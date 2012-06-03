@@ -3,7 +3,7 @@ package pokeri;
 import javax.swing.ImageIcon;
 
 
-public class Kortti
+public class Kortti implements Comparable
 {
     private String maa;
     private short arvo;
@@ -46,6 +46,24 @@ public class Kortti
     public void setArvo(short a)
     {
         arvo = (a > 0) ? a : 0;
+    }
+
+    @Override
+    /**
+     *  Jos @param <b>k<b> on yhtäsuuri arvoltaan kuin verrattava, palauta 0
+     *  Jos @param <b>k<b> on pienempi, palauta -1, muutoin 1.
+     */
+    public int compareTo(Object k)
+    {
+        Kortti kk = null;
+
+        if (!(k instanceof Kortti))
+            return -5;
+
+        kk = (Kortti) k;
+        if (kk.getArvo() == arvo)
+            return 0;
+        return (kk.getArvo() < arvo) ? -1 : 1;
     }
 
 }
