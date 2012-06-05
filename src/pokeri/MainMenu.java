@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package pokeri;
 
 import java.awt.Color;
@@ -48,24 +44,27 @@ public class MainMenu extends JFrame implements ActionListener
         raahauspeliNappi = new JButton("Raahauspeli");
         testikorttibutton = new JButton("testikorttibutton");
         raahausPeli = new RaahausPeliPaneeli();
-        kortti = new Kortti("ruutu", 3, new Point(50, 50));
 
         testikorttibutton.addActionListener(this);
         raahauspeliNappi.addActionListener(this);
 
         vasenPaneeli.setPreferredSize(new Dimension(450, 400));
         vasenPaneeli.setBackground(Color.red);
-        vasenPaneeli.add(raahauspeliNappi);
-        vasenPaneeli.add(testikorttibutton);
         paaPaneeli.setPreferredSize(new Dimension(40, 200));
         paaPaneeli.setBackground(Color.lightGray);
         ohjePaneeli.setPreferredSize(new Dimension(450, 300));
         ohjePaneeli.setBackground(Color.white);
+        this.setLayout(new GridLayout(1, 2, 4, 4));
+        Point sijainti = paaPaneeli.getLocation();
+        kortti = new Kortti("ruutu", 3, sijainti);
 
-        paaPaneeli.add(raahausPeli);
+        vasenPaneeli.add(raahauspeliNappi);
+        vasenPaneeli.add(testikorttibutton);
+        //paaPaneeli.add(raahausPeli);
+        paaPaneeli.add(kortti);
         wrapper.add(paaPaneeli);
         wrapper.add(ohjePaneeli);
-        this.setLayout(new GridLayout(1, 2, 4, 4));
+
         this.getContentPane().add(vasenPaneeli);
         this.getContentPane().add(wrapper);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -76,7 +75,8 @@ public class MainMenu extends JFrame implements ActionListener
     public void actionPerformed(ActionEvent ae)
     {
         if (ae.getSource() == testikorttibutton) {
-            System.out.println("LÄSKI");
+            System.out.println("yritetään..");
+            kortti.repaint();
         } else if (ae.getSource() == raahauspeliNappi) {
             System.out.println("raahauspeliNapin toiminnallisuus uupuu, korjaa se hyvä rouva.");
         }

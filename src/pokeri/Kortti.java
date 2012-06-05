@@ -1,13 +1,17 @@
 package pokeri;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
 import java.util.Arrays;
 import javax.swing.ImageIcon;
+import javax.swing.JComponent;
 
 
-public class Kortti extends RoundRectangle2D.Double implements Comparable
+public class Kortti extends JComponent implements Comparable
 {
     private String maa;
     private int arvo;
@@ -91,64 +95,16 @@ public class Kortti extends RoundRectangle2D.Double implements Comparable
         return (kk.getArvo() < arvo) ? -1 : 1;
     }
 
-    // Toteutetut RoundRectangle2D metodit
     @Override
-    public double getArcWidth()
+    public void paint(Graphics g)
     {
-        return ARCW;
-    }
+        Graphics2D g2 = (Graphics2D) g;
 
-    @Override
-    public double getArcHeight()
-    {
-        return ARCH;
-    }
-
-    @Override // Ei toteuteta, koska pyöristys ja koko on vakioita -> ei mahdollista muuttaa
-    public void setRoundRect(double d, double d1, double d2, double d3, double d4, double d5)
-    {
-        return;
-    }
-
-    @Override
-    public double getX()
-    {
-        return x;
-    }
-
-    @Override
-    public double getY()
-    {
-        return y;
-    }
-
-    @Override
-    public double getWidth()
-    {
-        return LEVEYS;
-    }
-
-    @Override
-    public double getHeight()
-    {
-        return KORKEUS;
-    }
-
-    @Override
-    public boolean isEmpty()
-    {
-        return (x <= 0 && y <= 0) ? true : false;
-    }
-
-    @Override
-    public Rectangle2D getBounds2D()
-    {
-        double x1 = x - (LEVEYS / 2);
-        double x2 = LEVEYS;
-        double y1 = y - (KORKEUS / 2);
-        double y2 = KORKEUS;
-
-        return new Rectangle2D.Double(x, y, LEVEYS, KORKEUS);
+        g2.setPaint(Color.black);
+        g2.setStroke(new BasicStroke(1.0f));
+        g2.setBackground(Color.white);
+        g2.draw(new RoundRectangle2D.Double(x, y, LEVEYS, KORKEUS, 10, 10));
+        repaint();
     }
 
 }
