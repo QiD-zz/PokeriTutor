@@ -9,9 +9,8 @@ import javax.swing.*;
  *
  * @author Kuisma Kuusniemi
  */
-public class KasiTransferHandler 
-    extends TransferHandler
-    {
+public class KasiTransferHandler extends TransferHandler
+{
      private int index = -1;
         public KasiTransferHandler()
         {
