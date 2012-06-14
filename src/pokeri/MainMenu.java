@@ -2,6 +2,7 @@ package pokeri;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -56,6 +57,7 @@ public class MainMenu extends JFrame implements ActionListener
         ohjePaneeli.setBackground(Color.white);
         this.setLayout(new GridLayout(1, 2, 4, 4));
         Point sijainti = paaPaneeli.getLocation();
+        sijainti.setLocation(500, 100);
         kortti = new Kortti("ruutu", 3, sijainti);
 
         vasenPaneeli.add(raahauspeliNappi);
@@ -76,10 +78,16 @@ public class MainMenu extends JFrame implements ActionListener
     {
         if (ae.getSource() == testikorttibutton) {
             System.out.println("yritetään..");
-            kortti.repaint();
+            repaint();
         } else if (ae.getSource() == raahauspeliNappi) {
             System.out.println("raahauspeliNapin toiminnallisuus uupuu, korjaa se hyvä rouva.");
         }
+    }
+
+    @Override
+    public void paint(Graphics g)
+    {
+        kortti.paint(g);
     }
 
 }

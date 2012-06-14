@@ -6,9 +6,13 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.geom.RoundRectangle2D;
+import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 
 
 public class Kortti extends JComponent implements Comparable
@@ -17,12 +21,12 @@ public class Kortti extends JComponent implements Comparable
     private int arvo;
     private double x;
     private double y;
-    private ImageIcon kuva;
+    private JLabel kuva;
     private Point sijainti;
-    private final double LEVEYS = 50;
+    private final double LEVEYS = 100;
     private final double KORKEUS = 150;
-    private final double ARCW = 5;
-    private final double ARCH = 5;
+    private final double ARCW = 15;
+    private final double ARCH = 15;
     private final String[] maat = {"ruutu", "hertta", "pata", "risti"};
 
     public Kortti(String s, int a, Point p)
@@ -32,19 +36,26 @@ public class Kortti extends JComponent implements Comparable
         sijainti = (p != null) ? p : new Point();
         x = sijainti.getX();
         y = sijainti.getY();
-        kuva = null;
+        try {
+            asetaKuva();
+        } catch (IOException ioe) {
+            System.out.println(String.format("Kortin kuvan lisääminen epäonnistui: %s", ioe.getStackTrace()));
+        }
     }
 
-    private void asetaKuva()
+    private void asetaKuva() throws IOException
     {
         if (maa.equalsIgnoreCase("ruutu"))
-            kuva = null;
+            kuva = new JLabel(new ImageIcon(ImageIO.read(new File("images/diamond.png"))));
         else if (maa.equalsIgnoreCase("hertta"))
-            kuva = null;
+            kuva = new JLabel(new ImageIcon(ImageIO.read(new File("images/heart.png"))));
         else if (maa.equalsIgnoreCase("pata"))
-            kuva = null;
+            kuva = new JLabel(new ImageIcon(ImageIO.read(new File("images/ace.png"))));
         else if (maa.equalsIgnoreCase("risti"))
-            kuva = null;
+            kuva = new JLabel(new ImageIcon(ImageIO.read(new File("images/club.png"))));
+
+        if (kuva != null)
+            add(kuva);
     }
 
     public String getMaa()
@@ -96,14 +107,16 @@ public class Kortti extends JComponent implements Comparable
     }
 
     @Override
-    public void paint(Graphics g)
+    public void paintComponent(Graphics g)
     {
         Graphics2D g2 = (Graphics2D) g;
 
+        g2.setPaint(Color.white);
+        g2.fill(new RoundRectangle2D.Double(x, y, LEVEYS, KORKEUS, ARCW, ARCH));
         g2.setPaint(Color.black);
         g2.setStroke(new BasicStroke(1.0f));
-        g2.setBackground(Color.white);
-        g2.draw(new RoundRectangle2D.Double(x, y, LEVEYS, KORKEUS, 10, 10));
+        g2.draw(new RoundRectangle2D.Double(x, y, LEVEYS, KORKEUS, ARCW, ARCH));
+
         repaint();
     }
 
