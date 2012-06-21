@@ -1,12 +1,13 @@
 package pokeri;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import javax.swing.*;
 
 /**
@@ -24,7 +25,7 @@ import javax.swing.*;
  *  |         | ohjePaneeli | }-´
  *  +---------+-------------+
  */
-public class MainMenu extends JFrame implements ActionListener
+public class MainMenu extends JFrame
 {
     private JPanel vasenPaneeli;
     private JPanel paaPaneeli;
@@ -34,36 +35,52 @@ public class MainMenu extends JFrame implements ActionListener
     private JButton testikorttibutton;
     private RaahausPeliPaneeli raahausPeli;
     private Kortti kortti;
-    
+    private Tapahtumakuuntelija tkuuntelija;
+    private final String leiska[] = { BorderLayout.EAST, BorderLayout.WEST,
+                                      BorderLayout.SOUTH, BorderLayout.NORTH,
+                                      BorderLayout.CENTER };
+
     public MainMenu()
     {
         super("TaoTao menee metsään!");
+        tkuuntelija = new Tapahtumakuuntelija();
+
+        alustaElementit();
+
+        /*** KORTTIEN NÄKYVYYDEN TESTAUSTA **/
+        Point sijainti = paaPaneeli.getLocation();
+        sijainti.setLocation(500, 100);
+        kortti = new Kortti("ruutu", 3, sijainti);
+        paaPaneeli.add(kortti);
+        /*** KORTTIEN NÄKYVYYDEN TESTAUSTA **/
+    }
+
+
+    public void alustaElementit()
+    {
+        this.setLayout(new GridLayout(1, 2, 4, 4));
         vasenPaneeli = new JPanel();
         paaPaneeli = new JPanel();
         ohjePaneeli = new JPanel();
-        wrapper = new JPanel(new GridLayout(2, 1, 4, 4));
+        wrapper = new JPanel(new GridLayout(2, 1));
         raahauspeliNappi = new JButton("Raahauspeli");
         testikorttibutton = new JButton("testikorttibutton");
         raahausPeli = new RaahausPeliPaneeli();
 
-        testikorttibutton.addActionListener(this);
-        raahauspeliNappi.addActionListener(this);
+        // Kuuntelijat
+        testikorttibutton.addMouseListener(tkuuntelija);
+        raahauspeliNappi.addMouseListener(tkuuntelija);
 
-        vasenPaneeli.setPreferredSize(new Dimension(450, 400));
+        // Varsinaiset asettelut
+        vasenPaneeli.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA, Extern.KORKEUS_IKKUNA));
         vasenPaneeli.setBackground(Color.red);
-        paaPaneeli.setPreferredSize(new Dimension(40, 200));
-        paaPaneeli.setBackground(Color.lightGray);
-        ohjePaneeli.setPreferredSize(new Dimension(450, 300));
-        ohjePaneeli.setBackground(Color.white);
-        this.setLayout(new GridLayout(1, 2, 4, 4));
-        Point sijainti = paaPaneeli.getLocation();
-        sijainti.setLocation(500, 100);
-        kortti = new Kortti("ruutu", 3, sijainti);
-
         vasenPaneeli.add(raahauspeliNappi);
         vasenPaneeli.add(testikorttibutton);
-        //paaPaneeli.add(raahausPeli);
-        paaPaneeli.add(kortti);
+        paaPaneeli.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA, Extern.KORKEUS_IKKUNA / 3));
+        paaPaneeli.setBackground(Color.lightGray);
+        ohjePaneeli.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA, Extern.KORKEUS_IKKUNA / 4));
+        ohjePaneeli.setBackground(Color.white);
+
         wrapper.add(paaPaneeli);
         wrapper.add(ohjePaneeli);
 
@@ -73,21 +90,47 @@ public class MainMenu extends JFrame implements ActionListener
         this.pack();
     }
 
-    @Override
-    public void actionPerformed(ActionEvent ae)
-    {
-        if (ae.getSource() == testikorttibutton) {
-            System.out.println("yritetään..");
-            repaint();
-        } else if (ae.getSource() == raahauspeliNappi) {
-            System.out.println("raahauspeliNapin toiminnallisuus uupuu, korjaa se hyvä rouva.");
-        }
-    }
 
     @Override
     public void paint(Graphics g)
     {
         kortti.paint(g);
+    }
+
+
+    public class Tapahtumakuuntelija implements MouseListener
+    {
+        @Override
+        public void mouseClicked(MouseEvent me)
+        {
+        }
+
+        @Override
+        public void mousePressed(MouseEvent me)
+        {
+            if (me.getSource() == testikorttibutton) {
+                System.out.println("yritetään..");
+                repaint();
+            } else if (me.getSource() == raahauspeliNappi) {
+                System.out.println("raahauspeliNapin toiminnallisuus uupuu, korjaa se hyvä rouva.");
+                //paaPaneeli.add(raahausPeli);
+            }
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent me)
+        {
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent me)
+        {
+        }
+
+        @Override
+        public void mouseExited(MouseEvent me)
+        {
+        }
     }
 
 }

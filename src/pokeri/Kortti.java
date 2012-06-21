@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.geom.RoundRectangle2D;
 import java.io.File;
 import java.io.IOException;
@@ -15,7 +17,7 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 
 
-public class Kortti extends JComponent implements Comparable
+public class Kortti extends JComponent implements MouseListener
 {
     private String maa;
     private int arvo;
@@ -27,15 +29,16 @@ public class Kortti extends JComponent implements Comparable
     private final double KORKEUS = 150;
     private final double ARCW = 15;
     private final double ARCH = 15;
-    private final String[] maat = {"ruutu", "hertta", "pata", "risti"};
 
     public Kortti(String s, int a, Point p)
     {
-        maa = (maa != null && Arrays.asList(maat).contains(s)) ? s : "";
+        super();
+        maa = (maa != null && Arrays.asList(Extern.MAAT).contains(s)) ? s : "";
         arvo = (a > 0) ? a : 0;
         sijainti = (p != null) ? p : new Point();
         x = sijainti.getX();
         y = sijainti.getY();
+        addMouseListener(this);
         try {
             asetaKuva();
         } catch (IOException ioe) {
@@ -88,7 +91,6 @@ public class Kortti extends JComponent implements Comparable
         sijainti = (p != null) ? p : new Point();
     }
 
-    @Override
     /**
      *  Jos @param <b>k<b> on yhtäsuuri arvoltaan kuin verrattava, palauta 0
      *  Jos @param <b>k<b> on pienempi, palauta -1, muutoin 1.
@@ -109,6 +111,7 @@ public class Kortti extends JComponent implements Comparable
     @Override
     public void paintComponent(Graphics g)
     {
+        super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
 
         g2.setPaint(Color.white);
@@ -118,6 +121,51 @@ public class Kortti extends JComponent implements Comparable
         g2.draw(new RoundRectangle2D.Double(x, y, LEVEYS, KORKEUS, ARCW, ARCH));
 
         repaint();
+    }
+
+    public boolean isInArea(Point p)
+    { // XXX Vaatinee vielä tarkastusta, pää piiputta rumasti tässä vaiheessa jo
+        boolean isIn = false;
+        double dx = LEVEYS / 2;
+        double dy = KORKEUS / 2;
+        double xl = sijainti.getX() - dx;
+        double xr = sijainti.getX() + dx;
+        double yt = sijainti.getY() - dy;
+        double yb = sijainti.getY() + dy;
+
+        if (p.getX() < xl || p.getX() > xr)
+            isIn = false;
+        if (p.getY() < yt || p.getY() > yb)
+            isIn = false;
+
+        return isIn;
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent me)
+    {
+    }
+
+    @Override
+    public void mousePressed(MouseEvent me)
+    {
+        if (isInArea(me.getPoint()))
+            System.out.println("KORTTIA PAINETTU");
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent me)
+    {
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent me)
+    {
+    }
+
+    @Override
+    public void mouseExited(MouseEvent me)
+    {
     }
 
 }

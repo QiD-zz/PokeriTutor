@@ -16,13 +16,14 @@ import javax.swing.JPanel;
  *
  * @author QiD
  */
-public class RaahausPeliPaneeli extends JPanel{
-    
+public class RaahausPeliPaneeli extends JPanel
+{
     private JPanel oikea;
     private DefaultListModel listamalli;
     private JList lista;
     
-    public RaahausPeliPaneeli() {
+    public RaahausPeliPaneeli()
+    {
         this.setLayout(new FlowLayout(FlowLayout.CENTER));
         KasiTransferHandler handleri = new KasiTransferHandler();
         oikea = new JPanel();
