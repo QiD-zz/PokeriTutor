@@ -8,13 +8,12 @@ import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.RoundRectangle2D;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JComponent;
-import javax.swing.JLabel;
 
 
 public class Kortti extends JComponent implements MouseListener
@@ -23,7 +22,7 @@ public class Kortti extends JComponent implements MouseListener
     private int arvo;
     private double x;
     private double y;
-    private JLabel kuva;
+    private BufferedImage kuva;
     private Point sijainti;
     private final double LEVEYS = 100;
     private final double KORKEUS = 150;
@@ -32,13 +31,14 @@ public class Kortti extends JComponent implements MouseListener
 
     public Kortti(String s, int a, Point p)
     {
-        super();
-        maa = (maa != null && Arrays.asList(Extern.MAAT).contains(s)) ? s : "";
+        maa = (s != null && Arrays.asList(Extern.MAAT).contains(s)) ? s : "";
         arvo = (a > 0) ? a : 0;
         sijainti = (p != null) ? p : new Point();
         x = sijainti.getX();
         y = sijainti.getY();
+
         addMouseListener(this);
+
         try {
             asetaKuva();
         } catch (IOException ioe) {
@@ -48,17 +48,15 @@ public class Kortti extends JComponent implements MouseListener
 
     private void asetaKuva() throws IOException
     {
-        if (maa.equalsIgnoreCase("ruutu"))
-            kuva = new JLabel(new ImageIcon(ImageIO.read(new File("images/diamond.png"))));
-        else if (maa.equalsIgnoreCase("hertta"))
-            kuva = new JLabel(new ImageIcon(ImageIO.read(new File("images/heart.png"))));
-        else if (maa.equalsIgnoreCase("pata"))
-            kuva = new JLabel(new ImageIcon(ImageIO.read(new File("images/ace.png"))));
-        else if (maa.equalsIgnoreCase("risti"))
-            kuva = new JLabel(new ImageIcon(ImageIO.read(new File("images/club.png"))));
-
-        if (kuva != null)
-            add(kuva);
+        if (maa.equalsIgnoreCase("ruutu")) {
+            kuva = ImageIO.read(new File("images/diamond.png"));
+        } else if (maa.equalsIgnoreCase("hertta")) {
+            kuva = ImageIO.read(new File("images/heart.png"));
+        } else if (maa.equalsIgnoreCase("pata")) {
+            kuva = ImageIO.read(new File("images/ace.png"));
+        } else if (maa.equalsIgnoreCase("risti")) {
+            kuva = ImageIO.read(new File("images/club.png"));
+        }
     }
 
     public String getMaa()
@@ -113,19 +111,26 @@ public class Kortti extends JComponent implements MouseListener
     {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
+        int img_w = 0;
+        int img_h = 0;
+
+        img_w = kuva.getWidth() + 5;
+        img_h = kuva.getHeight() + 5;
 
         g2.setPaint(Color.white);
         g2.fill(new RoundRectangle2D.Double(x, y, LEVEYS, KORKEUS, ARCW, ARCH));
         g2.setPaint(Color.black);
         g2.setStroke(new BasicStroke(1.0f));
         g2.draw(new RoundRectangle2D.Double(x, y, LEVEYS, KORKEUS, ARCW, ARCH));
-
-        repaint();
+        g.drawImage(kuva, (int) x + 5, (int) y + 5, null);
+        g.drawImage(kuva, (int) x + (int) LEVEYS - img_w, (int) y + (int) KORKEUS - img_h, null);
+        g.drawString(Integer.toString(arvo), (int)x + (int)(LEVEYS / 2) - 5,
+                                             (int)y + (int)(KORKEUS / 2));
     }
 
     public boolean isInArea(Point p)
     { // XXX Vaatinee vielä tarkastusta, pää piiputta rumasti tässä vaiheessa jo
-        boolean isIn = false;
+        boolean isIn = true;
         double dx = LEVEYS / 2;
         double dy = KORKEUS / 2;
         double xl = sijainti.getX() - dx;
