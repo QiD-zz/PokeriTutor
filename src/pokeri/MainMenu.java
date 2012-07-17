@@ -34,7 +34,7 @@ public class MainMenu extends JFrame
     private JButton raahauspeliNappi;
     private JButton testikorttibutton;
     private RaahausPeliPaneeli raahausPeli;
-    private Kortti kortti;
+    private Kortti[] poytakortit = new Kortti[Extern.KORTTEJA_POYDALLA];
     private Tapahtumakuuntelija tkuuntelija;
     private final String leiska[] = { BorderLayout.EAST, BorderLayout.WEST,
                                       BorderLayout.SOUTH, BorderLayout.NORTH,
@@ -50,8 +50,12 @@ public class MainMenu extends JFrame
         /*** KORTTIEN NÄKYVYYDEN TESTAUSTA **/
         Point sijainti = paaPaneeli.getLocation();
         sijainti.setLocation(500, 100);
-        kortti = new Kortti("ruutu", 3, sijainti);
-        paaPaneeli.add(kortti);
+        for (int i = 0; i < Extern.KORTTEJA_POYDALLA; i++) {
+            poytakortit[i] = new Kortti(Extern.MAAT[i % 4], i + 1, sijainti);
+            long vanhasijainti = sijainti.x + 60;
+            sijainti.setLocation(vanhasijainti, 100);
+            paaPaneeli.add(poytakortit[i]);
+        }
         /*** KORTTIEN NÄKYVYYDEN TESTAUSTA **/
     }
 
@@ -73,7 +77,7 @@ public class MainMenu extends JFrame
 
         // Varsinaiset asettelut
         vasenPaneeli.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA, Extern.KORKEUS_IKKUNA));
-        vasenPaneeli.setBackground(Color.red);
+        vasenPaneeli.setBackground(Color.darkGray);
         vasenPaneeli.add(raahauspeliNappi);
         vasenPaneeli.add(testikorttibutton);
         paaPaneeli.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA, Extern.KORKEUS_IKKUNA / 3));
@@ -94,7 +98,8 @@ public class MainMenu extends JFrame
     @Override
     public void paint(Graphics g)
     {
-        kortti.paint(g);
+        for (Kortti k : poytakortit)
+            k.paint(g);
     }
 
 
