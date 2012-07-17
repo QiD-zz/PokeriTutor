@@ -4,7 +4,11 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import java.awt.Point;
+import java.awt.Transparency;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.RoundRectangle2D;
@@ -113,6 +117,7 @@ public class Kortti extends JComponent implements MouseListener
         Graphics2D g2 = (Graphics2D) g;
         int img_w = 0;
         int img_h = 0;
+        BufferedImage kuva2;
 
         img_w = kuva.getWidth() + 5;
         img_h = kuva.getHeight() + 5;
@@ -122,8 +127,10 @@ public class Kortti extends JComponent implements MouseListener
         g2.setPaint(Color.black);
         g2.setStroke(new BasicStroke(1.0f));
         g2.draw(new RoundRectangle2D.Double(x, y, LEVEYS, KORKEUS, ARCW, ARCH));
+
         g.drawImage(kuva, (int) x + 5, (int) y + 5, null);
-        g.drawImage(kuva, (int) x + (int) LEVEYS - img_w, (int) y + (int) KORKEUS - img_h, null);
+        kuva2 = rotate(kuva, Math.toRadians(180));
+        g.drawImage(kuva2, (int) x + (int) LEVEYS - img_w, (int) y + (int) KORKEUS - img_h, null);
         g.drawString(Integer.toString(arvo), (int)x + (int)(LEVEYS / 2) - 5,
                                              (int)y + (int)(KORKEUS / 2));
     }
@@ -144,6 +151,39 @@ public class Kortti extends JComponent implements MouseListener
             isIn = false;
 
         return isIn;
+    }
+
+    public BufferedImage rotate(BufferedImage image, double angle)
+    {
+        int h = 0;
+        int w = 0;
+        int newh = 0;
+        int neww = 0;
+        double cos = 0.0;
+        double sin = 0.0;
+        GraphicsEnvironment ge;
+        GraphicsDevice dev;
+        GraphicsConfiguration gc;
+        BufferedImage result;
+
+        sin = Math.abs(Math.sin(angle));
+        cos = Math.abs(Math.cos(angle));
+        w = image.getWidth();
+        h = image.getHeight();
+        neww = (int) Math.floor(w*cos+h*sin);
+        newh = (int) Math.floor(h*cos+w*sin);
+        ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        dev = ge.getDefaultScreenDevice();
+        gc = dev.getDefaultConfiguration();
+        result = gc.createCompatibleImage(neww, newh, Transparency.TRANSLUCENT);
+
+        Graphics2D g = result.createGraphics();
+        g.translate((neww - w) / 2, (newh - h) / 2);
+        g.rotate(angle, w / 2, h / 2);
+        g.drawRenderedImage(image, null);
+        g.dispose();
+
+        return result;
     }
 
     @Override

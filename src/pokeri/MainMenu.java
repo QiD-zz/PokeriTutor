@@ -52,7 +52,7 @@ public class MainMenu extends JFrame
         sijainti.setLocation(500, 100);
         for (int i = 0; i < Extern.KORTTEJA_POYDALLA; i++) {
             poytakortit[i] = new Kortti(Extern.MAAT[i % 4], i + 1, sijainti);
-            long vanhasijainti = sijainti.x + 60;
+            long vanhasijainti = sijainti.x + 120;
             sijainti.setLocation(vanhasijainti, 100);
             paaPaneeli.add(poytakortit[i]);
         }
