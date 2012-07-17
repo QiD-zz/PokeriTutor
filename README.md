@@ -11,7 +11,7 @@ TODO:
 
 DONE:
 
-[X] Kortti-luokka ja pakka
+[X] Kortti- ja pakkaluokka
 
 [X] Perustoiminnallisuus
 
