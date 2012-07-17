@@ -21,3 +21,4 @@ destop.ini
 *.swp
 *.xml
 *.properties
+/.sonar/

@@ -28,10 +28,10 @@ public class Kortti extends JComponent implements MouseListener
     private double y;
     private BufferedImage kuva;
     private Point sijainti;
-    private final double LEVEYS = 100;
-    private final double KORKEUS = 150;
-    private final double ARCW = 15;
-    private final double ARCH = 15;
+    public final double LEVEYS = 100;
+    public final double KORKEUS = 150;
+    public final double ARCW = 15;
+    public final double ARCH = 15;
 
     public Kortti(String s, int a, Point p)
     {
@@ -97,17 +97,11 @@ public class Kortti extends JComponent implements MouseListener
      *  Jos @param <b>k<b> on yhtäsuuri arvoltaan kuin verrattava, palauta 0
      *  Jos @param <b>k<b> on pienempi, palauta -1, muutoin 1.
      */
-    public int compareTo(Object k)
+    public int compareTo(Kortti k)
     {
-        Kortti kk = null;
-
-        if (!(k instanceof Kortti))
-            return -5;
-
-        kk = (Kortti) k;
-        if (kk.getArvo() == arvo)
+        if (k.getArvo() == arvo)
             return 0;
-        return (kk.getArvo() < arvo) ? -1 : 1;
+        return (k.getArvo() < arvo) ? -1 : 1;
     }
 
     @Override
@@ -179,7 +173,7 @@ public class Kortti extends JComponent implements MouseListener
 
         Graphics2D g = result.createGraphics();
         g.translate((neww - w) / 2, (newh - h) / 2);
-        g.rotate(angle, w / 2, h / 2);
+        g.rotate(angle, (double)w / 2, (double)h / 2);
         g.drawRenderedImage(image, null);
         g.dispose();
 

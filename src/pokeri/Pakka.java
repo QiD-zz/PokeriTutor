@@ -17,8 +17,6 @@ public class Pakka
     {
         if (pakka == null)
             return; // TODO näytä mahdollisesti ruudulla, että pakkaa ei ole alustettu
-        if (!(k instanceof Kortti))
-            return; // TODO näytä mahdollisesti ruudulla, että pakkaa ei ole alustettu
         pakka.add(k);
     }
     
@@ -27,8 +25,6 @@ public class Pakka
         Kortti poistettava = null;
 
         if (pakka == null)
-            return null; // TODO näytä mahdollisesti ruudulla, että pakkaa ei ole alustettu
-        if (!(k instanceof Kortti))
             return null; // TODO näytä mahdollisesti ruudulla, että pakkaa ei ole alustettu
 
         if (Arrays.asList(pakka).contains(k)) {
