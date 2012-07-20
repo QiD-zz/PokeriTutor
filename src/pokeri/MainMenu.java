@@ -3,9 +3,12 @@ package pokeri;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.*;
@@ -60,10 +63,21 @@ public class MainMenu extends JFrame
     private void alustaMenu()
     {
         JMenu menu;
+        JMenuItem mitem;
 
         menu = new JMenu("Tiedosto");
-        menu.add(new JMenuItem("Raahauspeli"));
-        menu.add(new JMenuItem("Korttitesti"));
+
+        mitem = new JMenuItem("Raahauspeli");
+        mitem.addActionListener(tkuuntelija);
+        menu.add(mitem);
+
+        mitem = new JMenuItem("Korttitesti");
+        mitem.addActionListener(tkuuntelija);
+        menu.add(mitem);
+
+        mitem = new JMenuItem("Lopeta");
+        mitem.addActionListener(tkuuntelija);
+        menu.add(mitem);
 
         menubar = new JMenuBar();
         menubar.add(menu);
@@ -71,7 +85,7 @@ public class MainMenu extends JFrame
 
     private void alustaElementit()
     {
-        this.setLayout(new GridLayout(0, 2, 4, 4));
+        this.setLayout(new GridLayout(0, 1, 0, 0));
         paaPaneeli = new JPanel();
         ohjePaneeli = new JPanel();
         wrapper = new JPanel(new GridLayout(2, 1));
@@ -85,9 +99,11 @@ public class MainMenu extends JFrame
 
         alustaMenu();
         // Varsinaiset asettelut
-        paaPaneeli.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA, Extern.KORKEUS_IKKUNA / 3));
+        paaPaneeli.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA,
+                                    Extern.KORKEUS_IKKUNA / 3));
         paaPaneeli.setBackground(Color.lightGray);
-        ohjePaneeli.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA, Extern.KORKEUS_IKKUNA / 4));
+        ohjePaneeli.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA,
+                                     Extern.KORKEUS_IKKUNA / 4));
         ohjePaneeli.setBackground(Color.white);
 
         wrapper.add(paaPaneeli);
@@ -97,13 +113,28 @@ public class MainMenu extends JFrame
         super.add(wrapper);
         super.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         super.pack();
-        super.setVisible(true);
-    }
+        }
 
-
-
-    public class Tapahtumakuuntelija implements MouseListener
+    public class Tapahtumakuuntelija implements ActionListener, ItemListener,
+                                                MouseListener
     {
+        @Override
+        public void actionPerformed(ActionEvent ae)
+        {
+            if (ae.getActionCommand().equals("Raahauspeli"))
+                System.out.println("Raahauspeli..");
+            else if (ae.getActionCommand().equals("Korttitesti"))
+                System.out.println("Korttitesti..");
+            else if (ae.getActionCommand().equals("Lopeta"))
+                dispose();
+        }
+
+        @Override
+        public void itemStateChanged(ItemEvent ie)
+        {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+
         @Override
         public void mouseClicked(MouseEvent me)
         {
