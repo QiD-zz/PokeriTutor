@@ -164,8 +164,8 @@ public class Kortti extends JComponent implements MouseListener
         cos = Math.abs(Math.cos(angle));
         w = image.getWidth();
         h = image.getHeight();
-        neww = (int) Math.floor(w*cos+h*sin);
-        newh = (int) Math.floor(h*cos+w*sin);
+        neww = (int) Math.floor(w * cos + h * sin);
+        newh = (int) Math.floor(h * cos + w * sin);
         ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         dev = ge.getDefaultScreenDevice();
         gc = dev.getDefaultConfiguration();

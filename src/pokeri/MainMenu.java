@@ -10,24 +10,22 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.*;
 
-/**
- *
- * @author QiD
- */
 
 /*
  *  +---------+-------------+
- *  |         | paaPaneeli  |
- *  |         |             | }--.
- *  | vasen-  |             |     `-   `wrapper` sitoo paaPaneeli
- *  | Paneeli |             |      .´¨  ja ohjePaneelin yhteen
- *  | (menu)  |-------------+    .´
- *  |         | ohjePaneeli | }-´
- *  +---------+-------------+
+ *  |[menu]                 |
+ *  +-----------------------+
+ *  |      paaPaneeli       |
+ *  |                       | }--.
+ *  |                       |     `-   `wrapper` sitoo paaPaneeli
+ *  |                       |      .´¨  ja ohjePaneelin yhteen
+ *  +-----------------------+    .´
+ *  |      ohjePaneeli      | }-´
+ *  +-----------------------+
  */
 public class MainMenu extends JFrame
 {
-    private JPanel vasenPaneeli;
+    private JMenuBar menubar;
     private JPanel paaPaneeli;
     private JPanel ohjePaneeli;
     private JPanel wrapper;
@@ -48,8 +46,8 @@ public class MainMenu extends JFrame
         alustaElementit();
 
         /*** KORTTIEN NÄKYVYYDEN TESTAUSTA **/
-        Point sijainti = paaPaneeli.getLocation();
-        sijainti.setLocation(500, 100);
+        Point sijainti = this.getLocation(); //paaPaneeli.getLocation();
+        sijainti.setLocation(100, 100);
         for (int i = 0; i < Extern.KORTTEJA_POYDALLA; i++) {
             poytakortit[i] = new Kortti(Extern.MAAT[i % 4], i + 1, sijainti);
             long vanhasijainti = sijainti.x + 120;
@@ -59,11 +57,21 @@ public class MainMenu extends JFrame
         /*** KORTTIEN NÄKYVYYDEN TESTAUSTA **/
     }
 
-
-    public void alustaElementit()
+    private void alustaMenu()
     {
-        this.setLayout(new GridLayout(1, 2, 4, 4));
-        vasenPaneeli = new JPanel();
+        JMenu menu;
+
+        menu = new JMenu("Tiedosto");
+        menu.add(new JMenuItem("Raahauspeli"));
+        menu.add(new JMenuItem("Korttitesti"));
+
+        menubar = new JMenuBar();
+        menubar.add(menu);
+    }
+
+    private void alustaElementit()
+    {
+        this.setLayout(new GridLayout(0, 2, 4, 4));
         paaPaneeli = new JPanel();
         ohjePaneeli = new JPanel();
         wrapper = new JPanel(new GridLayout(2, 1));
@@ -75,11 +83,8 @@ public class MainMenu extends JFrame
         testikorttibutton.addMouseListener(tkuuntelija);
         raahauspeliNappi.addMouseListener(tkuuntelija);
 
+        alustaMenu();
         // Varsinaiset asettelut
-        vasenPaneeli.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA, Extern.KORKEUS_IKKUNA));
-        vasenPaneeli.setBackground(Color.darkGray);
-        vasenPaneeli.add(raahauspeliNappi);
-        vasenPaneeli.add(testikorttibutton);
         paaPaneeli.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA, Extern.KORKEUS_IKKUNA / 3));
         paaPaneeli.setBackground(Color.lightGray);
         ohjePaneeli.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA, Extern.KORKEUS_IKKUNA / 4));
@@ -88,19 +93,13 @@ public class MainMenu extends JFrame
         wrapper.add(paaPaneeli);
         wrapper.add(ohjePaneeli);
 
-        this.getContentPane().add(vasenPaneeli);
-        this.getContentPane().add(wrapper);
-        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        this.pack();
+        super.setJMenuBar(menubar);
+        super.add(wrapper);
+        super.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        super.pack();
+        super.setVisible(true);
     }
 
-
-    @Override
-    public void paint(Graphics g)
-    {
-        for (Kortti k : poytakortit)
-            k.paint(g);
-    }
 
 
     public class Tapahtumakuuntelija implements MouseListener
