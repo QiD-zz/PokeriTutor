@@ -47,9 +47,12 @@ public class MainMenu extends JFrame
         tkuuntelija = new Tapahtumakuuntelija();
 
         alustaElementit();
+    }
 
-        /*** KORTTIEN NÄKYVYYDEN TESTAUSTA **/
-        Point sijainti = this.getLocation(); //paaPaneeli.getLocation();
+    protected void piirraKortit()
+    {
+        Point sijainti = paaPaneeli.getLocation();
+
         sijainti.setLocation(100, 100);
         for (int i = 0; i < Extern.KORTTEJA_POYDALLA; i++) {
             poytakortit[i] = new Kortti(Extern.MAAT[i % 4], i + 1, sijainti);
@@ -57,7 +60,9 @@ public class MainMenu extends JFrame
             sijainti.setLocation(vanhasijainti, 100);
             paaPaneeli.add(poytakortit[i]);
         }
-        /*** KORTTIEN NÄKYVYYDEN TESTAUSTA **/
+        for (Kortti k : poytakortit) {
+            k.paint(this.getGraphics());
+        }
     }
 
     private void alustaMenu()
@@ -85,19 +90,18 @@ public class MainMenu extends JFrame
 
     private void alustaElementit()
     {
-        this.setLayout(new GridLayout(0, 1, 0, 0));
+        super.setLayout(new GridLayout(2, 1, 0, 0));
         paaPaneeli = new JPanel();
         ohjePaneeli = new JPanel();
-        wrapper = new JPanel(new GridLayout(2, 1));
         raahauspeliNappi = new JButton("Raahauspeli");
         testikorttibutton = new JButton("testikorttibutton");
         raahausPeli = new RaahausPeliPaneeli();
 
+        alustaMenu();
         // Kuuntelijat
         testikorttibutton.addMouseListener(tkuuntelija);
         raahauspeliNappi.addMouseListener(tkuuntelija);
 
-        alustaMenu();
         // Varsinaiset asettelut
         paaPaneeli.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA,
                                     Extern.KORKEUS_IKKUNA / 3));
@@ -106,14 +110,13 @@ public class MainMenu extends JFrame
                                      Extern.KORKEUS_IKKUNA / 4));
         ohjePaneeli.setBackground(Color.white);
 
-        wrapper.add(paaPaneeli);
-        wrapper.add(ohjePaneeli);
+        super.add(paaPaneeli);
+        super.add(ohjePaneeli);
 
         super.setJMenuBar(menubar);
-        super.add(wrapper);
         super.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         super.pack();
-        }
+    }
 
     public class Tapahtumakuuntelija implements ActionListener, ItemListener,
                                                 MouseListener
@@ -123,9 +126,10 @@ public class MainMenu extends JFrame
         {
             if (ae.getActionCommand().equals("Raahauspeli"))
                 System.out.println("Raahauspeli..");
-            else if (ae.getActionCommand().equals("Korttitesti"))
+            else if (ae.getActionCommand().equals("Korttitesti")) {
                 System.out.println("Korttitesti..");
-            else if (ae.getActionCommand().equals("Lopeta"))
+                piirraKortit();
+            } else if (ae.getActionCommand().equals("Lopeta"))
                 dispose();
         }
 

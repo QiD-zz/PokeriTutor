@@ -46,7 +46,9 @@ public class Kortti extends JComponent implements MouseListener
         try {
             asetaKuva();
         } catch (IOException ioe) {
-            System.out.println(String.format("Kortin kuvan lisääminen epäonnistui: %s", ioe.getStackTrace()));
+            System.out.println(String.format(
+                    "Kortin kuvan lisääminen epäonnistui: %s",
+                    ioe.getStackTrace()));
         }
     }
 
@@ -90,7 +92,7 @@ public class Kortti extends JComponent implements MouseListener
 
     public void setSijainti(Point p)
     {
-        sijainti = (p != null) ? p : new Point();
+        sijainti = (p != null) ? p : new Point(5, 5);
     }
 
     /**
