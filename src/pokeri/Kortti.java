@@ -9,8 +9,6 @@ import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Point;
 import java.awt.Transparency;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -20,7 +18,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JComponent;
 
 
-public class Kortti extends JComponent implements MouseListener
+public class Kortti extends JComponent
 {
     private String maa;
     private int arvo;
@@ -40,8 +38,6 @@ public class Kortti extends JComponent implements MouseListener
         sijainti = (p != null) ? p : new Point();
         x = sijainti.getX();
         y = sijainti.getY();
-
-        addMouseListener(this);
 
         try {
             asetaKuva();
@@ -180,33 +176,6 @@ public class Kortti extends JComponent implements MouseListener
         g.dispose();
 
         return result;
-    }
-
-    @Override
-    public void mouseClicked(MouseEvent me)
-    {
-    }
-
-    @Override
-    public void mousePressed(MouseEvent me)
-    {
-        if (isInArea(me.getPoint()))
-            System.out.println("KORTTIA PAINETTU");
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent me)
-    {
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent me)
-    {
-    }
-
-    @Override
-    public void mouseExited(MouseEvent me)
-    {
     }
 
 }
