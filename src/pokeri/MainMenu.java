@@ -110,12 +110,18 @@ public class MainMenu extends JFrame
                                      Extern.KORKEUS_IKKUNA / 4));
         ohjePaneeli.setBackground(Color.white);
 
-        super.add(paaPaneeli);
+     /*   super.add(paaPaneeli);
         super.add(ohjePaneeli);
 
         super.setJMenuBar(menubar);
         super.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        super.pack();
+        super.pack();*/
+        this.add(paaPaneeli);
+        this.add(ohjePaneeli);
+
+        this.setJMenuBar(menubar);
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        this.pack();
     }
 
     public class Tapahtumakuuntelija implements ActionListener, ItemListener,
@@ -124,13 +130,21 @@ public class MainMenu extends JFrame
         @Override
         public void actionPerformed(ActionEvent ae)
         {
-            if (ae.getActionCommand().equals("Raahauspeli"))
-                System.out.println("Raahauspeli..");
-            else if (ae.getActionCommand().equals("Korttitesti")) {
+            if (ae.getActionCommand().equals("Raahauspeli")) 
+            {
+                 System.out.println("Raahauspeli..");
+                paaPaneeli.add(new RaahausPeliPaneeli());
+                paaPaneeli.validate();
+            }
+               
+            else if (ae.getActionCommand().equals("Korttitesti")) 
+            {
                 System.out.println("Korttitesti..");
                 piirraKortit();
-            } else if (ae.getActionCommand().equals("Lopeta"))
+            } else if (ae.getActionCommand().equals("Lopeta")) {
                 dispose();
+            }
+                
         }
 
         @Override

@@ -36,6 +36,7 @@ public class RaahausPeliPaneeli extends JPanel
         lista.setDragEnabled(true);
         lista.setTransferHandler(handleri);
         lista.setPreferredSize(new Dimension(200, 400));
+        lista.setFixedCellHeight(50);
         lista.setFont(new Font("Arial",Font.BOLD, 29));
         this.add(oikea);
         this.setPreferredSize(new Dimension(600, 600));

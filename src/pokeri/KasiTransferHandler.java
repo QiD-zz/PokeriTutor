@@ -12,6 +12,7 @@ import javax.swing.*;
 public class KasiTransferHandler extends TransferHandler
 {
      private int index = -1;
+     private boolean alkuunPain = false;
         public KasiTransferHandler()
         {
             super();
@@ -83,8 +84,13 @@ public class KasiTransferHandler extends TransferHandler
                 if (( i*list.getFixedCellHeight()) < tiputusPaikka.getDropPoint().getY() && 
                    tiputusPaikka.getDropPoint().getY() < ( (i+1)*list.getFixedCellHeight())) {
                     osumaIndeksi = i;
+                    System.out.println(list.getFixedCellHeight()*i);
                 }
             }
+            if (index > osumaIndeksi) {
+                alkuunPain = true;
+            }
+            
             /*
              * Tämä on vaihtoehtoinen tapa ylemmästä asiasta. 
             for (int i = 0; i<listModel.getSize(); i++) {
@@ -99,7 +105,15 @@ public class KasiTransferHandler extends TransferHandler
             if (tiputusPaikka.getDropPoint().getY()>listModel.getSize()*list.getFixedCellHeight()) {
                 listModel.addElement(data);
             } else {
-                listModel.add(osumaIndeksi, data);
+                if (alkuunPain) 
+                {
+                    listModel.add(osumaIndeksi, data);
+                } 
+                else
+                {
+                    listModel.add(osumaIndeksi+1, data);
+                }
+                
             }          
             
             // note that we still do not distinguish between copy and move
@@ -115,10 +129,15 @@ public class KasiTransferHandler extends TransferHandler
             JList source = (JList)c;
             DefaultListModel listModel  = (DefaultListModel)source.getModel();
 
+            if (alkuunPain) {
+                index++;
+            }
+            System.out.println(listModel.size());
             if (action == TransferHandler.MOVE) {
                 listModel.remove(index);
             }
 
+            alkuunPain = false;
             index = -1;
         }
     /*
