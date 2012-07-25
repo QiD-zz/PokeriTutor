@@ -51,14 +51,10 @@ public class RaahausPeliPaneeli extends JPanel implements ActionListener
         
         listamalli = new DefaultListModel();
         lista = new JList(listamalli);
-        PokeriHanska hanska = new PokeriHanska(PokeriHanska.Arvo.VARI);
-        PokeriHanska hanska2 = new PokeriHanska(PokeriHanska.Arvo.SUORA);
-        PokeriHanska hanska3 = new PokeriHanska(PokeriHanska.Arvo.VARISUORA);
-        PokeriHanska hanska4 = new PokeriHanska(PokeriHanska.Arvo.HAI);
-        listamalli.addElement(hanska2);
-        listamalli.addElement(hanska4);
-        listamalli.addElement(hanska3);
-        listamalli.addElement(hanska);
+        listamalli.addElement("Pari");
+        listamalli.addElement("Neloset");
+        listamalli.addElement("Suora");
+        listamalli.addElement("Väri");
         
         lista.setDragEnabled(true);
         lista.setTransferHandler(handleri);
