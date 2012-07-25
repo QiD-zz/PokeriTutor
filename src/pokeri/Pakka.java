@@ -1,16 +1,15 @@
 package pokeri;
 
-import java.util.Arrays;
-import java.util.Vector;
+import java.util.ArrayList;
 
 
 public class Pakka
 {
-    private Vector<Kortti> pakka;
+    private ArrayList<Kortti> pakka;
 
     public Pakka()
     {
-        pakka = new Vector<Kortti>(Extern.KORTTEJA_PAKASSA);
+        pakka = new ArrayList<Kortti>(Extern.KORTTEJA_PAKASSA);
     }
 
     public void lisaaKortti(Kortti k)
@@ -27,7 +26,7 @@ public class Pakka
         if (pakka == null)
             return null; // TODO näytä mahdollisesti ruudulla, että pakkaa ei ole alustettu
 
-        if (Arrays.asList(pakka).contains(k)) {
+        if (pakka.contains(k)) {
             poistettava = k;
             pakka.remove(k);
             return poistettava;
