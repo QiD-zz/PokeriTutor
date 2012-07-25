@@ -32,8 +32,6 @@ public class MainMenu extends JFrame
     private JPanel paaPaneeli;
     private JPanel ohjePaneeli;
     private JPanel wrapper;
-    private JButton raahauspeliNappi;
-    private JButton testikorttibutton;
     private RaahausPeliPaneeli raahausPeli;
     private Kortti[] poytakortit = new Kortti[Extern.KORTTEJA_POYDALLA];
     private Tapahtumakuuntelija tkuuntelija;
@@ -49,7 +47,7 @@ public class MainMenu extends JFrame
         alustaElementit();
     }
 
-    protected void piirraKortit()
+    public void piirraKortit()
     {
         Point sijainti = paaPaneeli.getLocation();
 
@@ -61,8 +59,10 @@ public class MainMenu extends JFrame
             paaPaneeli.add(poytakortit[i]);
         }
         for (Kortti k : poytakortit) {
-            k.paint(this.getGraphics());
+            k.paint(super.getGraphics());
         }
+        JButton btn = new JButton("HEIPPA");
+        paaPaneeli.add(btn);
     }
 
     private void alustaMenu()
@@ -93,14 +93,10 @@ public class MainMenu extends JFrame
         super.setLayout(new GridLayout(2, 1, 0, 0));
         paaPaneeli = new JPanel();
         ohjePaneeli = new JPanel();
-        raahauspeliNappi = new JButton("Raahauspeli");
-        testikorttibutton = new JButton("testikorttibutton");
         raahausPeli = new RaahausPeliPaneeli();
 
         alustaMenu();
         // Kuuntelijat
-        testikorttibutton.addMouseListener(tkuuntelija);
-        raahauspeliNappi.addMouseListener(tkuuntelija);
 
         // Varsinaiset asettelut
         paaPaneeli.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA,
@@ -147,13 +143,7 @@ public class MainMenu extends JFrame
         @Override
         public void mousePressed(MouseEvent me)
         {
-            if (me.getSource() == testikorttibutton) {
-                System.out.println("yritetään..");
-                repaint();
-            } else if (me.getSource() == raahauspeliNappi) {
-                System.out.println("raahauspeliNapin toiminnallisuus uupuu, korjaa se hyvä rouva.");
-                //paaPaneeli.add(raahausPeli);
-            }
+            System.out.println(String.format("MouseEvent: %s", me.getSource()));
         }
 
         @Override
