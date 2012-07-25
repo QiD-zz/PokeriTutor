@@ -1,11 +1,13 @@
 package pokeri;
 
+import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Collections;
 
 
 public class Pakka
 {
-    private ArrayList<Kortti> pakka;
+    private ArrayList<Kortti> pakka = new ArrayList<Kortti>(0);
 
     public Pakka()
     {
@@ -14,17 +16,17 @@ public class Pakka
 
     public void lisaaKortti(Kortti k)
     {
-        if (pakka == null)
+        if (pakka.isEmpty())
             return; // TODO näytä mahdollisesti ruudulla, että pakkaa ei ole alustettu
         pakka.add(k);
     }
     
     public Kortti poistaKortti(Kortti k)
     {
-        Kortti poistettava = null;
+        Kortti poistettava = new Kortti("", 0, new Point());
 
-        if (pakka == null)
-            return null; // TODO näytä mahdollisesti ruudulla, että pakkaa ei ole alustettu
+        if (pakka.isEmpty())
+            return poistettava; // XXX Jos kortti.arvo == 0 -> pakka == null
 
         if (pakka.contains(k)) {
             poistettava = k;
@@ -37,6 +39,7 @@ public class Pakka
 
     public void sekoitaPakka()
     {
+        Collections.shuffle(pakka);
     }
 
 }
