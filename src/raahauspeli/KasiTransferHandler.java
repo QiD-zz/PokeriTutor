@@ -1,4 +1,4 @@
-package pokeri;
+package raahauspeli;
 
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
