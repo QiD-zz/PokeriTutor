@@ -1,4 +1,5 @@
 # NetBeans specific #
+nbproject
 nbproject/build-impl.xml
 nbproject/genfiles.properties
 nbproject/private/
