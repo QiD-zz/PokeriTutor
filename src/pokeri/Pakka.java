@@ -7,11 +7,19 @@ import java.util.Collections;
 
 public class Pakka
 {
+    private static Pakka instance = null;
     private ArrayList<Kortti> pakka = new ArrayList<Kortti>(0);
 
-    public Pakka()
+    private Pakka() // Singleton, vain yksi pakka on mahdollinen
     {
         pakka = new ArrayList<Kortti>(Extern.KORTTEJA_PAKASSA);
+    }
+
+    public static Pakka getPakka() // Käytä tätä konstruktorin sijaan
+    {
+        if (instance == null)
+            instance = new Pakka();
+        return instance;
     }
 
     public void lisaaKortti(Kortti k)
