@@ -32,8 +32,8 @@ public class MainMenu extends JFrame
     private JMenuBar menubar;
     private JPanel paaPaneeli;
     private JPanel ohjePaneeli;
+    private JPanel wrapper;
     private RaahausPeliPaneeli raahausPeli;
-    private Kortti[] poytakortit = new Kortti[Extern.KORTTEJA_POYDALLA];
     private Tapahtumakuuntelija tkuuntelija;
     private final String leiska[] = { BorderLayout.EAST, BorderLayout.WEST,
                                       BorderLayout.SOUTH, BorderLayout.NORTH,
@@ -45,22 +45,6 @@ public class MainMenu extends JFrame
         tkuuntelija = new Tapahtumakuuntelija();
 
         alustaElementit();
-    }
-
-    public void piirraKortit()
-    {
-        Point sijainti = paaPaneeli.getLocation();
-
-        sijainti.setLocation(100, 100);
-        for (int i = 0; i < Extern.KORTTEJA_POYDALLA; i++) {
-            poytakortit[i] = new Kortti(Extern.MAAT[i % 4], i + 1, sijainti);
-            long vanhasijainti = sijainti.x + 120;
-            sijainti.setLocation(vanhasijainti, 100);
-            this.add(poytakortit[i]);
-        }
-        for (Kortti k : poytakortit) {
-            k.paint(super.getGraphics());
-        }
     }
 
     private void alustaMenu()
@@ -88,30 +72,24 @@ public class MainMenu extends JFrame
 
     private void alustaElementit()
     {
-        super.setLayout(new GridLayout(2, 1, 0, 0));
         paaPaneeli = new JPanel();
         ohjePaneeli = new JPanel();
+        wrapper = new JPanel();
         raahausPeli = new RaahausPeliPaneeli();
 
+        this.setLayout(new BorderLayout(2, 0));
         alustaMenu();
-        // Kuuntelijat
-
         // Varsinaiset asettelut
         paaPaneeli.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA,
                                     Extern.KORKEUS_IKKUNA / 3));
         paaPaneeli.setBackground(Color.lightGray);
         ohjePaneeli.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA,
-                                     Extern.KORKEUS_IKKUNA / 4));
+                                     Extern.KORKEUS_IKKUNA / 7));
         ohjePaneeli.setBackground(Color.white);
 
-     /*   super.add(paaPaneeli);
-        super.add(ohjePaneeli);
-
-        super.setJMenuBar(menubar);
-        super.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        super.pack();*/
-        this.add(paaPaneeli);
-        this.add(ohjePaneeli);
+        this.add(paaPaneeli, BorderLayout.CENTER);
+        ohjePaneeli.add(new JTextArea("OHJE"));
+        this.add(ohjePaneeli, BorderLayout.SOUTH);
 
         this.setJMenuBar(menubar);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -124,21 +102,17 @@ public class MainMenu extends JFrame
         @Override
         public void actionPerformed(ActionEvent ae)
         {
-            if (ae.getActionCommand().equals("Raahauspeli")) 
-            {
-                 System.out.println("Raahauspeli..");
+            if (ae.getActionCommand().equals("Raahauspeli"))  {
+                System.out.println("Raahauspeli..");
                 paaPaneeli.add(new RaahausPeliPaneeli());
                 paaPaneeli.validate();
-            }
-               
-            else if (ae.getActionCommand().equals("Korttitesti")) 
-            {
+            } else if (ae.getActionCommand().equals("Korttitesti"))  {
                 System.out.println("Korttitesti..");
-                piirraKortit();
+                paaPaneeli.add(new KorttiPaneeli(paaPaneeli));
+                paaPaneeli.validate();
             } else if (ae.getActionCommand().equals("Lopeta")) {
                 dispose();
             }
-                
         }
 
         @Override
