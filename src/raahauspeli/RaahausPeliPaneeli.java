@@ -10,8 +10,10 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Random;
 import javax.swing.*;
 
 /**
@@ -23,14 +25,14 @@ public class RaahausPeliPaneeli extends JPanel implements ActionListener
     private JPanel vasen;
     private JPanel oikea;
     private JButton uusiPeli;
-    private JLabel tulos;
+    private static JLabel tulos;
     private Timer kello;
-    private Date startTime;
-    private Date endTime;
+    private static Date startTime;
+    private static Date endTime;
     
-    private DefaultListModel listamalli;
+    private static DefaultListModel listamalli;
     private JEditorPane selitys;
-    private JList lista;
+    private static JList lista;
     
     public RaahausPeliPaneeli()
     {
@@ -43,7 +45,7 @@ public class RaahausPeliPaneeli extends JPanel implements ActionListener
         uusiPeli.addActionListener(this);
         tulos = new JLabel();
         tulos.setBorder(BorderFactory.createTitledBorder("Tulos"));
-        tulos.setPreferredSize(new Dimension(70, 50));
+        tulos.setPreferredSize(new Dimension(150, 50));
         kello = new Timer(1000, this);       
         
         oikea.add(uusiPeli);
@@ -51,6 +53,7 @@ public class RaahausPeliPaneeli extends JPanel implements ActionListener
         
         listamalli = new DefaultListModel();
         lista = new JList(listamalli);
+        lista.setEnabled(false);
         PokeriHanska hanska = new PokeriHanska(PokeriHanska.Arvo.VARI);
         PokeriHanska hanska2 = new PokeriHanska(PokeriHanska.Arvo.SUORA);
         PokeriHanska hanska3 = new PokeriHanska(PokeriHanska.Arvo.VARISUORA);
@@ -85,8 +88,14 @@ public class RaahausPeliPaneeli extends JPanel implements ActionListener
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(uusiPeli)) {
+            listamalli.removeAllElements();
+            for (int i = 0; i < 4; i++) {
+                Random rnd = new Random();
+                listamalli.addElement(new PokeriHanska(rnd.nextInt(8)));
+            }
+            lista.setEnabled(true);
             startTime = Calendar.getInstance().getTime();
-            kello.start();
+          //  kello.start();
         }
         if (e.getSource().equals(kello)) {
             endTime = Calendar.getInstance().getTime();
@@ -99,4 +108,42 @@ public class RaahausPeliPaneeli extends JPanel implements ActionListener
         }
     }
     
+    public static Object[] haeHanskat() {
+        
+        Object[] list = listamalli.toArray();
+        
+        return list;
+    }
+    
+    public static boolean testaaVoitto() 
+    {
+        boolean voitto = true;
+        PokeriHanska hanskat[] = new PokeriHanska[4];
+       int vertailu[] = new int[3];
+        for (int i = 0; i < hanskat.length; i++) {
+            hanskat[i] = (PokeriHanska) listamalli.get(i);
+            
+        }
+        for (int i = 0; i < hanskat.length-1; i++) {
+            vertailu[i] = hanskat[i].arvo.compareTo(hanskat[i+1].arvo);
+            
+            if (vertailu[i] > 0) {
+                voitto = false;
+            }
+        }
+        
+        if (voitto)
+        {
+           endTime = Calendar.getInstance().getTime();          
+           long delay = endTime.getTime()-startTime.getTime();
+           String tulosteksti = String.valueOf((double)delay/1000)+" sekuntia";
+           tulos.setText(String.valueOf(tulosteksti));
+           lista.setEnabled(false);
+           return true;  
+        } else
+        {
+            return false;
+        }
+       
+    }
 }

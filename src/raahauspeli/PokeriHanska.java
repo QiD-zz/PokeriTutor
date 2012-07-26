@@ -35,6 +35,12 @@ public class PokeriHanska {
         kasi = kadet[arvo.ordinal()];
     }
     
+    public PokeriHanska(int luku) {
+        Arvo[] arvot = Arvo.values();
+        arvo = arvot[luku];
+        kasi = kadet[luku];
+    }
+    
     public String getHanskaName() {
         return kasi;
     }
