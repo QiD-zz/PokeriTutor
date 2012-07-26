@@ -91,7 +91,7 @@ public class RaahausPeliPaneeli extends JPanel implements ActionListener
             listamalli.removeAllElements();
             for (int i = 0; i < 4; i++) {
                 Random rnd = new Random();
-                listamalli.addElement(new PokeriHanska(rnd.nextInt(8)));
+                listamalli.addElement(new PokeriHanska(rnd.nextInt(9)));
             }
             lista.setEnabled(true);
             startTime = Calendar.getInstance().getTime();

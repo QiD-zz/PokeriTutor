@@ -17,10 +17,14 @@ public class PokeriHanska {
     public static String HAI = "high card";
     
     public Arvo arvo;
+    public String kasi;
     
     public static enum Arvo {
         VARISUORA, NELOSET, TAYSKASI, VARI, SUORA, KOLMOSET, KAKSIPARIA, PARI, HAI
     }
+    
+    public static String kadet[] = {"Värisuora","Neloset","Täyskäsi","Väri","Suora"
+    ,"Kolmoset","Kaksi paria","Pari","Hai"};
     
     public PokeriHanska(Arvo arvo_) {
         arvo = arvo_;
