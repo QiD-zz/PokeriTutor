@@ -3,8 +3,6 @@ package raahauspeli;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.*;
 
 /**
@@ -25,15 +23,10 @@ public class KasiTransferHandler extends TransferHandler
          */
         public boolean canImport(TransferHandler.TransferSupport info) {
             info.setShowDropLocation(false); // no visual feedback
-        try {
             // Check for String flavor
-            if (!info.isDataFlavorSupported(new DataFlavor(DataFlavor.javaJVMLocalObjectMimeType
-                    +";class=raahauspeli.PokeriHanska"))) {
+            if (!info.isDataFlavorSupported(DataFlavor.stringFlavor)) {
                 return false;
             }
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(KasiTransferHandler.class.getName()).log(Level.SEVERE, null, ex);
-        }
             return true;
            }
 
@@ -44,17 +37,24 @@ public class KasiTransferHandler extends TransferHandler
             // this handler is bound on a JList
             JList list = (JList)c;
             index = list.getSelectedIndex();
-            PokeriHanska hanska = (PokeriHanska)list.getSelectedValue();
-            return new PokeriHanskaTransferable(hanska);
-        
+            String txt = (String)list.getSelectedValue();
+                       
+            return new StringSelection(txt);
         }
 
+
+         /**
+         * We support copy and move actions.
+         */
         public int getSourceActions(JComponent c) {
        
             return TransferHandler.MOVE;
 
         }
 
+        /**
+         * Perform the actual import.  
+         */
         public boolean importData(TransferHandler.TransferSupport info) {
             if (!info.isDrop()) {
                 return false;
@@ -65,10 +65,10 @@ public class KasiTransferHandler extends TransferHandler
 
             // Get the string that is being dropped.
             Transferable t = info.getTransferable();
-            PokeriHanska data;
+            String data;
             // get data
             try {
-                data = (PokeriHanska)t.getTransferData(new DataFlavor(DataFlavor.javaJVMLocalObjectMimeType));
+                data = (String)t.getTransferData(DataFlavor.stringFlavor);
             }
             catch (Exception e) { return false; }
 
@@ -91,6 +91,14 @@ public class KasiTransferHandler extends TransferHandler
                 alkuunPain = true;
             }
             
+            /*
+             * Tämä on vaihtoehtoinen tapa ylemmästä asiasta. 
+            for (int i = 0; i<listModel.getSize(); i++) {
+                if (( i*list.getCellBounds(0, 0).getHeight()) < tiputusPaikka.getDropPoint().getY() && 
+                   tiputusPaikka.getDropPoint().getY() < ( (i+1)*list.getCellBounds(0, 0).getHeight())) {
+                    osumaIndeksi = i;
+                }
+            }*/
             
             //Tarkistetaan vielä onko tiputuspaikka listan indeksien ulkopuolella, jolloin tiputetaan
             //uusi elementti listan viimeiseksi. Muussa tapauksessa elementti lisätään indeksin määrittämään kohtaan.
@@ -113,6 +121,9 @@ public class KasiTransferHandler extends TransferHandler
             return true;
         }
 
+        /**
+         * Remove the items moved from the list.
+         */
         protected void exportDone(JComponent c, Transferable data, int action) {
             // drop successful
             JList source = (JList)c;

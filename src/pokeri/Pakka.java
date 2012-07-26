@@ -1,33 +1,42 @@
 package pokeri;
 
-import java.util.Arrays;
-import java.util.Vector;
+import java.awt.Point;
+import java.util.ArrayList;
+import java.util.Collections;
 
 
 public class Pakka
 {
-    private Vector<Kortti> pakka;
+    private static Pakka instance = null;
+    private ArrayList<Kortti> pakka = new ArrayList<Kortti>(0);
 
-    public Pakka()
+    private Pakka() // Singleton, vain yksi pakka on mahdollinen
     {
-        pakka = new Vector<Kortti>(Extern.KORTTEJA_PAKASSA);
+        pakka = new ArrayList<Kortti>(Extern.KORTTEJA_PAKASSA);
+    }
+
+    public static Pakka getPakka() // Käytä tätä konstruktorin sijaan
+    {
+        if (instance == null)
+            instance = new Pakka();
+        return instance;
     }
 
     public void lisaaKortti(Kortti k)
     {
-        if (pakka == null)
+        if (pakka.isEmpty())
             return; // TODO näytä mahdollisesti ruudulla, että pakkaa ei ole alustettu
         pakka.add(k);
     }
     
     public Kortti poistaKortti(Kortti k)
     {
-        Kortti poistettava = null;
+        Kortti poistettava = new Kortti("", 0, new Point());
 
-        if (pakka == null)
-            return null; // TODO näytä mahdollisesti ruudulla, että pakkaa ei ole alustettu
+        if (pakka.isEmpty())
+            return poistettava; // XXX Jos kortti.arvo == 0 -> pakka == null
 
-        if (Arrays.asList(pakka).contains(k)) {
+        if (pakka.contains(k)) {
             poistettava = k;
             pakka.remove(k);
             return poistettava;
@@ -38,6 +47,7 @@ public class Pakka
 
     public void sekoitaPakka()
     {
+        Collections.shuffle(pakka);
     }
 
 }
