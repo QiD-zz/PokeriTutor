@@ -32,7 +32,6 @@ public class MainMenu extends JFrame
     private JMenuBar menubar;
     private JPanel paaPaneeli;
     private JPanel ohjePaneeli;
-    private JPanel wrapper;
     private RaahausPeliPaneeli raahausPeli;
     private Kortti[] poytakortit = new Kortti[Extern.KORTTEJA_POYDALLA];
     private Tapahtumakuuntelija tkuuntelija;
@@ -57,13 +56,11 @@ public class MainMenu extends JFrame
             poytakortit[i] = new Kortti(Extern.MAAT[i % 4], i + 1, sijainti);
             long vanhasijainti = sijainti.x + 120;
             sijainti.setLocation(vanhasijainti, 100);
-            paaPaneeli.add(poytakortit[i]);
+            this.add(poytakortit[i]);
         }
         for (Kortti k : poytakortit) {
             k.paint(super.getGraphics());
         }
-        JButton btn = new JButton("HEIPPA");
-        paaPaneeli.add(btn);
     }
 
     private void alustaMenu()
