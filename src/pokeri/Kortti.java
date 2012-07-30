@@ -16,6 +16,7 @@ public class Kortti extends JComponent
     private int arvo;
     private double x;
     private double y;
+    private boolean valittu;
     private BufferedImage kuva;
     private Point sijainti;
     public final double LEVEYS = 100;
@@ -31,6 +32,7 @@ public class Kortti extends JComponent
         sijainti = (p != null) ? p : new Point();
         x = sijainti.getX();
         y = sijainti.getY();
+        valittu = false;
 
         try {
             asetaKuva();
@@ -84,6 +86,16 @@ public class Kortti extends JComponent
         sijainti = (p != null) ? p : new Point(5, 5);
     }
 
+    public boolean getValinta()
+    {
+        return valittu;
+    }
+
+    public void toggleValinta()
+    {
+        valittu = (valittu == false) ? true : false;
+    }
+
     /**
      *  Jos @param <b>k<b> on yhtäsuuri arvoltaan kuin verrattava, palauta 0
      *  Jos @param <b>k<b> on pienempi, palauta -1, muutoin 1.
@@ -107,7 +119,10 @@ public class Kortti extends JComponent
         img_w = kuva.getWidth() + 5;
         img_h = kuva.getHeight() + 5;
 
-        g2.setPaint(Color.white);
+        if (valittu)
+            g2.setPaint(Color.gray);
+        else
+            g2.setPaint(Color.white);
         g2.fill(new RoundRectangle2D.Double(x, y, LEVEYS, KORKEUS, ARCW, ARCH));
         g2.setPaint(Color.black);
         g2.setStroke(new BasicStroke(1.0f));
