@@ -13,6 +13,7 @@ import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.*;
+import opetus.OpiTuntemaanHanskat;
 
 
 /*
@@ -61,6 +62,10 @@ public class MainMenu extends JFrame
         mitem = new JMenuItem("Korttitesti");
         mitem.addActionListener(tkuuntelija);
         menu.add(mitem);
+        
+        mitem = new JMenuItem("Opetus");
+        mitem.addActionListener(tkuuntelija);
+        menu.add(mitem);
 
         mitem = new JMenuItem("Lopeta");
         mitem.addActionListener(tkuuntelija);
@@ -104,13 +109,21 @@ public class MainMenu extends JFrame
         {
             if (ae.getActionCommand().equals("Raahauspeli"))  {
                 System.out.println("Raahauspeli..");
+                paaPaneeli.removeAll();
                 paaPaneeli.add(new RaahausPeliPaneeli());
                 paaPaneeli.validate();
             } else if (ae.getActionCommand().equals("Korttitesti"))  {
                 System.out.println("Korttitesti..");
+                
                 paaPaneeli.add(new KorttiPaneeli(paaPaneeli));
                 paaPaneeli.validate();
-            } else if (ae.getActionCommand().equals("Lopeta")) {
+            } else if (ae.getActionCommand().equals("Opetus"))  {
+                paaPaneeli.removeAll();
+                paaPaneeli.repaint();
+                paaPaneeli.add(new OpiTuntemaanHanskat());
+                paaPaneeli.validate();
+            }
+                if (ae.getActionCommand().equals("Lopeta")) {
                 dispose();
             }
         }

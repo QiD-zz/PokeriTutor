@@ -7,5 +7,5 @@ public class Extern
     public final static int KORTTEJA_POYDALLA = 5;
     public final static int LEVEYS_IKKUNA = 800;
     public final static int KORKEUS_IKKUNA = 800;
-    protected final static String[] MAAT = { "ruutu", "hertta", "pata", "risti" };
+    public final static String[] MAAT = { "ruutu", "hertta", "pata", "risti" };
 }
