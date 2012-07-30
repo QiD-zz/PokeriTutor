@@ -20,14 +20,13 @@ public class OpiTuntemaanHanskat extends JPanel {
     
     public OpiTuntemaanHanskat() {
         
-        this.setPreferredSize(new Dimension(550, 200));
+        this.setPreferredSize(new Dimension(750, 200));
                 
         Kortti[] kortit = new Kortti[5];
         
         for (int i = 0; i < kortit.length; i++) {
-            int x =10+i*100;
             int y = 10;
-            Point piste = new Point(x, y);
+            Point piste = new Point(0, y);
             kortit[i] = new Kortti(Extern.MAAT[0], 4+i, piste);
             this.add(kortit[i]);
             kortit[i].paint(this.getGraphics());

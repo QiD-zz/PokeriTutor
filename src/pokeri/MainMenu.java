@@ -114,7 +114,7 @@ public class MainMenu extends JFrame
                 paaPaneeli.validate();
             } else if (ae.getActionCommand().equals("Korttitesti"))  {
                 System.out.println("Korttitesti..");
-                
+                paaPaneeli.removeAll();
                 paaPaneeli.add(new KorttiPaneeli(paaPaneeli));
                 paaPaneeli.validate();
             } else if (ae.getActionCommand().equals("Opetus"))  {
