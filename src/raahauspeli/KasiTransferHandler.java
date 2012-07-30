@@ -3,6 +3,8 @@ package raahauspeli;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 
 /**
@@ -23,10 +25,16 @@ public class KasiTransferHandler extends TransferHandler
          */
         public boolean canImport(TransferHandler.TransferSupport info) {
             info.setShowDropLocation(false); // no visual feedback
+        try {
             // Check for String flavor
-            if (!info.isDataFlavorSupported(DataFlavor.stringFlavor)) {
+            if (!info.isDataFlavorSupported(new DataFlavor(DataFlavor.javaJVMLocalObjectMimeType +
+               ";class=raahauspeli.PokeriHanska")))
+                 {
                 return false;
             }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(KasiTransferHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
             return true;
            }
 
@@ -37,9 +45,9 @@ public class KasiTransferHandler extends TransferHandler
             // this handler is bound on a JList
             JList list = (JList)c;
             index = list.getSelectedIndex();
-            String txt = (String)list.getSelectedValue();
+            PokeriHanska hanska = (PokeriHanska)list.getSelectedValue();
                        
-            return new StringSelection(txt);
+            return new PokeriHanskaTransferable(hanska);
         }
 
 
@@ -65,10 +73,12 @@ public class KasiTransferHandler extends TransferHandler
 
             // Get the string that is being dropped.
             Transferable t = info.getTransferable();
-            String data;
+            PokeriHanska data;
             // get data
             try {
-                data = (String)t.getTransferData(DataFlavor.stringFlavor);
+                data = (PokeriHanska)t.getTransferData(
+                        new DataFlavor(DataFlavor.javaJVMLocalObjectMimeType)
+                        );
             }
             catch (Exception e) { return false; }
 
