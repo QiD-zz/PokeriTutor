@@ -23,4 +23,12 @@ public class KorttiPaneeli extends JPanel
         this.setPreferredSize(panel.getPreferredSize());
         this.setVisible(true);
     }
+
+    public void merkkaaValituksi(Kortti k)
+    {
+        if (k.getValinta() == false) {
+            k.toggleValinta();
+            k.repaint();
+        }
+    }
 }
