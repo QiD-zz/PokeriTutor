@@ -1,14 +1,6 @@
 package pokeri;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.GraphicsConfiguration;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
-import java.awt.Point;
-import java.awt.Transparency;
+import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -33,6 +25,7 @@ public class Kortti extends JComponent
 
     public Kortti(String s, int a, Point p)
     {
+        this.setPreferredSize(new Dimension(120, 200));
         maa = (s != null && Arrays.asList(Extern.MAAT).contains(s)) ? s : "";
         arvo = (a > 0) ? a : 0;
         sijainti = (p != null) ? p : new Point();

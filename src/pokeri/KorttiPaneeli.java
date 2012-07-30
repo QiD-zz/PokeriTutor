@@ -16,7 +16,7 @@ public class KorttiPaneeli extends JPanel
         sijainti.setLocation(50, 50); // XXX kun toimii, poista tämä
         for (int i = 0; i < Extern.KORTTEJA_POYDALLA; i++) {
             poytakortit[i] = new Kortti(Extern.MAAT[i % 4], i + 1, sijainti);
-            sijainti.setLocation(sijainti.x + 120, 50);
+            sijainti.setLocation(sijainti.x, 50);
             this.add(poytakortit[i]);
         }
         this.add(kk);
