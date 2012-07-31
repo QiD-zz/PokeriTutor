@@ -19,6 +19,7 @@ public class PokeriHanska {
     public static String HAI = "high card";
     
     public Arvo arvo;
+    private Arvo[] arvot;
     public String kasi;
     private Kortti[] kortit;
     
@@ -35,13 +36,21 @@ public class PokeriHanska {
     }
     
     public PokeriHanska(int luku) {
-        Arvo[] arvot = Arvo.values();
+         arvot = Arvo.values();
         arvo = arvot[luku];
         kasi = kadet[luku];
     }
     
     public String getHanskaName() {
         return kasi;
+    }
+    
+    public PokeriHanska getNextHanska(PokeriHanska hanska) {
+        if (hanska.arvo.equals(PokeriHanska.Arvo.VARISUORA)){
+            return null;
+        } else {
+            return new PokeriHanska(hanska.arvo.ordinal()+1);
+        }
     }
     
     @Override
