@@ -132,33 +132,34 @@ public class Kortti extends JComponent
         kuva2 = rotate(kuva, Math.toRadians(180));
         g.drawImage(kuva2, (int) x + (int) LEVEYS - img_w, (int) y + (int) KORKEUS - img_h, null);
         g.setFont(new Font(Font.SERIF, Font.PLAIN, 40));
+        if (maa.equals("hertta") || maa.equals("ruutu"))
+            g2.setPaint(Color.red);
        
         String luku = Integer.toString(arvo);       
         FontMetrics fmt = g.getFontMetrics();
         int leveys = fmt.stringWidth(luku)/2;
         
-        if (this.arvo<10) {
-            
+        if (arvo < 10) {
              g.drawString(Integer.toString(arvo), (int)x + (int)(LEVEYS / 2) - leveys,
-                                             (int)y + (int)(KORKEUS / 2+10));
-        } else if (this.arvo == 10) {
+                                             (int)y + (int)(KORKEUS / 2 + 10));
+        } else if (arvo == 10) {
              g.drawString("10", (int)x + (int)(LEVEYS / 2) - leveys,
-                                             (int)y + (int)(KORKEUS / 2+10));
-        } else if (this.arvo == 11) {
+                                             (int)y + (int)(KORKEUS / 2 + 10));
+        } else if (arvo == 11) {
              g.drawString("J", (int)x + (int)(LEVEYS / 2) - 10,
-                                             (int)y + (int)(KORKEUS / 2+10));
-        } else if (this.arvo == 12) {
+                                             (int)y + (int)(KORKEUS / 2 + 10));
+        } else if (arvo == 12) {
              g.drawString("Q", (int)x + (int)(LEVEYS / 2) - leveys,
-                                             (int)y + (int)(KORKEUS / 2+10));
-        } else if (this.arvo == 13) {
+                                             (int)y + (int)(KORKEUS / 2 + 10));
+        } else if (arvo == 13) {
              g.drawString("K", (int)x + (int)(LEVEYS / 2) - 10,
-                                             (int)y + (int)(KORKEUS / 2+10));
-        } else if (this.arvo == 14) {
+                                             (int)y + (int)(KORKEUS / 2 + 10));
+        } else if (arvo == 14) {
              g.drawString("A", (int)x + (int)(LEVEYS / 2) - leveys,
-                                             (int)y + (int)(KORKEUS / 2+10));
+                                             (int)y + (int)(KORKEUS / 2 + 10));
         } else {
              g.drawString(Integer.toString(arvo), (int)x + (int)(LEVEYS / 2) - leveys,
-                                             (int)y + (int)(KORKEUS / 2+10));
+                                             (int)y + (int)(KORKEUS / 2 + 10));
         }
        
     }
