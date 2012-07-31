@@ -17,10 +17,19 @@ public class KorttiPaneeli extends JPanel
     private KorttipaneelinKuuntelija kuuntelija;
     private Kortti[] poytakortit = new Kortti[Extern.KORTTEJA_POYDALLA];
 
-    public KorttiPaneeli(JPanel panel)
+    public void alustaKortit()
     {
-        Point sijainti = panel.getLocation();
+       Point sijainti = getLocation();
+       sijainti.setLocation(0, 25); // XXX kun toimii, poista tämä
+       for (int i = 0; i < Extern.KORTTEJA_POYDALLA; i++) {
+            poytakortit[i] = new Kortti(Extern.MAAT[i % 4], i + 1, sijainti);
+            sijainti.setLocation(0, 25);
+            kortitPane.add(poytakortit[i]);
+       }
+    }
 
+    public KorttiPaneeli()
+    {
         kortitPane = new JPanel();
         toiminnotPane = new JPanel();
 
@@ -29,12 +38,7 @@ public class KorttiPaneeli extends JPanel
         kortitPane.setLayout(new FlowLayout(FlowLayout.CENTER));
         toiminnotPane.setLayout(new FlowLayout(FlowLayout.CENTER));
 
-        sijainti.setLocation(0, 25); // XXX kun toimii, poista tämä
-        for (int i = 0; i < Extern.KORTTEJA_POYDALLA; i++) {
-            poytakortit[i] = new Kortti(Extern.MAAT[i % 4], i + 1, sijainti);
-            sijainti.setLocation(0, 25);
-            kortitPane.add(poytakortit[i]);
-        }
+        alustaKortit();
 
         // Toiminnot
         uusipeli = new JButton("Uusi peli");
@@ -44,8 +48,9 @@ public class KorttiPaneeli extends JPanel
 
         add(kortitPane);
         add(toiminnotPane);
+        kortitPane.setSize(getMaximumSize());
+        toiminnotPane.setSize(getMaximumSize());
 
-        setPreferredSize(panel.getPreferredSize());
         setVisible(true);
     }
 
@@ -62,8 +67,11 @@ public class KorttiPaneeli extends JPanel
         @Override
         public void actionPerformed(ActionEvent ae)
         {
-            // TODO: Nollaa pakka, nollaa tilastot, nolla elämä
-            System.out.println(String.format("Toteuta minut"));
+            if (ae.getActionCommand().equals("Uusi peli")) {
+                // TODO: Nollaa pakka, nollaa tilastot, nolla elämä
+                System.out.println(String.format("Toteuta minut"));
+                alustaKortit();
+            }
         }
     }
 
