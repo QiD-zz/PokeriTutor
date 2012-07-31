@@ -96,9 +96,16 @@ public class Kortti extends JComponent
         valittu = (valittu == false) ? true : false;
     }
 
+    @Override
+    public String toString()
+    {
+        return String.format("%6s %2d, valittu [%c], (X: %4d, Y: %4d)", maa,
+                arvo, (valittu) ? 'X' : ' ', (int)x, (int)y);
+    }
+
     /**
-     *  Jos @param <b>k<b> on yhtäsuuri arvoltaan kuin verrattava, palauta 0
-     *  Jos @param <b>k<b> on pienempi, palauta -1, muutoin 1.
+     *  Jos @param <b>k</b> on yhtäsuuri arvoltaan kuin verrattava, palauta 0
+     *  Jos @param <b>k</b> on pienempi, palauta -1, muutoin 1.
      */
     public int compareTo(Kortti k)
     {
@@ -161,28 +168,9 @@ public class Kortti extends JComponent
              g.drawString(Integer.toString(arvo), (int)x + (int)(LEVEYS / 2) - leveys,
                                              (int)y + (int)(KORKEUS / 2 + 10));
         }
-       
     }
 
-    public boolean isInArea(Point p)
-    { // XXX Vaatinee vielä tarkastusta, pää piiputta rumasti tässä vaiheessa jo
-        boolean isIn = true;
-        double dx = LEVEYS / 2;
-        double dy = KORKEUS / 2;
-        double xl = sijainti.getX() - dx;
-        double xr = sijainti.getX() + dx;
-        double yt = sijainti.getY() - dy;
-        double yb = sijainti.getY() + dy;
-
-        if (p.getX() < xl || p.getX() > xr)
-            isIn = false;
-        if (p.getY() < yt || p.getY() > yb)
-            isIn = false;
-
-        return isIn;
-    }
-
-    public BufferedImage rotate(BufferedImage image, double angle)
+    private BufferedImage rotate(BufferedImage image, double angle)
     {
         int h = 0;
         int w = 0;
