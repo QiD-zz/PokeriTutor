@@ -51,7 +51,7 @@ public class KorttiPaneeli extends JPanel
 
         sijainti.setLocation(0, 25); // XXX kun toimii, poista tämä
         for (int i = 0; i < Extern.KORTTEJA_POYDALLA; i++) {
-            int randArvo = rand.nextInt(14);
+            int randArvo = rand.nextInt(15) + 1 % 15;
             int randMaa = rand.nextInt(4);
             poytakortit[i] = new Kortti(Extern.MAAT[randMaa], randArvo, sijainti);
             sijainti.setLocation(0, 25);

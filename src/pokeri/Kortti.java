@@ -94,6 +94,7 @@ public class Kortti extends JComponent
     public void toggleValinta()
     {
         valittu = (valittu == false) ? true : false;
+        repaint();
     }
 
     @Override
@@ -119,17 +120,17 @@ public class Kortti extends JComponent
     {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-        int img_w = 0;
-        int img_h = 0;
+        int imgw = 0;
+        int imgh = 0;
+        int fontinLeveys = 0;
+        String luku = "";
         BufferedImage kuva2;
+        FontMetrics fmt;
 
-        img_w = kuva.getWidth() + 5;
-        img_h = kuva.getHeight() + 5;
+        imgw = kuva.getWidth() + 5;
+        imgh = kuva.getHeight() + 5;
 
-        if (valittu)
-            g2.setPaint(Color.gray);
-        else
-            g2.setPaint(Color.white);
+        g2.setPaint(Color.white);
         g2.fill(new RoundRectangle2D.Double(x, y, LEVEYS, KORKEUS, ARCW, ARCH));
         g2.setPaint(Color.black);
         g2.setStroke(new BasicStroke(1.0f));
@@ -137,36 +138,48 @@ public class Kortti extends JComponent
 
         g.drawImage(kuva, (int) x + 5, (int) y + 5, null);
         kuva2 = rotate(kuva, Math.toRadians(180));
-        g.drawImage(kuva2, (int) x + (int) LEVEYS - img_w, (int) y + (int) KORKEUS - img_h, null);
+        g.drawImage(kuva2, (int) x + (int) LEVEYS - imgw, (int) y +
+                    (int) KORKEUS - imgh, null);
         g.setFont(new Font(Font.SERIF, Font.PLAIN, 40));
+
         if (maa.equals("hertta") || maa.equals("ruutu"))
             g2.setPaint(Color.red);
-       
-        String luku = Integer.toString(arvo);       
-        FontMetrics fmt = g.getFontMetrics();
-        int leveys = fmt.stringWidth(luku)/2;
+
+        luku = Integer.toString(arvo);
+        fmt = g2.getFontMetrics();
+        fontinLeveys = fmt.stringWidth(luku) / 2;
         
         if (arvo < 10) {
-             g.drawString(Integer.toString(arvo), (int)x + (int)(LEVEYS / 2) - leveys,
-                                             (int)y + (int)(KORKEUS / 2 + 10));
+             g2.drawString(Integer.toString(arvo), (int)x + (int)(LEVEYS / 2) -
+                     fontinLeveys, (int)y + (int)(KORKEUS / 2 + 10));
         } else if (arvo == 10) {
-             g.drawString("10", (int)x + (int)(LEVEYS / 2) - leveys,
+             g2.drawString("10", (int)x + (int)(LEVEYS / 2) - fontinLeveys,
                                              (int)y + (int)(KORKEUS / 2 + 10));
         } else if (arvo == 11) {
-             g.drawString("J", (int)x + (int)(LEVEYS / 2) - 10,
+             g2.drawString("J", (int)x + (int)(LEVEYS / 2) - 10,
                                              (int)y + (int)(KORKEUS / 2 + 10));
         } else if (arvo == 12) {
-             g.drawString("Q", (int)x + (int)(LEVEYS / 2) - leveys,
+             g2.drawString("Q", (int)x + (int)(LEVEYS / 2) - fontinLeveys,
                                              (int)y + (int)(KORKEUS / 2 + 10));
         } else if (arvo == 13) {
-             g.drawString("K", (int)x + (int)(LEVEYS / 2) - 10,
+             g2.drawString("K", (int)x + (int)(LEVEYS / 2) - 10,
                                              (int)y + (int)(KORKEUS / 2 + 10));
         } else if (arvo == 14) {
-             g.drawString("A", (int)x + (int)(LEVEYS / 2) - leveys,
+             g2.drawString("A", (int)x + (int)(LEVEYS / 2) - fontinLeveys,
                                              (int)y + (int)(KORKEUS / 2 + 10));
         } else {
-             g.drawString(Integer.toString(arvo), (int)x + (int)(LEVEYS / 2) - leveys,
-                                             (int)y + (int)(KORKEUS / 2 + 10));
+             g2.drawString(Integer.toString(arvo), (int)x + (int)(LEVEYS / 2) -
+                     fontinLeveys, (int)y + (int)(KORKEUS / 2 + 10));
+        }
+
+        if (valittu) { // Merkkaa kortti valituksi
+            g.setFont(new Font(Font.SERIF, Font.PLAIN, 20));
+            fmt = g2.getFontMetrics();
+            g2.setPaint(Color.getHSBColor(336, 334, 100));
+            g2.fill(new RoundRectangle2D.Double(x + 1, y * 5 - 10, LEVEYS - 1,
+                    KORKEUS / 5, 0, 0));
+            g2.setPaint(Color.getHSBColor(73, 100, 68));
+            g2.drawString("Valittu", (int)x + 15, (int)y + 110);
         }
     }
 
@@ -181,6 +194,7 @@ public class Kortti extends JComponent
         GraphicsEnvironment ge;
         GraphicsDevice dev;
         GraphicsConfiguration gc;
+        Graphics2D g;
         BufferedImage result;
 
         sin = Math.abs(Math.sin(angle));
@@ -194,7 +208,7 @@ public class Kortti extends JComponent
         gc = dev.getDefaultConfiguration();
         result = gc.createCompatibleImage(neww, newh, Transparency.TRANSLUCENT);
 
-        Graphics2D g = result.createGraphics();
+        g = result.createGraphics();
         g.translate((neww - w) / 2, (newh - h) / 2);
         g.rotate(angle, (double)w / 2, (double)h / 2);
         g.drawRenderedImage(image, null);

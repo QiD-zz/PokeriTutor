@@ -117,7 +117,6 @@ public class MainMenu extends JFrame
                 paaPaneeli.validate();
             } else if (ae.getActionCommand().equals("Opetus"))  {
                 paaPaneeli.removeAll();
-                paaPaneeli.repaint();
                 paaPaneeli.add(new OpiTuntemaanHanskat());
                 paaPaneeli.validate();
             } else if (ae.getActionCommand().equals("Lopeta")) {
@@ -140,7 +139,10 @@ public class MainMenu extends JFrame
             if (cmpntn instanceof Kortti) {
                 Kortti k = (Kortti) cmpntn;
 
-                System.out.println(String.format("Maa: %s", k.getMaa()));
+                System.out.println("Ennen: " + k);
+                k.toggleValinta();
+                System.out.println("Jälk : " + k);
+                System.out.println("--");
             }
         }
 

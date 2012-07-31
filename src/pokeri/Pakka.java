@@ -13,13 +13,25 @@ public class Pakka
     private Pakka() // Singleton, vain yksi pakka on mahdollinen
     {
         pakka = new ArrayList<Kortti>(Extern.KORTTEJA_PAKASSA);
+        for (int i = 0; i < Extern.KORTTEJA_PAKASSA; i++) {
+            Kortti k = new Kortti(Extern.MAAT[i % 4], i + 1, new Point(0, 0));
+            pakka.add(i, k);
+        }
     }
 
-    public static Pakka getPakka() // Käytä tätä konstruktorin sijaan
+    public static synchronized Pakka getPakka() // Käytä tätä konstruktorin sijaan
     {
         if (instance == null)
             instance = new Pakka();
         return instance;
+    }
+
+    public void uusiPakka() // Kun halutaan luoda uusi pakka ja tuhota vanha
+    {
+        if (pakka.size() > 0)
+            pakka.clear();
+        pakka = null;
+        instance = new Pakka();
     }
 
     public void lisaaKortti(Kortti k)
