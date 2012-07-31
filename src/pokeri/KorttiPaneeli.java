@@ -4,6 +4,7 @@ import java.awt.FlowLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Random;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -16,17 +17,6 @@ public class KorttiPaneeli extends JPanel
     private JPanel  toiminnotPane;
     private KorttipaneelinKuuntelija kuuntelija;
     private Kortti[] poytakortit = new Kortti[Extern.KORTTEJA_POYDALLA];
-
-    public void alustaKortit()
-    {
-       Point sijainti = getLocation();
-       sijainti.setLocation(0, 25); // XXX kun toimii, poista tämä
-       for (int i = 0; i < Extern.KORTTEJA_POYDALLA; i++) {
-            poytakortit[i] = new Kortti(Extern.MAAT[i % 4], i + 1, sijainti);
-            sijainti.setLocation(0, 25);
-            kortitPane.add(poytakortit[i]);
-       }
-    }
 
     public KorttiPaneeli()
     {
@@ -54,6 +44,22 @@ public class KorttiPaneeli extends JPanel
         setVisible(true);
     }
 
+    public void alustaKortit()
+    {
+        Random rand = new Random();
+        Point sijainti = new Point();
+
+        sijainti.setLocation(0, 25); // XXX kun toimii, poista tämä
+        for (int i = 0; i < Extern.KORTTEJA_POYDALLA; i++) {
+            int randArvo = rand.nextInt(14);
+            int randMaa = rand.nextInt(4);
+            poytakortit[i] = new Kortti(Extern.MAAT[randMaa], randArvo, sijainti);
+            sijainti.setLocation(0, 25);
+            kortitPane.add(poytakortit[i]);
+        }
+        revalidate();
+    }
+
     public void merkkaaValituksi(Kortti k)
     {
         if (k.getValinta() == false) {
@@ -69,7 +75,9 @@ public class KorttiPaneeli extends JPanel
         {
             if (ae.getActionCommand().equals("Uusi peli")) {
                 // TODO: Nollaa pakka, nollaa tilastot, nolla elämä
-                System.out.println(String.format("Toteuta minut"));
+                kortitPane.removeAll();
+                poytakortit = null;
+                poytakortit = new Kortti[Extern.KORTTEJA_POYDALLA];
                 alustaKortit();
             }
         }
