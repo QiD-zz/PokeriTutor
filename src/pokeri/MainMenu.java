@@ -4,8 +4,6 @@ import raahauspeli.RaahausPeliPaneeli;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.GridLayout;
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -62,7 +60,7 @@ public class MainMenu extends JFrame
         mitem = new JMenuItem("Korttitesti");
         mitem.addActionListener(tkuuntelija);
         menu.add(mitem);
-        
+
         mitem = new JMenuItem("Opetus");
         mitem.addActionListener(tkuuntelija);
         menu.add(mitem);
@@ -88,6 +86,7 @@ public class MainMenu extends JFrame
         paaPaneeli.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA,
                                     Extern.KORKEUS_IKKUNA / 3));
         paaPaneeli.setBackground(Color.lightGray);
+        paaPaneeli.addMouseListener(tkuuntelija);
         ohjePaneeli.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA,
                                      Extern.KORKEUS_IKKUNA / 7));
         ohjePaneeli.setBackground(Color.white);
@@ -122,8 +121,7 @@ public class MainMenu extends JFrame
                 paaPaneeli.repaint();
                 paaPaneeli.add(new OpiTuntemaanHanskat());
                 paaPaneeli.validate();
-            }
-                if (ae.getActionCommand().equals("Lopeta")) {
+            } else if (ae.getActionCommand().equals("Lopeta")) {
                 dispose();
             }
         }
@@ -137,12 +135,14 @@ public class MainMenu extends JFrame
         @Override
         public void mouseClicked(MouseEvent me)
         {
+            System.out.println(String.format("Point [%d, %d] %s", me.getPoint().x, me.getPoint().y,
+                    paaPaneeli.getComponentAt(me.getPoint())));
         }
 
         @Override
         public void mousePressed(MouseEvent me)
         {
-            System.out.println(String.format("MouseEvent: %s", me.getSource()));
+            //System.out.println(String.format("MouseEvent: %s", me.getSource()));
         }
 
         @Override
