@@ -116,8 +116,36 @@ public class Kortti extends JComponent
         g.drawImage(kuva, (int) x + 5, (int) y + 5, null);
         kuva2 = rotate(kuva, Math.toRadians(180));
         g.drawImage(kuva2, (int) x + (int) LEVEYS - img_w, (int) y + (int) KORKEUS - img_h, null);
-        g.drawString(Integer.toString(arvo), (int)x + (int)(LEVEYS / 2) - 5,
-                                             (int)y + (int)(KORKEUS / 2));
+        g.setFont(new Font(Font.SERIF, Font.PLAIN, 40));
+       
+        String luku = Integer.toString(arvo);       
+        FontMetrics fmt = g.getFontMetrics();
+        int leveys = fmt.stringWidth(luku)/2;
+        
+        if (this.arvo<10) {
+            
+             g.drawString(Integer.toString(arvo), (int)x + (int)(LEVEYS / 2) - leveys,
+                                             (int)y + (int)(KORKEUS / 2+10));
+        } else if (this.arvo == 10) {
+             g.drawString("10", (int)x + (int)(LEVEYS / 2) - leveys,
+                                             (int)y + (int)(KORKEUS / 2+10));
+        } else if (this.arvo == 11) {
+             g.drawString("J", (int)x + (int)(LEVEYS / 2) - 10,
+                                             (int)y + (int)(KORKEUS / 2+10));
+        } else if (this.arvo == 12) {
+             g.drawString("Q", (int)x + (int)(LEVEYS / 2) - leveys,
+                                             (int)y + (int)(KORKEUS / 2+10));
+        } else if (this.arvo == 13) {
+             g.drawString("K", (int)x + (int)(LEVEYS / 2) - 10,
+                                             (int)y + (int)(KORKEUS / 2+10));
+        } else if (this.arvo == 14) {
+             g.drawString("A", (int)x + (int)(LEVEYS / 2) - leveys,
+                                             (int)y + (int)(KORKEUS / 2+10));
+        } else {
+             g.drawString(Integer.toString(arvo), (int)x + (int)(LEVEYS / 2) - leveys,
+                                             (int)y + (int)(KORKEUS / 2+10));
+        }
+       
     }
 
     public boolean isInArea(Point p)

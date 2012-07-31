@@ -1,5 +1,7 @@
 package raahauspeli;
 
+import pokeri.Kortti;
+
 /**
  *
  * @author hurvittelu
@@ -18,6 +20,7 @@ public class PokeriHanska {
     
     public Arvo arvo;
     public String kasi;
+    private Kortti[] kortit;
     
     public static enum Arvo {
         VARISUORA, NELOSET, TAYSKASI, VARI, SUORA, KOLMOSET, KAKSIPARIA, PARI, HAI
@@ -44,5 +47,23 @@ public class PokeriHanska {
     @Override
     public String toString() {
         return kasi;
+    }
+    
+    public void setKortti(Kortti kortti, int numero) {
+        if ((numero >= 0 || numero < 5) && kortti != null){
+            kortit[numero] = kortti;
+        }
+    }
+    
+    public Kortti[] getKortit() {
+        return kortit;
+    }
+    
+    public Kortti getKortti(int numero) {
+        if ((numero >= 0 || numero < 5)){
+            return kortit[numero];
+        } else {
+            return null;
+        }
     }
 }
