@@ -1,17 +1,16 @@
 ## Opetusopas pokerille (TAO-kurssi)
 
-TODO:
-
-[ ] Olisiko järkevää siirtää tuo vasemmalla esiintyvä "menu"-valikko
-    oikean menu barin taakse? Silloin tilaa olisi paremmin käytettävissä.
-
+#### TODO:
 [ ] Statistiikkaa näkyviin (Kortteja jaettu / jäljellä)
 
-[ ] Layout fiksummaksi (ei ole dynaaminen nyt)
+[½] Layout fiksummaksi (ei ole dynaaminen nyt, pitäisikö olla?)
 
-DONE:
+#### DONE:
+[X] Olisiko järkevää siirtää tuo vasemmalla esiintyvä "menu"-valikko
+oikean menu barin taakse? Silloin tilaa olisi paremmin käytettävissä.
 
 [X] Kortti- ja pakkaluokka
 
 [X] Perustoiminnallisuus
 
+[X] Klikkaus kortissa tunnistaa kortin eikä esim. JPanea
