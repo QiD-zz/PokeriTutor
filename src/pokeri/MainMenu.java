@@ -3,6 +3,7 @@ package pokeri;
 import raahauspeli.RaahausPeliPaneeli;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -107,12 +108,10 @@ public class MainMenu extends JFrame
         public void actionPerformed(ActionEvent ae)
         {
             if (ae.getActionCommand().equals("Raahauspeli"))  {
-                System.out.println("Raahauspeli..");
                 paaPaneeli.removeAll();
                 paaPaneeli.add(new RaahausPeliPaneeli());
                 paaPaneeli.validate();
             } else if (ae.getActionCommand().equals("Korttitesti"))  {
-                System.out.println("Korttitesti..");
                 paaPaneeli.removeAll();
                 paaPaneeli.add(new KorttiPaneeli());
                 paaPaneeli.validate();
@@ -135,8 +134,14 @@ public class MainMenu extends JFrame
         @Override
         public void mouseClicked(MouseEvent me)
         {
-            System.out.println(String.format("Point [%d, %d] %s", me.getPoint().x, me.getPoint().y,
-                    paaPaneeli.getComponentAt(me.getPoint())));
+            Component cmpntn = paaPaneeli.findComponentAt(me.getPoint());
+
+            // Tarkastetaan onko klikattu komponentti Kortti
+            if (cmpntn instanceof Kortti) {
+                Kortti k = (Kortti) cmpntn;
+
+                System.out.println(String.format("Maa: %s", k.getMaa()));
+            }
         }
 
         @Override
