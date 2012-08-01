@@ -33,6 +33,7 @@ public class MainMenu extends JFrame
     private JPanel paaPaneeli;
     private JPanel ohjePaneeli;
     private JPanel wrapper;
+    private JTextArea ohjeTekstiAlue;
     private RaahausPeliPaneeli raahausPeli;
     private Tapahtumakuuntelija tkuuntelija;
     private final String leiska[] = { BorderLayout.EAST, BorderLayout.WEST,
@@ -42,7 +43,7 @@ public class MainMenu extends JFrame
     public MainMenu()
     {
         super("TaoTao menee metsään!");
-        tkuuntelija = new Tapahtumakuuntelija();
+        tkuuntelija = new Tapahtumakuuntelija(this);
 
         alustaElementit();
     }
@@ -93,17 +94,34 @@ public class MainMenu extends JFrame
         ohjePaneeli.setBackground(Color.white);
 
         this.add(paaPaneeli, BorderLayout.CENTER);
-        ohjePaneeli.add(new JTextArea("OHJE"));
-        this.add(ohjePaneeli, BorderLayout.SOUTH);
+        ohjeTekstiAlue= new JTextArea("OHJE");
+        ohjeTekstiAlue.setColumns(50);
+        ohjeTekstiAlue.setWrapStyleWord(true);
+        ohjeTekstiAlue.setEditable(false);
+        ohjeTekstiAlue.setLineWrap(true);
+        ohjePaneeli.add(ohjeTekstiAlue);
+        JScrollPane jsc = new JScrollPane(ohjePaneeli);
+        this.add(jsc, BorderLayout.SOUTH);
 
         this.setJMenuBar(menubar);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.pack();
     }
+    
+    public void setOhjeTekstiAlue(String teksti) {
+        ohjeTekstiAlue.setText(teksti);
+    }
 
     public class Tapahtumakuuntelija implements ActionListener, ItemListener,
                                                 MouseListener
     {
+        private MainMenu main;
+        
+        public Tapahtumakuuntelija(MainMenu m) {
+            main = m;
+        }
+        
+        
         @Override
         public void actionPerformed(ActionEvent ae)
         {
@@ -117,7 +135,7 @@ public class MainMenu extends JFrame
                 paaPaneeli.validate();
             } else if (ae.getActionCommand().equals("Opetus"))  {
                 paaPaneeli.removeAll();
-                paaPaneeli.add(new OpiTuntemaanHanskat());
+                paaPaneeli.add(new OpiTuntemaanHanskat(main));
                 paaPaneeli.validate();
             } else if (ae.getActionCommand().equals("Lopeta")) {
                 dispose();

@@ -4,11 +4,7 @@
  */
 package opetus;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Graphics;
-import java.awt.Point;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.EOFException;
@@ -18,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import pokeri.Extern;
 import pokeri.Kortti;
+import pokeri.MainMenu;
 import raahauspeli.PokeriHanska;
 
 /**
@@ -29,9 +26,13 @@ public class OpiTuntemaanHanskat extends JPanel implements ActionListener{
     private JButton oikealle;
     private JButton vasemmalle;
     private JPanel kasiTaulunPaikka;
-    private JEditorPane ohjeTeksti;
+    private JLabel nykyinenKasi;
+    private JPanel nimenPaneeli;
     private JPanel ohjeTekstinPaikka;
     private KasiTaulu kasiTaulu;
+    private JLabel seuraavaParempi;
+    private JLabel edellinenHuonompi;
+    private MainMenu main;
     
     private int kuvausLaskuri;
     
@@ -51,19 +52,38 @@ public class OpiTuntemaanHanskat extends JPanel implements ActionListener{
     "Kolme samaa eli kolmoset on neljänneksi paras käsi pokerissa. Kahden kolmoskäden "
             + "vahvuuden vertailu on helppoa, koska jokerittomassa pakassa voi olla vain "
             + "yhdet kolmoset, joka arvolla. Isoimmat kolmoset ovat parhaat, eli esimerkkikätemme "
-            + "ässäkolmoset.","","","","",""};
+            + "ässäkolmoset.","Suora on käsi, jossa on viisi peräkkäistä korttia eri maista."
+            + " Suoran arvo suhteessa toiseen suoraan määritellään sen korkeimman tai"
+            + " matalimman kortin mukaan.","Väri on käsi, jossa kaikki viisi korttia "
+            + "on samasta maasta, mutta ne eivät ole peräkkäisiä keskenään.","Täyskädessä on"
+            + " kolmoset ja pari samassa kädessä. Täyskäden arvon määrittää kolmosten"
+            + " koko eli käsi QQQAA (kolme rouvaa ja kaksi ässää) on huonompi kuin"
+            + " KKK22 (kolme kuningasta ja kakkospari).","Neljä samaa eli neloset"
+            + " on pokerin toiseksi paras käsi. Nelosissa pelaajalla on kädessään"
+            + " jokaisen maan kortti samalla arvolla eli esimerkiksi neljä ässää "
+            + "kuten esimerkkikädessä.","Värisuora on pokerin paras käsi ja "
+            + "sen erästä versioita, kuninkaallista (suora kympistä ässään) herttavärisuoraa"
+            + " eli herttareetiä pidetään kaikkein parhaimpana kätenä. Todellisuudessa"
+            + " maalla ei useimmissa pokeriversioissa ole väliä, jolloin patavärisuora"
+            + " samoilla numeroilla"
+            + " olisi aivan yhtä hyvä käsi kuin herttavärisuora. "};
     
-    public OpiTuntemaanHanskat() {
+    public OpiTuntemaanHanskat(MainMenu m) {
+        main = m;
         
         kuvausLaskuri = 0;
-        this.setPreferredSize(new Dimension(800, 500));
-        this.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));   
-        kasiTaulu = new KasiTaulu(new PokeriHanska(PokeriHanska.Arvo.HAI));
+        this.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA, Extern.KORKEUS_IKKUNA));
+        this.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0)); 
+        PokeriHanska alkuHanska = new PokeriHanska(PokeriHanska.Arvo.HAI);
+        kasiTaulu = new KasiTaulu(alkuHanska);
         kasiTaulunPaikka = new JPanel();
         kasiTaulunPaikka.add(kasiTaulu);
         this.add(kasiTaulunPaikka);
-        ohjeTeksti = new JEditorPane();
+        nykyinenKasi = new JLabel();
+        nykyinenKasi.setFont(new Font(Font.SERIF, Font.BOLD, 30));
         vasemmalle = new JButton("Edellinen käsi");
+        edellinenHuonompi = new JLabel();
+        seuraavaParempi = new JLabel(PokeriHanska.PARI);
         oikealle = new JButton("Seuraava käsi");
         vasemmalle.addActionListener(this);
         vasemmalle.setEnabled(false);
@@ -73,13 +93,21 @@ public class OpiTuntemaanHanskat extends JPanel implements ActionListener{
         JPanel tyhja2 = new JPanel(new FlowLayout(FlowLayout.CENTER));
         tyhja2.setPreferredSize(new Dimension(125, 250));
         tyhja.add(vasemmalle);
+        tyhja.add(edellinenHuonompi);
         tyhja2.add(oikealle);
+        tyhja2.add(seuraavaParempi);
         this.add(tyhja); //this.add(vasemmalle);
-        ohjeTeksti.setPreferredSize(new Dimension(540, 250));
-        ohjeTeksti.setBackground(this.getBackground());
-        ohjeTeksti.setText(kuvaukset[kuvausLaskuri]);
+        nimenPaneeli = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        nimenPaneeli.setPreferredSize(new Dimension(540, 250));
+       // nykyinenKasi.setPreferredSize(new Dimension(540, 250));
+        nykyinenKasi.setBackground(this.getBackground());
+      //  ohjeTeksti.setText(kuvaukset[kuvausLaskuri]);
+        nykyinenKasi.setLayout(new FlowLayout(FlowLayout.CENTER));
+        nykyinenKasi.setText(alkuHanska.getHanskaName());
+        nimenPaneeli.add(nykyinenKasi);
+        main.setOhjeTekstiAlue(kuvaukset[kuvausLaskuri]);
         ohjeTekstinPaikka = new JPanel();
-        ohjeTekstinPaikka.add(ohjeTeksti);
+        ohjeTekstinPaikka.add(nimenPaneeli);
         this.add(ohjeTekstinPaikka);
         this.add(tyhja2); //this.add(oikealle);
         
@@ -96,32 +124,48 @@ public class OpiTuntemaanHanskat extends JPanel implements ActionListener{
         if (e.getSource().equals(oikealle)) {
             
             vasemmalle.setEnabled(true);
-            PokeriHanska tempHanska = kasiTaulu.getHanska();
-            kasiTaulu = new KasiTaulu(new PokeriHanska(tempHanska.arvo.ordinal()-1));
+            PokeriHanska vanhaHanska = kasiTaulu.getHanska();
+            PokeriHanska uusHanska = new PokeriHanska(vanhaHanska.arvo.ordinal()-1);
+            kasiTaulu = new KasiTaulu(uusHanska);
             kasiTaulunPaikka.removeAll();
-            
+                       
+            edellinenHuonompi.setText(vanhaHanska.getHanskaName());
             kuvausLaskuri++;
-            ohjeTeksti.setText(kuvaukset[kuvausLaskuri]);
+            nykyinenKasi.setText(uusHanska.getHanskaName());
+            main.setOhjeTekstiAlue(kuvaukset[kuvausLaskuri]);
             kasiTaulunPaikka.add(kasiTaulu);
             kasiTaulunPaikka.validate();
             
             if (kuvausLaskuri == 8) {
                 oikealle.setEnabled(false);
+                seuraavaParempi.setText("");
+            } else {
+                PokeriHanska seuraavaHanska = new PokeriHanska(uusHanska.arvo.ordinal()-1);
+                seuraavaParempi.setText(seuraavaHanska.getHanskaName());
             }
         } else {
             
             oikealle.setEnabled(true);
-            PokeriHanska tempHanska = kasiTaulu.getHanska();
-            kasiTaulu = new KasiTaulu(new PokeriHanska(tempHanska.arvo.ordinal()+1));
+            PokeriHanska vanhaHanska = kasiTaulu.getHanska();
+            PokeriHanska uusHanska = new PokeriHanska(vanhaHanska.arvo.ordinal()+1);
+            kasiTaulu = new KasiTaulu(uusHanska);
             kasiTaulunPaikka.removeAll();
             
+            seuraavaParempi.setText(vanhaHanska.getHanskaName());
+           
+            
             kuvausLaskuri--;
-            ohjeTeksti.setText(kuvaukset[kuvausLaskuri]);
+            nykyinenKasi.setText(uusHanska.getHanskaName());
+            main.setOhjeTekstiAlue(kuvaukset[kuvausLaskuri]);
             kasiTaulunPaikka.add(kasiTaulu);
             kasiTaulunPaikka.validate();
             
             if (kuvausLaskuri == 0) {
                 vasemmalle.setEnabled(false);
+                 edellinenHuonompi.setText("");
+            } else {
+                PokeriHanska seuraavaHanska = new PokeriHanska(uusHanska.arvo.ordinal()+1);
+                edellinenHuonompi.setText(seuraavaHanska.getHanskaName());
             }
         }
     }
