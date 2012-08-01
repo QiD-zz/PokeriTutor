@@ -1,8 +1,10 @@
 package raahauspeli;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Calendar;
@@ -23,10 +25,22 @@ public class RaahausPeliPaneeli extends JPanel implements ActionListener
     private Timer kello;
     private static Date startTime;
     private static Date endTime;
+    private JTextArea peliSuunta;
     
     private static DefaultListModel listamalli;
     private JEditorPane selitys;
     private static JList lista;
+    
+    private static final int KORTTEJAPELISSA = 6;
+    
+     private final String[] pelimuodotLyhyesti = {"Parhaimmasta huonoimpaan.",
+         "Huonoimmasta parhaimpaan."};
+    
+    private final String[] pelimuodot = {"Järjestä lista parhaimmasta kädestä huonoimpaan. \n"
+            + "Ajanlasku alkaa kun painat OK.", "Järjestä lista huonoimmasta kädestä parhaimpaan. \n"
+            + "Ajanlasku alkaa kun painat OK."};
+    
+    private static boolean parhaimmastaHuonoimpaan;
     
     public RaahausPeliPaneeli()
     {
@@ -34,6 +48,7 @@ public class RaahausPeliPaneeli extends JPanel implements ActionListener
         KasiTransferHandler handleri = new KasiTransferHandler();
         vasen = new JPanel();
         oikea = new JPanel();
+        oikea.setLayout(new FlowLayout(FlowLayout.CENTER));
         
         uusiPeli = new JButton("Uusi peli");
         uusiPeli.addActionListener(this);
@@ -42,20 +57,36 @@ public class RaahausPeliPaneeli extends JPanel implements ActionListener
         tulos.setPreferredSize(new Dimension(150, 50));
         kello = new Timer(1000, this);       
         
+        peliSuunta = new JTextArea("lol");
+        peliSuunta.setWrapStyleWord(true);
+        peliSuunta.setLineWrap(true);
+        peliSuunta.setBackground(this.getBackground());
+        peliSuunta.setPreferredSize(new Dimension(125, 150));
+        peliSuunta.setBorder(BorderFactory.createTitledBorder("Pelin suunta"));
+        oikea.add(peliSuunta);
         oikea.add(uusiPeli);
         oikea.add(tulos);
+        oikea.setPreferredSize(new Dimension(150, 250));
+        JPanel oikeanPohja = new JPanel(new FlowLayout(FlowLayout.LEADING));
+        oikeanPohja.add(oikea);
         
         listamalli = new DefaultListModel();
         lista = new JList(listamalli);
         lista.setEnabled(false);
-        PokeriHanska hanska = new PokeriHanska(PokeriHanska.Arvo.VARI);
+         for (int i = 0; i < KORTTEJAPELISSA; i++) {
+                Random rnd = new Random();
+                listamalli.addElement(new PokeriHanska(rnd.nextInt(9)));
+            }
+        /*PokeriHanska hanska = new PokeriHanska(PokeriHanska.Arvo.VARI);
         PokeriHanska hanska2 = new PokeriHanska(PokeriHanska.Arvo.SUORA);
+        PokeriHanska hanska3 = new PokeriHanska(PokeriHanska.Arvo.VARISUORA);
+        PokeriHanska hanska4 = new PokeriHanska(PokeriHanska.Arvo.HAI);
         PokeriHanska hanska3 = new PokeriHanska(PokeriHanska.Arvo.VARISUORA);
         PokeriHanska hanska4 = new PokeriHanska(PokeriHanska.Arvo.HAI);
         listamalli.addElement(hanska2);
         listamalli.addElement(hanska4);
         listamalli.addElement(hanska3);
-        listamalli.addElement(hanska);
+        listamalli.addElement(hanska);*/
         
         lista.setDragEnabled(true);
         lista.setTransferHandler(handleri);
@@ -74,7 +105,7 @@ public class RaahausPeliPaneeli extends JPanel implements ActionListener
         vasen.add(lista);
      //  selitys.setLocation(200, 200);
         this.add(vasen);
-        this.add(oikea);
+        this.add(oikeanPohja);
         
         this.setPreferredSize(new Dimension(800, 400));
     }
@@ -83,9 +114,21 @@ public class RaahausPeliPaneeli extends JPanel implements ActionListener
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(uusiPeli)) {
             listamalli.removeAllElements();
-            for (int i = 0; i < 4; i++) {
-                Random rnd = new Random();
+            Random rnd = new Random();
+            for (int i = 0; i < KORTTEJAPELISSA; i++) {
+                
                 listamalli.addElement(new PokeriHanska(rnd.nextInt(9)));
+            }
+            parhaimmastaHuonoimpaan = rnd.nextBoolean();
+            
+            if (parhaimmastaHuonoimpaan) {
+                JOptionPane.showMessageDialog(this, pelimuodot[0]);
+                peliSuunta.setText(pelimuodotLyhyesti[0]);
+                
+            } else {
+                JOptionPane.showMessageDialog(this, pelimuodot[1]);
+                peliSuunta.setText(pelimuodotLyhyesti[1]);
+                
             }
             lista.setEnabled(true);
             startTime = Calendar.getInstance().getTime();
@@ -93,7 +136,7 @@ public class RaahausPeliPaneeli extends JPanel implements ActionListener
         }
         if (e.getSource().equals(kello)) {
             endTime = Calendar.getInstance().getTime();
-            kello.stop();
+           // kello.stop();
             long delay = endTime.getTime()-startTime.getTime();
             tulos.setText(String.valueOf(delay));
        //     System.out.print(delay);
@@ -112,18 +155,24 @@ public class RaahausPeliPaneeli extends JPanel implements ActionListener
     public static boolean testaaVoitto() 
     {
         boolean voitto = true;
-        PokeriHanska hanskat[] = new PokeriHanska[4];
-       int vertailu[] = new int[3];
+        PokeriHanska hanskat[] = new PokeriHanska[KORTTEJAPELISSA];
+       int vertailu[] = new int[KORTTEJAPELISSA];
         for (int i = 0; i < hanskat.length; i++) {
             hanskat[i] = (PokeriHanska) listamalli.get(i);
             
         }
         for (int i = 0; i < hanskat.length-1; i++) {
             vertailu[i] = hanskat[i].arvo.compareTo(hanskat[i+1].arvo);
-            
-            if (vertailu[i] > 0) {
-                voitto = false;
+            if (parhaimmastaHuonoimpaan) {
+                if (vertailu[i] > 0) {
+                    voitto = false;
+                }
+            } else {
+                if (vertailu[i] < 0) {
+                    voitto = false;
+                }
             }
+            
         }
         
         if (voitto)
