@@ -44,10 +44,13 @@ public class RaahausPeliPaneeli extends JPanel implements ActionListener
     
     public RaahausPeliPaneeli()
     {
-        this.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        this.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        this.setBackground(Color.lightGray);
         KasiTransferHandler handleri = new KasiTransferHandler();
         vasen = new JPanel();
+        vasen.setBackground(Color.lightGray);
         oikea = new JPanel();
+        oikea.setBackground(Color.lightGray);
         oikea.setLayout(new FlowLayout(FlowLayout.CENTER));
         
         uusiPeli = new JButton("Uusi peli");
@@ -60,33 +63,32 @@ public class RaahausPeliPaneeli extends JPanel implements ActionListener
         peliSuunta = new JTextArea("lol");
         peliSuunta.setWrapStyleWord(true);
         peliSuunta.setLineWrap(true);
-        peliSuunta.setBackground(this.getBackground());
-        peliSuunta.setPreferredSize(new Dimension(125, 150));
+     //   peliSuunta.setBackground(this.getBackground());
+        peliSuunta.setPreferredSize(new Dimension(125, 70));
+        peliSuunta.setFont(new Font(this.getFont().getName(), Font.PLAIN, 17));
         peliSuunta.setBorder(BorderFactory.createTitledBorder("Pelin suunta"));
         oikea.add(peliSuunta);
         oikea.add(uusiPeli);
         oikea.add(tulos);
         oikea.setPreferredSize(new Dimension(150, 250));
         JPanel oikeanPohja = new JPanel(new FlowLayout(FlowLayout.LEADING));
+        oikeanPohja.setBackground(Color.lightGray);
         oikeanPohja.add(oikea);
         
         listamalli = new DefaultListModel();
         lista = new JList(listamalli);
+        lista.setBackground(Color.black);
         lista.setEnabled(false);
-         for (int i = 0; i < KORTTEJAPELISSA; i++) {
+        for (int i = 0; i < KORTTEJAPELISSA; i++) {
                 Random rnd = new Random();
                 listamalli.addElement(new PokeriHanska(rnd.nextInt(9)));
             }
-        /*PokeriHanska hanska = new PokeriHanska(PokeriHanska.Arvo.VARI);
-        PokeriHanska hanska2 = new PokeriHanska(PokeriHanska.Arvo.SUORA);
-        PokeriHanska hanska3 = new PokeriHanska(PokeriHanska.Arvo.VARISUORA);
-        PokeriHanska hanska4 = new PokeriHanska(PokeriHanska.Arvo.HAI);
-        PokeriHanska hanska3 = new PokeriHanska(PokeriHanska.Arvo.VARISUORA);
-        PokeriHanska hanska4 = new PokeriHanska(PokeriHanska.Arvo.HAI);
-        listamalli.addElement(hanska2);
-        listamalli.addElement(hanska4);
-        listamalli.addElement(hanska3);
-        listamalli.addElement(hanska);*/
+        lista.setCellRenderer(new DefaultListCellRenderer(){
+
+       public int getHorizontalAlignment() {
+                return CENTER;
+       }
+});
         
         lista.setDragEnabled(true);
         lista.setTransferHandler(handleri);
@@ -131,6 +133,7 @@ public class RaahausPeliPaneeli extends JPanel implements ActionListener
                 
             }
             lista.setEnabled(true);
+            lista.setForeground(Color.ORANGE);
             startTime = Calendar.getInstance().getTime();
           //  kello.start();
         }

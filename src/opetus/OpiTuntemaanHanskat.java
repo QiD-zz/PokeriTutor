@@ -71,34 +71,48 @@ public class OpiTuntemaanHanskat extends JPanel implements ActionListener{
     public OpiTuntemaanHanskat(MainMenu m) {
         main = m;
         
+        int reunojenPaksuus = main.getContentPane().getBounds().width;
+        System.out.println(reunojenPaksuus);
+        
         kuvausLaskuri = 0;
         this.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA, Extern.KORKEUS_IKKUNA));
-        this.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0)); 
+        this.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0)); 
+        this.setBackground(Color.lightGray);
         PokeriHanska alkuHanska = new PokeriHanska(PokeriHanska.Arvo.HAI);
         kasiTaulu = new KasiTaulu(alkuHanska);
         kasiTaulunPaikka = new JPanel();
+        kasiTaulunPaikka.setBackground(Color.lightGray);
+        kasiTaulu.setBackground(Color.lightGray);
         kasiTaulunPaikka.add(kasiTaulu);
         this.add(kasiTaulunPaikka);
         nykyinenKasi = new JLabel();
+        nykyinenKasi.setBackground(Color.lightGray);
         nykyinenKasi.setFont(new Font(Font.SERIF, Font.BOLD, 30));
         vasemmalle = new JButton("Edellinen käsi");
         edellinenHuonompi = new JLabel();
+        edellinenHuonompi.setFont(new Font(Font.SERIF, Font.BOLD, 25));
+       // edellinenHuonompi.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA/6-10, 30));
         seuraavaParempi = new JLabel(PokeriHanska.PARI);
+        seuraavaParempi.setFont(new Font(Font.SERIF, Font.BOLD, 25));
+        //seuraavaParempi.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA/6-10, 30));
         oikealle = new JButton("Seuraava käsi");
         vasemmalle.addActionListener(this);
         vasemmalle.setEnabled(false);
         oikealle.addActionListener(this);
         JPanel tyhja = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        tyhja.setPreferredSize(new Dimension(125, 250));
+        tyhja.setBackground(Color.lightGray);
+        tyhja.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA/7, 250));
         JPanel tyhja2 = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        tyhja2.setPreferredSize(new Dimension(125, 250));
+        tyhja2.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA/7, 250));
+        tyhja2.setBackground(Color.lightGray);
         tyhja.add(vasemmalle);
         tyhja.add(edellinenHuonompi);
         tyhja2.add(oikealle);
         tyhja2.add(seuraavaParempi);
         this.add(tyhja); //this.add(vasemmalle);
         nimenPaneeli = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        nimenPaneeli.setPreferredSize(new Dimension(540, 250));
+        nimenPaneeli.setPreferredSize(new Dimension((Extern.LEVEYS_IKKUNA/3)*2, 250));
+        nimenPaneeli.setBackground(Color.lightGray);
        // nykyinenKasi.setPreferredSize(new Dimension(540, 250));
         nykyinenKasi.setBackground(this.getBackground());
       //  ohjeTeksti.setText(kuvaukset[kuvausLaskuri]);
@@ -108,6 +122,7 @@ public class OpiTuntemaanHanskat extends JPanel implements ActionListener{
         main.setOhjeTekstiAlue(kuvaukset[kuvausLaskuri]);
         ohjeTekstinPaikka = new JPanel();
         ohjeTekstinPaikka.add(nimenPaneeli);
+        ohjeTekstinPaikka.setBackground(Color.lightGray);
         this.add(ohjeTekstinPaikka);
         this.add(tyhja2); //this.add(oikealle);
         
@@ -117,6 +132,7 @@ public class OpiTuntemaanHanskat extends JPanel implements ActionListener{
             this.add(button);
             
         }*/
+       
     }
 
     @Override
@@ -178,10 +194,12 @@ public class OpiTuntemaanHanskat extends JPanel implements ActionListener{
             hanska = hanska_;
             int hanskanLuku = hanska.arvo.ordinal();
             System.out.println(hanskanLuku);
-            this.setPreferredSize(new Dimension(800, 170));
+            
             this.setLayout(new FlowLayout(FlowLayout.CENTER));
+            this.setBackground(Color.lightGray);
             Kortti[] kortit = new Kortti[5];
             kortit = teeKasi(PokeriHanska.HAI);
+            this.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA, 170));
             switch(hanska.arvo.ordinal()) {
                 case 8:
                 {

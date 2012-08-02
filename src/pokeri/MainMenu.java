@@ -102,88 +102,46 @@ public class MainMenu extends JFrame
         ohjePaneeli.add(ohjeTekstiAlue);
         JScrollPane jsc = new JScrollPane(ohjePaneeli);
         this.add(jsc, BorderLayout.SOUTH);
+        
+        paaPaneeli.add(new EtusivuPaneeli());
 
         this.setJMenuBar(menubar);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.pack();
     }
     
+    public Object getPaapaneeli() {
+        return paaPaneeli;
+    }
+    
     public void setOhjeTekstiAlue(String teksti) {
         ohjeTekstiAlue.setText(teksti);
     }
 
-    public class Tapahtumakuuntelija implements ActionListener, ItemListener,
-                                                MouseListener
-    {
-        private MainMenu main;
-        
-        public Tapahtumakuuntelija(MainMenu m) {
-            main = m;
-        }
-        
-        
-        @Override
-        public void actionPerformed(ActionEvent ae)
-        {
-            if (ae.getActionCommand().equals("Raahauspeli"))  {
-                paaPaneeli.removeAll();
-                paaPaneeli.add(new RaahausPeliPaneeli());
-                paaPaneeli.validate();
-            } else if (ae.getActionCommand().equals("Korttitesti"))  {
-                paaPaneeli.removeAll();
-                paaPaneeli.add(new KorttiPaneeli());
-                paaPaneeli.validate();
-            } else if (ae.getActionCommand().equals("Opetus"))  {
-                paaPaneeli.removeAll();
-                paaPaneeli.add(new OpiTuntemaanHanskat(main));
-                paaPaneeli.validate();
-            } else if (ae.getActionCommand().equals("Lopeta")) {
-                dispose();
-            }
-        }
-
-        @Override
-        public void itemStateChanged(ItemEvent ie)
-        {
-            throw new UnsupportedOperationException("Not supported yet.");
-        }
-
-        @Override
-        public void mouseClicked(MouseEvent me)
-        {
-            Component cmpntn = paaPaneeli.findComponentAt(me.getPoint());
-
-            // Tarkastetaan onko klikattu komponentti Kortti
-            if (cmpntn instanceof Kortti) {
-                Kortti k = (Kortti) cmpntn;
-
-                System.out.println("Ennen: " + k);
-                k.toggleValinta();
-                System.out.println("Jälk : " + k);
-                System.out.println("--");
-            }
-        }
-
-        @Override
-        public void mousePressed(MouseEvent me)
-        {
-            //System.out.println(String.format("MouseEvent: %s", me.getSource()));
-        }
-
-        @Override
-        public void mouseReleased(MouseEvent me)
-        {
-        }
-
-        @Override
-        public void mouseEntered(MouseEvent me)
-        {
-        }
-
-        @Override
-        public void mouseExited(MouseEvent me)
-        {
-        }
+    public void setRaahauspeli() {
+        ohjeTekstiAlue.setText("");
+        paaPaneeli.removeAll();
+        paaPaneeli.add(new RaahausPeliPaneeli());
+        paaPaneeli.repaint();
+        paaPaneeli.validate();
     }
+    
+
+    public void setPokeripeli() {
+        ohjeTekstiAlue.setText("");
+        paaPaneeli.removeAll();
+        paaPaneeli.add(new KorttiPaneeli());
+        paaPaneeli.repaint();
+        paaPaneeli.validate();
+    }
+
+    public void setOpetuspaneeli() {
+          ohjeTekstiAlue.setText("");
+          paaPaneeli.removeAll();
+          paaPaneeli.add(new OpiTuntemaanHanskat(this));
+          paaPaneeli.repaint();
+          paaPaneeli.validate();
+    }
+    
 
 }
