@@ -25,19 +25,15 @@ public class Tapahtumakuuntelija implements ActionListener, ItemListener,
             main = m;
         }
         
-        public Tapahtumakuuntelija(EtusivuPaneeli e) {
-            etusivu = e;
-        }
-        
         
         @Override
         public void actionPerformed(ActionEvent ae)
         {
-            if (ae.getActionCommand().equals("Raahauspeli"))  {
+            if (ae.getActionCommand().equals(Extern.RAAHAUSPELI))  {
                 main.setRaahauspeli();
-            } else if (ae.getActionCommand().equals("Korttitesti"))  {
+            } else if (ae.getActionCommand().equals(Extern.KORTTIPELI))  {
                 main.setPokeripeli();
-            } else if (ae.getActionCommand().equals("Opetus"))  {
+            } else if (ae.getActionCommand().equals(Extern.OPETUS))  {
                 main.setOpetuspaneeli();
             } else if (ae.getActionCommand().equals("Lopeta")) {
                 main.dispose();

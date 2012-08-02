@@ -17,16 +17,25 @@ import pokeri.Tapahtumakuuntelija;
 public class EtusivuPaneeli extends JPanel{
     
     private Tapahtumakuuntelija tkuuntelija;
+    private MainMenu main;
     
-    public EtusivuPaneeli() {
-        
-        tkuuntelija = new Tapahtumakuuntelija(this);
+    public EtusivuPaneeli(MainMenu m) {
+        main = m;
+        tkuuntelija = new Tapahtumakuuntelija(main);
         
         this.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA, Extern.KORKEUS_IKKUNA));
         this.setLayout(new FlowLayout(FlowLayout.CENTER));
-        JButton opiKadet = new JButton("Opi tuntemaan pokerikädet");
-        JButton kadetJarj = new JButton("Kädet järjestykseen -peli");
+        JButton opiKadet = new JButton("Opi tuntemaan pokerikädet");     
+        JButton kadetJarj = new JButton("Kädet järjestykseen -peli");      
         JButton pelaaPokeri = new JButton("Käytännön pokeriopetus");
+    
+        opiKadet.addActionListener(tkuuntelija);
+        kadetJarj.addActionListener(tkuuntelija);
+        pelaaPokeri.addActionListener(tkuuntelija);
+        opiKadet.setActionCommand(Extern.OPETUS);
+        kadetJarj.setActionCommand(Extern.RAAHAUSPELI);
+               pelaaPokeri.setActionCommand(Extern.KORTTIPELI);
+        
         opiKadet.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA/4, Extern.KORKEUS_IKKUNA/10));
         kadetJarj.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA/4, Extern.KORKEUS_IKKUNA/10));
         pelaaPokeri.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA/4, Extern.KORKEUS_IKKUNA/10));

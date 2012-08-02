@@ -11,4 +11,10 @@ public class Extern
     public final static int LEVEYS_IKKUNA = 1000;
     public final static int KORKEUS_IKKUNA = 1000;
     public final static String[] MAAT = { "ruutu", "hertta", "pata", "risti" };
+    
+    //komennot
+    public final static String RAAHAUSPELI = "RaahausPeli";
+    public final static String KORTTIPELI = "KorttiPeli";
+    public final static String OPETUS = "Opetus";
+    public final static String ETUSIVU = "Etusivulle";
 }

@@ -55,15 +55,15 @@ public class MainMenu extends JFrame
 
         menu = new JMenu("Tiedosto");
 
-        mitem = new JMenuItem("Raahauspeli");
+        mitem = new JMenuItem(Extern.RAAHAUSPELI);
         mitem.addActionListener(tkuuntelija);
         menu.add(mitem);
 
-        mitem = new JMenuItem("Korttitesti");
+        mitem = new JMenuItem(Extern.KORTTIPELI);
         mitem.addActionListener(tkuuntelija);
         menu.add(mitem);
 
-        mitem = new JMenuItem("Opetus");
+        mitem = new JMenuItem(Extern.OPETUS);
         mitem.addActionListener(tkuuntelija);
         menu.add(mitem);
 
@@ -103,7 +103,7 @@ public class MainMenu extends JFrame
         JScrollPane jsc = new JScrollPane(ohjePaneeli);
         this.add(jsc, BorderLayout.SOUTH);
         
-        paaPaneeli.add(new EtusivuPaneeli());
+        paaPaneeli.add(new EtusivuPaneeli(this));
 
         this.setJMenuBar(menubar);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -144,4 +144,7 @@ public class MainMenu extends JFrame
     }
     
 
+    public MainMenu getMainMenu() {
+        return this;
+    }
 }

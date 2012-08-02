@@ -7,10 +7,9 @@ import java.awt.Font;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Random;
+import java.util.*;
 import javax.swing.*;
+import javax.swing.Timer;
 
 /**
  *
@@ -27,9 +26,13 @@ public class RaahausPeliPaneeli extends JPanel implements ActionListener
     private static Date endTime;
     private JTextArea peliSuunta;
     
+    private static DefaultListModel parhaatTulokset;
+    
     private static DefaultListModel listamalli;
     private JEditorPane selitys;
     private static JList lista;
+    
+    private static JList HoF;
     
     private static final int KORTTEJAPELISSA = 6;
     
@@ -44,6 +47,9 @@ public class RaahausPeliPaneeli extends JPanel implements ActionListener
     
     public RaahausPeliPaneeli()
     {
+
+        parhaatTulokset = new DefaultListModel();
+        HoF = new JList(parhaatTulokset);
         this.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
         this.setBackground(Color.lightGray);
         KasiTransferHandler handleri = new KasiTransferHandler();
@@ -108,6 +114,11 @@ public class RaahausPeliPaneeli extends JPanel implements ActionListener
      //  selitys.setLocation(200, 200);
         this.add(vasen);
         this.add(oikeanPohja);
+        
+        JScrollPane jscroll = new JScrollPane(HoF);
+        jscroll.setPreferredSize(new Dimension(125, 350));
+        jscroll.setBorder(BorderFactory.createTitledBorder("Parhaat tulokset"));
+        this.add(jscroll);
         
         this.setPreferredSize(new Dimension(800, 400));
     }
@@ -184,6 +195,15 @@ public class RaahausPeliPaneeli extends JPanel implements ActionListener
            long delay = endTime.getTime()-startTime.getTime();
            String tulosteksti = String.valueOf((double)delay/1000)+" sekuntia";
            tulos.setText(String.valueOf(tulosteksti));
+           parhaatTulokset.addElement(tulosteksti);
+           Object[] temp = parhaatTulokset.toArray();
+           Arrays.sort(temp);
+           
+           parhaatTulokset.clear();
+            for (int i = 0; i < temp.length; i++) {
+                parhaatTulokset.addElement(temp[i]);
+                
+            }
            lista.setEnabled(false);
            return true;  
         } else
