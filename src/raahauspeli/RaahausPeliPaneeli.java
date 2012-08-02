@@ -169,7 +169,8 @@ public class RaahausPeliPaneeli extends JPanel implements ActionListener
     {
         boolean voitto = true;
         PokeriHanska hanskat[] = new PokeriHanska[KORTTEJAPELISSA];
-       int vertailu[] = new int[KORTTEJAPELISSA];
+        int vertailu[] = new int[KORTTEJAPELISSA];
+
         for (int i = 0; i < hanskat.length; i++) {
             hanskat[i] = (PokeriHanska) listamalli.get(i);
             
@@ -188,8 +189,7 @@ public class RaahausPeliPaneeli extends JPanel implements ActionListener
             
         }
         
-        if (voitto)
-        {
+        if (voitto) {
            endTime = Calendar.getInstance().getTime();          
            long delay = endTime.getTime()-startTime.getTime();
            String tulosteksti = String.valueOf((double)delay/1000)+" sekuntia";
@@ -205,8 +205,7 @@ public class RaahausPeliPaneeli extends JPanel implements ActionListener
             }
            lista.setEnabled(false);
            return true;  
-        } else
-        {
+        } else {
             return false;
         }
        
