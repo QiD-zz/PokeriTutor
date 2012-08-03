@@ -178,13 +178,18 @@ public class Kortti extends JComponent
         }
 
         if (valittu) { // Merkkaa kortti valituksi
+            int alareuna = 0; // Kortin alareuna
+            int sijt = 0; // Labelin tekstin sijainti
+
             g.setFont(new Font(Font.SERIF, Font.PLAIN, 20));
             fmt = g2.getFontMetrics();
             g2.setPaint(Color.getHSBColor(336, 334, 100));
-            g2.fill(new RoundRectangle2D.Double(x + 1, KORKEUS - 60, LEVEYS - 1,
+            alareuna = (int) ((int) y + KORKEUS) - 64;
+            sijt = alareuna + 20;
+            g2.fill(new RoundRectangle2D.Double(x + 1, alareuna, LEVEYS - 1,
                     KORKEUS / 5, 0, 0));
             g2.setPaint(Color.getHSBColor(73, 100, 68));
-            g2.drawString("Valittu", (int)x + 15, (int)KORKEUS - 40);
+            g2.drawString("Valittu", (int)x + 15, sijt);
         }
     }
 
