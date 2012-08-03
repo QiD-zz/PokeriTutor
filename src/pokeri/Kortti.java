@@ -168,13 +168,13 @@ public class Kortti extends JComponent
              g2.drawString("J", (int)x + (int)(LEVEYS / 2) - 10,
                                              (int)y + (int)(KORKEUS / 2 + 10));
         } else if (arvo == 12) {
-             g2.drawString("Q", (int)x + (int)(LEVEYS / 2) - fontinLeveys,
+             g2.drawString(" Q", (int)x + (int)(LEVEYS / 2) - fontinLeveys,
                                              (int)y + (int)(KORKEUS / 2 + 10));
         } else if (arvo == 13) {
              g2.drawString("K", (int)x + (int)(LEVEYS / 2) - 10,
                                              (int)y + (int)(KORKEUS / 2 + 10));
         } else if (arvo == 14) {
-             g2.drawString("A", (int)x + (int)(LEVEYS / 2) - fontinLeveys,
+             g2.drawString(" A", (int)x + (int)(LEVEYS / 2) - fontinLeveys,
                                              (int)y + (int)(KORKEUS / 2 + 10));
         } else {
              g2.drawString(Integer.toString(arvo), (int)x + (int)(LEVEYS / 2) -
