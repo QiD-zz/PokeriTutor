@@ -307,7 +307,8 @@ public class OpiTuntemaanHanskat extends JPanel implements ActionListener
     public void setValintaPoisPaalta()
     {
         for (int i = 0; i < Extern.KORTTEJA_POYDALLA; i++)
-            kortit[i].setValintaPaalla(false);
+            kortit[i].poistaValinta();
+        repaint();
     }
 
 }
