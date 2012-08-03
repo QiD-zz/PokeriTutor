@@ -18,21 +18,18 @@ public class Tapahtumakuuntelija implements ActionListener, ItemListener,
     @Override
     public void actionPerformed(ActionEvent ae)
     {
-        if (ae.getActionCommand().equals(Extern.RAAHAUSPELI))  {
+        if (ae.getActionCommand().equals(Extern.RAAHAUSPELI)) {
             main.setRaahauspeli();
-        } else if (ae.getActionCommand().equals(Extern.KORTTIPELI))  {
-            main.setPokeripeli();         
-        } else if (ae.getActionCommand().equals(Extern.OPETUS))  {       
-            main.setOpetuspaneeli();     
-        } else if (ae.getActionCommand().equals(Extern.ETUSIVU)) {       
-            main.setEtusivu();        
-        } else if (ae.getActionCommand().equals("Lopeta")) {    
-            main.dispose();     
+        } else if (ae.getActionCommand().equals(Extern.KORTTIPELI)) {
+            main.setPokeripeli();
+        } else if (ae.getActionCommand().equals(Extern.OPETUS))  {
+            main.setOpetuspaneeli();
+        } else if (ae.getActionCommand().equals(Extern.ETUSIVU)) {
+            main.setEtusivu();
+        } else if (ae.getActionCommand().equals("Lopeta")) {
+            main.dispose();
         }    
     }
-
-   
-    
 
     @Override
     public void itemStateChanged(ItemEvent ie)

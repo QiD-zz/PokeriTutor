@@ -101,23 +101,23 @@ public class MainMenu extends JFrame
         ohjeTekstiAlue.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA/8*6,
                                      Extern.KORKEUS_IKKUNA / 7));
      //   ohjeTekstiAlue.setLayout(new FlowLayout(FlowLayout.LEFT));
-        
+
         ohjePaneeli.add(paluu);
         ohjePaneeli.add(ohjeTekstiAlue);
-        
+
         Insets insets = ohjePaneeli.getInsets();
         Dimension size = paluu.getPreferredSize();
         paluu.setBounds(insets.left, insets.top,
              size.width, size.height);
-        
+
         size = ohjeTekstiAlue.getPreferredSize();
         ohjeTekstiAlue.setBounds(paluu.getWidth() + insets.left, insets.top,
              size.width, size.height);
-        
+
         ohjeTekstiAlue.setWrapStyleWord(true);
         ohjeTekstiAlue.setEditable(false);
         ohjeTekstiAlue.setLineWrap(true);
-        
+
         JScrollPane jsc = new JScrollPane(ohjePaneeli);
         this.add(jsc, BorderLayout.SOUTH);
 

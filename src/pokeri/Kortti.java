@@ -99,10 +99,10 @@ public class Kortti extends JComponent
             valittu = (valittu == false) ? true : false;
             repaint();
         }
-        
     }
-    
-    public void setValintaPaalle(boolean arvo) {
+
+    public void setValintaPaalla(boolean arvo)
+    {
         valintaPaalla = arvo;
     }
 
