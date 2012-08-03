@@ -120,19 +120,21 @@ public class MainMenu extends JFrame
         
         JScrollPane jsc = new JScrollPane(ohjePaneeli);
         this.add(jsc, BorderLayout.SOUTH);
-        
+
         paaPaneeli.add(new EtusivuPaneeli(this));
 
         this.setJMenuBar(menubar);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.pack();
     }
-    
-    public Object getPaapaneeli() {
+
+    public Object getPaapaneeli()
+    {
         return paaPaneeli;
     }
-    
-    public void setOhjeTekstiAlue(String teksti) {
+
+    public void setOhjeTekstiAlue(String teksti)
+    {
         ohjeTekstiAlue.setText(teksti);
     }
 
@@ -143,9 +145,9 @@ public class MainMenu extends JFrame
         paaPaneeli.repaint();
         paaPaneeli.validate();
     }
-    
 
-    public void setPokeripeli() {
+    public void setPokeripeli()
+    {
         ohjeTekstiAlue.setText("");
         paaPaneeli.removeAll();
         paaPaneeli.add(new KorttiPaneeli());
@@ -153,16 +155,17 @@ public class MainMenu extends JFrame
         paaPaneeli.validate();
     }
 
-    public void setOpetuspaneeli() {
+    public void setOpetuspaneeli()
+    {
           ohjeTekstiAlue.setText("");
           paaPaneeli.removeAll();
           paaPaneeli.add(new OpiTuntemaanHanskat(this));
           paaPaneeli.repaint();
           paaPaneeli.validate();
     }
-    
 
-    public MainMenu getMainMenu() {
+    public MainMenu getMainMenu() // FIXME Onko tälle käyttöä?
+    {
         return this;
     }
 

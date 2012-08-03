@@ -1,15 +1,9 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package opetus;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.EOFException;
 import javax.swing.JButton;
-import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import pokeri.Extern;
@@ -21,8 +15,8 @@ import raahauspeli.PokeriHanska;
  *
  * @author hurvittelu
  */
-public class OpiTuntemaanHanskat extends JPanel implements ActionListener{
-    
+public class OpiTuntemaanHanskat extends JPanel implements ActionListener
+{
     private JButton oikealle;
     private JButton vasemmalle;
     private JPanel kasiTaulunPaikka;
@@ -33,9 +27,9 @@ public class OpiTuntemaanHanskat extends JPanel implements ActionListener{
     private JLabel seuraavaParempi;
     private JLabel edellinenHuonompi;
     private MainMenu main;
-    
+
     private int kuvausLaskuri;
-    
+
     private String[] kuvaukset = {"Hai, eli high card, on nimensä mukaisesti käsi,"
             + " jossa ei ole mitään kombinaatioita vaan käden arvon määrittää sen "
             + "korkein kortti. Esimerkkikädessä korkein kortti on ässä, joten käden"
@@ -67,16 +61,17 @@ public class OpiTuntemaanHanskat extends JPanel implements ActionListener{
             + " maalla ei useimmissa pokeriversioissa ole väliä, jolloin patavärisuora"
             + " samoilla numeroilla"
             + " olisi aivan yhtä hyvä käsi kuin herttavärisuora. "};
-    
-    public OpiTuntemaanHanskat(MainMenu m) {
+
+    public OpiTuntemaanHanskat(MainMenu m)
+    {
         main = m;
-        
+
         int reunojenPaksuus = main.getContentPane().getBounds().width;
         System.out.println(reunojenPaksuus);
-        
+
         kuvausLaskuri = 0;
         this.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA, Extern.KORKEUS_IKKUNA));
-        this.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0)); 
+        this.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
         this.setBackground(Color.lightGray);
         PokeriHanska alkuHanska = new PokeriHanska(PokeriHanska.Arvo.HAI);
         kasiTaulu = new KasiTaulu(alkuHanska);
@@ -125,33 +120,32 @@ public class OpiTuntemaanHanskat extends JPanel implements ActionListener{
         ohjeTekstinPaikka.setBackground(Color.lightGray);
         this.add(ohjeTekstinPaikka);
         this.add(tyhja2); //this.add(oikealle);
-        
+
       /*  for (int i = 0; i < kortit.length; i++) {
             JButton button = new JButton("Lukitse");
             button.setPreferredSize(new Dimension(120, 50));
             this.add(button);
-            
+
         }*/
-       
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed(ActionEvent e)
+    {
         if (e.getSource().equals(oikealle)) {
-            
             vasemmalle.setEnabled(true);
             PokeriHanska vanhaHanska = kasiTaulu.getHanska();
             PokeriHanska uusHanska = new PokeriHanska(vanhaHanska.arvo.ordinal()-1);
             kasiTaulu = new KasiTaulu(uusHanska);
             kasiTaulunPaikka.removeAll();
-                       
+
             edellinenHuonompi.setText(vanhaHanska.getHanskaName());
             kuvausLaskuri++;
             nykyinenKasi.setText(uusHanska.getHanskaName());
             main.setOhjeTekstiAlue(kuvaukset[kuvausLaskuri]);
             kasiTaulunPaikka.add(kasiTaulu);
             kasiTaulunPaikka.validate();
-            
+
             if (kuvausLaskuri == 8) {
                 oikealle.setEnabled(false);
                 seuraavaParempi.setText("");
@@ -160,22 +154,21 @@ public class OpiTuntemaanHanskat extends JPanel implements ActionListener{
                 seuraavaParempi.setText(seuraavaHanska.getHanskaName());
             }
         } else {
-            
             oikealle.setEnabled(true);
             PokeriHanska vanhaHanska = kasiTaulu.getHanska();
             PokeriHanska uusHanska = new PokeriHanska(vanhaHanska.arvo.ordinal()+1);
             kasiTaulu = new KasiTaulu(uusHanska);
             kasiTaulunPaikka.removeAll();
-            
+
             seuraavaParempi.setText(vanhaHanska.getHanskaName());
-           
-            
+
+
             kuvausLaskuri--;
             nykyinenKasi.setText(uusHanska.getHanskaName());
             main.setOhjeTekstiAlue(kuvaukset[kuvausLaskuri]);
             kasiTaulunPaikka.add(kasiTaulu);
             kasiTaulunPaikka.validate();
-            
+
             if (kuvausLaskuri == 0) {
                 vasemmalle.setEnabled(false);
                  edellinenHuonompi.setText("");
@@ -185,16 +178,17 @@ public class OpiTuntemaanHanskat extends JPanel implements ActionListener{
             }
         }
     }
-    
-    private class KasiTaulu extends JPanel {
-        
+
+    private class KasiTaulu extends JPanel
+    {
         private PokeriHanska hanska;
-        
-        public KasiTaulu(PokeriHanska hanska_) {
+
+        public KasiTaulu(PokeriHanska hanska_)
+        {
             hanska = hanska_;
             int hanskanLuku = hanska.arvo.ordinal();
             System.out.println(hanskanLuku);
-            
+
             this.setLayout(new FlowLayout(FlowLayout.CENTER));
             this.setBackground(Color.lightGray);
             Kortti[] kortit = new Kortti[5];
@@ -202,149 +196,110 @@ public class OpiTuntemaanHanskat extends JPanel implements ActionListener{
             this.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA, 170));
             switch(hanska.arvo.ordinal()) {
                 case 8:
-                {
                     System.out.println("TÄÄLLÄ");
                     kortit = teeKasi(PokeriHanska.HAI);
                     break;
-                }
                 case 7:
-                {
                     System.out.println("TÄÄLLÄ");
                     kortit = teeKasi(PokeriHanska.PARI);
                     break;
-                }
                  case 6:
-                {
                     kortit = teeKasi(PokeriHanska.KAKSIPARIA);;
                     break;
-                }
                 case 5:
-                {
                     kortit = teeKasi(PokeriHanska.KOLMOSET);
                     break;
-                }   
-                  case 4:
-                {
+                case 4:
                     kortit = teeKasi(PokeriHanska.SUORA);
                     break;
-                }
                 case 3:
-                {
                     kortit = teeKasi(PokeriHanska.VARI);
                     break;
-                }
                  case 2:
-                {
                     kortit = teeKasi(PokeriHanska.TAYSKASI);
                     break;
-                }
                 case 1:
-                {
                     kortit = teeKasi(PokeriHanska.NELOSET);
                     break;
-                }   
                 case 0:
-                {
                     kortit = teeKasi(PokeriHanska.VARISUORA);
                     break;
-                }  
             }
-            
-        
+
             for (int i = 0; i < kortit.length; i++) {
                 kortit[i].setPreferredSize(new Dimension(120, 170));
                 this.add(kortit[i]);
             }
         }
-        
-        public PokeriHanska getHanska() {
+
+        public PokeriHanska getHanska()
+        {
             return hanska;
         }
-        
-        private Kortti[] teeKasi(String kasi) {
+
+        private Kortti[] teeKasi(String kasi)
+        {
             Kortti[] kortit = new Kortti[5];
-            
+
             if (kasi.equals(PokeriHanska.HAI)) {
-                kortit[0] = new Kortti("ruutu", 4, new Point(10, 10));       
+                kortit[0] = new Kortti("ruutu", 4, new Point(10, 10));
                 kortit[1] = new Kortti("risti", 9, new Point(10, 10));
                 kortit[2] = new Kortti("risti", 13, new Point(10, 10));
                 kortit[3] = new Kortti("hertta", 5, new Point(10, 10));
                 kortit[4] = new Kortti("ruutu", 14, new Point(10, 10));
-                return kortit;           
-            } else if (kasi.equals(PokeriHanska.PARI))
-            {
-                kortit[0] = new Kortti("risti", 14, new Point(10, 10));       
-                kortit[1] = new Kortti("ruutu", 14, new Point(10, 10));        
-                kortit[2] = new Kortti("risti", 9, new Point(10, 10));        
-                kortit[3] = new Kortti("ruutu", 10, new Point(10, 10));      
-                kortit[4] = new Kortti("pata", 13, new Point(10, 10));      
-                return kortit;
-            } else if (kasi.equals(PokeriHanska.KAKSIPARIA))
-            {  
-                kortit[0] = new Kortti("ruutu", 13, new Point(10, 10));           
-                kortit[1] = new Kortti("ruutu", 14, new Point(10, 10));     
-                kortit[2] = new Kortti("risti", 13, new Point(10, 10));       
-                kortit[3] = new Kortti("pata", 11, new Point(10, 10));       
-                kortit[4] = new Kortti("hertta", 14, new Point(10, 10));     
-                return kortit;
-            } if (kasi.equals(PokeriHanska.KOLMOSET)) {
-                kortit[0] = new Kortti("ruutu", 13, new Point(10, 10));       
+            } else if (kasi.equals(PokeriHanska.PARI)) {
+                kortit[0] = new Kortti("risti", 14, new Point(10, 10));
+                kortit[1] = new Kortti("ruutu", 14, new Point(10, 10));
+                kortit[2] = new Kortti("risti", 9, new Point(10, 10));
+                kortit[3] = new Kortti("ruutu", 10, new Point(10, 10));
+                kortit[4] = new Kortti("pata", 13, new Point(10, 10));
+            } else if (kasi.equals(PokeriHanska.KAKSIPARIA)) {
+                kortit[0] = new Kortti("ruutu", 13, new Point(10, 10));
+                kortit[1] = new Kortti("ruutu", 14, new Point(10, 10));
+                kortit[2] = new Kortti("risti", 13, new Point(10, 10));
+                kortit[3] = new Kortti("pata", 11, new Point(10, 10));
+                kortit[4] = new Kortti("hertta", 14, new Point(10, 10));
+            } else if (kasi.equals(PokeriHanska.KOLMOSET)) {
+                kortit[0] = new Kortti("ruutu", 13, new Point(10, 10));
                 kortit[1] = new Kortti("risti", 9, new Point(10, 10));
                 kortit[2] = new Kortti("risti", 14, new Point(10, 10));
                 kortit[3] = new Kortti("hertta", 14, new Point(10, 10));
                 kortit[4] = new Kortti("ruutu", 14, new Point(10, 10));
-                return kortit;           
-            } else if (kasi.equals(PokeriHanska.SUORA))
-            {
-                kortit[0] = new Kortti("risti", 7, new Point(10, 10));       
-                kortit[1] = new Kortti("ruutu", 8, new Point(10, 10));        
-                kortit[2] = new Kortti("risti", 9, new Point(10, 10));        
-                kortit[3] = new Kortti("ruutu", 10, new Point(10, 10));      
-                kortit[4] = new Kortti("pata", 11, new Point(10, 10));      
-                return kortit;
-            } else if (kasi.equals(PokeriHanska.VARI))
-            {  
-                kortit[0] = new Kortti("pata", 13, new Point(10, 10));           
-                kortit[1] = new Kortti("pata", 8, new Point(10, 10));     
-                kortit[2] = new Kortti("pata", 5, new Point(10, 10));       
-                kortit[3] = new Kortti("pata", 2, new Point(10, 10));       
-                kortit[4] = new Kortti("pata", 14, new Point(10, 10));     
-                return kortit;
-            } if (kasi.equals(PokeriHanska.TAYSKASI)) {
-                kortit[0] = new Kortti("ruutu", 13, new Point(10, 10));       
+            } else if (kasi.equals(PokeriHanska.SUORA)) {
+                kortit[0] = new Kortti("risti", 7, new Point(10, 10));
+                kortit[1] = new Kortti("ruutu", 8, new Point(10, 10));
+                kortit[2] = new Kortti("risti", 9, new Point(10, 10));
+                kortit[3] = new Kortti("ruutu", 10, new Point(10, 10));
+                kortit[4] = new Kortti("pata", 11, new Point(10, 10));
+            } else if (kasi.equals(PokeriHanska.VARI)) {
+                kortit[0] = new Kortti("pata", 13, new Point(10, 10));
+                kortit[1] = new Kortti("pata", 8, new Point(10, 10));
+                kortit[2] = new Kortti("pata", 5, new Point(10, 10));
+                kortit[3] = new Kortti("pata", 2, new Point(10, 10));
+                kortit[4] = new Kortti("pata", 14, new Point(10, 10));
+            } else if (kasi.equals(PokeriHanska.TAYSKASI)) {
+                kortit[0] = new Kortti("ruutu", 13, new Point(10, 10));
                 kortit[1] = new Kortti("risti", 5, new Point(10, 10));
                 kortit[2] = new Kortti("risti", 13, new Point(10, 10));
                 kortit[3] = new Kortti("hertta", 5, new Point(10, 10));
                 kortit[4] = new Kortti("ruutu", 5, new Point(10, 10));
-                return kortit;           
-            } else if (kasi.equals(PokeriHanska.NELOSET))
-            {
-                kortit[0] = new Kortti("risti", 14, new Point(10, 10));       
-                kortit[1] = new Kortti("ruutu", 14, new Point(10, 10));        
-                kortit[2] = new Kortti("pata", 14, new Point(10, 10));        
-                kortit[3] = new Kortti("hertta", 14, new Point(10, 10));      
-                kortit[4] = new Kortti("pata", 13, new Point(10, 10));      
-                return kortit;
-            } else if (kasi.equals(PokeriHanska.VARISUORA))
-            {  
-                kortit[0] = new Kortti("hertta", 10, new Point(10, 10));           
-                kortit[1] = new Kortti("hertta", 11, new Point(10, 10));     
-                kortit[2] = new Kortti("hertta", 12, new Point(10, 10));       
-                kortit[3] = new Kortti("hertta", 13, new Point(10, 10));       
-                kortit[4] = new Kortti("hertta", 14, new Point(10, 10));     
-                return kortit;
-            }
-              else
-            {
+            } else if (kasi.equals(PokeriHanska.NELOSET)) {
+                kortit[0] = new Kortti("risti", 14, new Point(10, 10));
+                kortit[1] = new Kortti("ruutu", 14, new Point(10, 10));
+                kortit[2] = new Kortti("pata", 14, new Point(10, 10));
+                kortit[3] = new Kortti("hertta", 14, new Point(10, 10));
+                kortit[4] = new Kortti("pata", 13, new Point(10, 10));
+            } else if (kasi.equals(PokeriHanska.VARISUORA)) {
+                kortit[0] = new Kortti("hertta", 10, new Point(10, 10));
+                kortit[1] = new Kortti("hertta", 11, new Point(10, 10));
+                kortit[2] = new Kortti("hertta", 12, new Point(10, 10));
+                kortit[3] = new Kortti("hertta", 13, new Point(10, 10));
+                kortit[4] = new Kortti("hertta", 14, new Point(10, 10));
+            } else {
                 return null;
             }
+            return kortit;
         }
-
-       
     }
-    
-    
-    
-    
-    
+
 }
