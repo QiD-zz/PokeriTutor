@@ -24,29 +24,28 @@ public class RaahausPeliPaneeli extends JPanel implements ActionListener
     private static Date startTime;
     private static Date endTime;
     private JTextArea peliSuunta;
-    
+
     private static DefaultListModel parhaatTulokset;
-    
+
     private static DefaultListModel listamalli;
     private JEditorPane selitys;
     private static JList lista;
-    
+
     private static JList HoF;
     
     private static final int KORTTEJAPELISSA = 6;
-    
-     private final String[] pelimuodotLyhyesti = {"Parhaimmasta huonoimpaan.",
+
+    private final String[] pelimuodotLyhyesti = {"Parhaimmasta huonoimpaan.",
          "Huonoimmasta parhaimpaan."};
-    
+
     private final String[] pelimuodot = {"Järjestä lista parhaimmasta kädestä huonoimpaan. \n"
             + "Ajanlasku alkaa kun painat OK.", "Järjestä lista huonoimmasta kädestä parhaimpaan. \n"
             + "Ajanlasku alkaa kun painat OK."};
-    
+
     private static boolean parhaimmastaHuonoimpaan;
-    
+
     public RaahausPeliPaneeli()
     {
-
         parhaatTulokset = new DefaultListModel();
         HoF = new JList(parhaatTulokset);
         this.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
@@ -87,13 +86,13 @@ public class RaahausPeliPaneeli extends JPanel implements ActionListener
         for (int i = 0; i < KORTTEJAPELISSA; i++) {
                 Random rnd = new Random();
                 listamalli.addElement(new PokeriHanska(rnd.nextInt(9)));
+        }
+        lista.setCellRenderer(new DefaultListCellRenderer() {
+            public int getHorizontalAlignment()
+            {
+                    return CENTER;
             }
-        lista.setCellRenderer(new DefaultListCellRenderer(){
-
-       public int getHorizontalAlignment() {
-                return CENTER;
-       }
-});
+        });
         
         lista.setDragEnabled(true);
         lista.setTransferHandler(handleri);
@@ -158,8 +157,8 @@ public class RaahausPeliPaneeli extends JPanel implements ActionListener
         }
     }
     
-    public static Object[] haeHanskat() {
-        
+    public static Object[] haeHanskat()
+    {
         Object[] list = listamalli.toArray();
         
         return list;

@@ -1,10 +1,8 @@
 package pokeri;
 
 import java.awt.FlowLayout;
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Random;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -16,6 +14,7 @@ public class KorttiPaneeli extends JPanel
     private JPanel  kortitPane;
     private JPanel  toiminnotPane;
     private KorttipaneelinKuuntelija kuuntelija;
+    private Pakka    pakka;
     private Kortti[] poytakortit = new Kortti[Extern.KORTTEJA_POYDALLA];
 
     public KorttiPaneeli()
@@ -28,6 +27,7 @@ public class KorttiPaneeli extends JPanel
         kortitPane.setLayout(new FlowLayout(FlowLayout.CENTER));
         toiminnotPane.setLayout(new FlowLayout(FlowLayout.CENTER));
 
+        pakka = Pakka.getPakka();
         alustaKortit();
 
         // Toiminnot
@@ -46,6 +46,14 @@ public class KorttiPaneeli extends JPanel
 
     public void alustaKortit()
     {
+        for (int i = 0; i < Extern.KORTTEJA_POYDALLA; i++) {
+            Kortti k = pakka.otaKortti();
+
+            k.setLocation(0, 25);
+            poytakortit[i] = k;
+            kortitPane.add(poytakortit[i]);
+        }
+        /*
         Random rand = new Random();
         Point sijainti = new Point();
 
@@ -57,6 +65,7 @@ public class KorttiPaneeli extends JPanel
             sijainti.setLocation(0, 25);
             kortitPane.add(poytakortit[i]);
         }
+        */
         revalidate();
     }
 
@@ -78,6 +87,8 @@ public class KorttiPaneeli extends JPanel
                 kortitPane.removeAll();
                 poytakortit = null;
                 poytakortit = new Kortti[Extern.KORTTEJA_POYDALLA];
+                pakka = Pakka.uusiPakka();
+                pakka.sekoita();
                 alustaKortit();
             }
         }

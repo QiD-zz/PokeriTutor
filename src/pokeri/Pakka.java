@@ -7,14 +7,18 @@ import java.util.Collections;
 
 public class Pakka
 {
-    private static Pakka instance = null;
+    private long otettu;
     private ArrayList<Kortti> pakka = new ArrayList<Kortti>(0);
+    private static Pakka instance = null;
 
     private Pakka() // Singleton, vain yksi pakka on mahdollinen
     {
+        pakka = null;
         pakka = new ArrayList<Kortti>(Extern.KORTTEJA_PAKASSA);
+        otettu = 0;
+
         for (int i = 0; i < Extern.KORTTEJA_PAKASSA; i++) {
-            Kortti k = new Kortti(Extern.MAAT[i % 4], i + 1, new Point(0, 0));
+            Kortti k = new Kortti(Extern.MAAT[i % 4], (i + 1) % 15, new Point(0, 0));
             pakka.add(i, k);
         }
     }
@@ -26,18 +30,38 @@ public class Pakka
         return instance;
     }
 
-    public void uusiPakka() // Kun halutaan luoda uusi pakka ja tuhota vanha
+    public static Pakka uusiPakka() // Kun halutaan luoda uusi pakka ja tuhota vanha
     {
-        if (pakka.size() > 0)
-            pakka.clear();
-        pakka = null;
+        instance = null;
         instance = new Pakka();
+
+        return instance;
+    }
+
+    public long jaljella()
+    {
+        return pakka.size();
+    }
+
+    /**
+     * Palauta pakan ensimmäinen kortti
+     * @return kortti, tai jos korttia ei löydy, tyhjä kortti
+     */
+    public Kortti otaKortti()
+    {
+        Kortti k;
+
+        try {
+            k = pakka.remove(0);
+            otettu++;
+        } catch (IndexOutOfBoundsException iobe) {
+            k = new Kortti("", 0, new Point());
+        }
+        return k;
     }
 
     public void lisaaKortti(Kortti k)
     {
-        if (pakka.isEmpty())
-            return; // TODO näytä mahdollisesti ruudulla, että pakkaa ei ole alustettu
         pakka.add(k);
     }
     
@@ -51,13 +75,13 @@ public class Pakka
         if (pakka.contains(k)) {
             poistettava = k;
             pakka.remove(k);
-            return poistettava;
+            otettu++;
         }
 
         return poistettava;
     }
 
-    public void sekoitaPakka()
+    public void sekoita()
     {
         Collections.shuffle(pakka);
     }
