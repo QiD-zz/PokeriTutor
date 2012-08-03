@@ -43,6 +43,11 @@ public class Pakka
         return pakka.size();
     }
 
+    public long nostettu()
+    {
+        return otettu;
+    }
+
     /**
      * Palauta pakan ensimmäinen kortti
      * @return kortti, tai jos korttia ei löydy, tyhjä kortti

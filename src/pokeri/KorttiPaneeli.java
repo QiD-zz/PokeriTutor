@@ -6,21 +6,25 @@ import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 
 
 public class KorttiPaneeli extends JPanel
 {
+    private JButton pelaaKasi;
     private JButton uusipeli;
     private JPanel  kortitPane;
     private JPanel  toiminnotPane;
+    private JTextArea tilastot;
     private KorttipaneelinKuuntelija kuuntelija;
     private Pakka    pakka;
     private Kortti[] poytakortit = new Kortti[Extern.KORTTEJA_POYDALLA];
 
-    public KorttiPaneeli()
+    public KorttiPaneeli(JTextArea til)
     {
         kortitPane = new JPanel();
         toiminnotPane = new JPanel();
+        tilastot = til;
 
         // Layout määrittelyt
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
@@ -31,9 +35,12 @@ public class KorttiPaneeli extends JPanel
         alustaKortit();
 
         // Toiminnot
+        pelaaKasi = new JButton("Pelaa käsi");
         uusipeli = new JButton("Uusi peli");
         kuuntelija = new KorttipaneelinKuuntelija();
+        pelaaKasi.addActionListener(kuuntelija);
         uusipeli.addActionListener(kuuntelija);
+        toiminnotPane.add(pelaaKasi);
         toiminnotPane.add(uusipeli);
 
         add(kortitPane);
@@ -53,19 +60,6 @@ public class KorttiPaneeli extends JPanel
             poytakortit[i] = k;
             kortitPane.add(poytakortit[i]);
         }
-        /*
-        Random rand = new Random();
-        Point sijainti = new Point();
-
-        sijainti.setLocation(0, 25); // XXX kun toimii, poista tämä
-        for (int i = 0; i < Extern.KORTTEJA_POYDALLA; i++) {
-            int randArvo = rand.nextInt(Extern.KORTTEJA_MAASSA) + 2 % Extern.KORTTEJA_MAASSA;
-            int randMaa = rand.nextInt(Extern.MAIDEN_LKM);
-            poytakortit[i] = new Kortti(Extern.MAAT[randMaa], randArvo, sijainti);
-            sijainti.setLocation(0, 25);
-            kortitPane.add(poytakortit[i]);
-        }
-        */
         revalidate();
     }
 
@@ -83,13 +77,15 @@ public class KorttiPaneeli extends JPanel
         public void actionPerformed(ActionEvent ae)
         {
             if (ae.getActionCommand().equals("Uusi peli")) {
-                // TODO: Nollaa pakka, nollaa tilastot, nolla elämä
                 kortitPane.removeAll();
                 poytakortit = null;
                 poytakortit = new Kortti[Extern.KORTTEJA_POYDALLA];
                 pakka = Pakka.uusiPakka();
                 pakka.sekoita();
                 alustaKortit();
+            } else if (ae.getActionCommand().equals("Pelaa käsi")) {
+                tilastot.setText(String.format("Pakassa: %d\nNostettu: %d",
+                                 pakka.jaljella(), pakka.nostettu()));
             }
         }
     }

@@ -163,7 +163,6 @@ public class OpiTuntemaanHanskat extends JPanel implements ActionListener
 
             seuraavaParempi.setText(vanhaHanska.getHanskaName());
 
-
             kuvausLaskuri--;
             nykyinenKasi.setText(uusHanska.getHanskaName());
             main.setOhjeTekstiAlue(kuvaukset[kuvausLaskuri]);

@@ -131,7 +131,8 @@ public class MainMenu extends JFrame
         ohjeTekstiAlue.setText(teksti);
     }
 
-    public void setRaahauspeli() {
+    public void setRaahauspeli()
+    {
         ohjeTekstiAlue.setText("");
         paaPaneeli.removeAll();
         paaPaneeli.add(new RaahausPeliPaneeli());
@@ -143,7 +144,7 @@ public class MainMenu extends JFrame
     {
         ohjeTekstiAlue.setText("");
         paaPaneeli.removeAll();
-        paaPaneeli.add(new KorttiPaneeli());
+        paaPaneeli.add(new KorttiPaneeli(ohjeTekstiAlue));
         paaPaneeli.repaint();
         paaPaneeli.validate();
     }
@@ -162,11 +163,13 @@ public class MainMenu extends JFrame
         return this;
     }
 
-    void setEtusivu() {
+    void setEtusivu()
+    {
         ohjeTekstiAlue.setText("");
         paaPaneeli.removeAll();
         paaPaneeli.add(new EtusivuPaneeli(this));
         paaPaneeli.repaint();
         paaPaneeli.validate();
     }
+
 }
