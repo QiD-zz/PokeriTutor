@@ -18,7 +18,7 @@ public class Pakka
         otettu = 0;
 
         for (int i = 0; i < Extern.KORTTEJA_PAKASSA; i++) {
-            Kortti k = new Kortti(Extern.MAAT[i % 4], (i + 1) % 15, new Point(0, 0));
+            Kortti k = new Kortti(Extern.MAAT[i % 4], (i % 14) + 1, new Point(0, 0));
             pakka.add(i, k);
         }
     }
