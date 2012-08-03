@@ -300,7 +300,6 @@ public class OpiTuntemaanHanskat extends JPanel implements ActionListener
                 return null;
 
             setValintaPoisPaalta();
-            repaint();
             return kortit;
         }
     }
@@ -309,6 +308,7 @@ public class OpiTuntemaanHanskat extends JPanel implements ActionListener
     {
         for (int i = 0; i < Extern.KORTTEJA_POYDALLA; i++)
             kortit[i].poistaValinta();
+        repaint();
     }
 
 }
