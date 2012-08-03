@@ -35,6 +35,8 @@ public class Tapahtumakuuntelija implements ActionListener, ItemListener,
                 main.setPokeripeli();
             } else if (ae.getActionCommand().equals(Extern.OPETUS))  {
                 main.setOpetuspaneeli();
+            } else if (ae.getActionCommand().equals(Extern.ETUSIVU)) {
+                main.setEtusivu();
             } else if (ae.getActionCommand().equals("Lopeta")) {
                 main.dispose();
             }

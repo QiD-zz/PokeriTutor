@@ -98,7 +98,7 @@ public class RaahausPeliPaneeli extends JPanel implements ActionListener
         
         lista.setDragEnabled(true);
         lista.setTransferHandler(handleri);
-        lista.setPreferredSize(new Dimension(200, 400));
+        lista.setPreferredSize(new Dimension(200, 300));
         lista.setFixedCellHeight(50);
         lista.setFont(new Font("Arial",Font.BOLD, 20));
      //   lista.setLocation(0, 0);
@@ -116,7 +116,7 @@ public class RaahausPeliPaneeli extends JPanel implements ActionListener
         this.add(oikeanPohja);
         
         JScrollPane jscroll = new JScrollPane(HoF);
-        jscroll.setPreferredSize(new Dimension(125, 350));
+        jscroll.setPreferredSize(new Dimension(125, 300));
         jscroll.setBorder(BorderFactory.createTitledBorder("Parhaat tulokset"));
         this.add(jscroll);
         
