@@ -23,13 +23,9 @@ public class MainMenu extends JFrame
     private JMenuBar menubar;
     private JPanel paaPaneeli;
     private JPanel ohjePaneeli;
-    private JPanel wrapper;
     private JTextArea ohjeTekstiAlue;
     private RaahausPeliPaneeli raahausPeli;
     private Tapahtumakuuntelija tkuuntelija;
-    private final String leiska[] = { BorderLayout.EAST, BorderLayout.WEST,
-                                      BorderLayout.SOUTH, BorderLayout.NORTH,
-                                      BorderLayout.CENTER };
 
     public MainMenu()
     {
@@ -66,59 +62,63 @@ public class MainMenu extends JFrame
         menubar.add(menu);
     }
 
-    private void alustaElementit()
+    private void alustaOhjePaneeli()
     {
-        paaPaneeli = new JPanel();
         ohjePaneeli = new JPanel();
-        wrapper = new JPanel();
-        raahausPeli = new RaahausPeliPaneeli();
+        ohjeTekstiAlue = new JTextArea("OHJE");
+        JButton paluu = new JButton(Extern.ETUSIVU);
+        Dimension paluuSize;
+        Insets insets;
 
-        this.setLayout(new BorderLayout(2, 0));
-        alustaMenu();
-        // Varsinaiset asettelut
-        paaPaneeli.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA,
-                                    Extern.KORKEUS_IKKUNA / 3));
-        paaPaneeli.addMouseListener(tkuuntelija);
-        ohjePaneeli.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA,
-                                     Extern.KORKEUS_IKKUNA / 7));
         ohjePaneeli.setBackground(Color.white);
         ohjePaneeli.setLayout(null);
-        JButton paluu = new JButton(Extern.ETUSIVU);
-        paluu.addActionListener(tkuuntelija);
-        paluu.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA/8,
-                                     Extern.KORKEUS_IKKUNA / 7));
-
-        this.add(paaPaneeli, BorderLayout.CENTER);
-        ohjeTekstiAlue= new JTextArea("OHJE");
-        ohjeTekstiAlue.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 18));
-        ohjeTekstiAlue.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA/8*6,
-                                     Extern.KORKEUS_IKKUNA / 7));
-     //   ohjeTekstiAlue.setLayout(new FlowLayout(FlowLayout.LEFT));
-
-        ohjePaneeli.add(paluu);
-        ohjePaneeli.add(ohjeTekstiAlue);
-
-        Insets insets = ohjePaneeli.getInsets();
-        Dimension size = paluu.getPreferredSize();
-        paluu.setBounds(insets.left, insets.top,
-             size.width, size.height);
-
-        size = ohjeTekstiAlue.getPreferredSize();
-        ohjeTekstiAlue.setBounds(paluu.getWidth() + insets.left, insets.top,
-             size.width, size.height);
-
         ohjeTekstiAlue.setWrapStyleWord(true);
         ohjeTekstiAlue.setEditable(false);
         ohjeTekstiAlue.setLineWrap(true);
 
-        JScrollPane jsc = new JScrollPane(ohjePaneeli);
-        this.add(jsc, BorderLayout.SOUTH);
+        ohjeTekstiAlue.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 18));
+        ohjeTekstiAlue.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA /
+                                        8 * 6, Extern.KORKEUS_IKKUNA / 7));
+        ohjePaneeli.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA,
+                             Extern.KORKEUS_IKKUNA / 7));
 
+        paluu.addActionListener(tkuuntelija);
+        paluu.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA/8,
+                               Extern.KORKEUS_IKKUNA / 7));
+         //   ohjeTekstiAlue.setLayout(new FlowLayout(FlowLayout.LEFT));
+
+        ohjePaneeli.add(paluu);
+        ohjePaneeli.add(ohjeTekstiAlue);
+
+        insets = ohjePaneeli.getInsets();
+        paluuSize = paluu.getPreferredSize();
+        paluu.setBounds(insets.left, insets.top, paluuSize.width,
+                        paluuSize.height);
+        paluuSize = ohjeTekstiAlue.getPreferredSize();
+        ohjeTekstiAlue.setBounds(paluu.getWidth() + insets.left, insets.top,
+                                 paluuSize.width, paluuSize.height);
+    }
+
+    private void alustaElementit()
+    {
+        paaPaneeli = new JPanel();
+        raahausPeli = new RaahausPeliPaneeli();
+
+        setLayout(new BorderLayout(2, 0));
+        alustaMenu();
+        alustaOhjePaneeli();
+        // Varsinaiset asettelut
+        paaPaneeli.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA,
+                                    Extern.KORKEUS_IKKUNA / 3));
+        paaPaneeli.addMouseListener(tkuuntelija);
+
+        add(paaPaneeli, BorderLayout.CENTER);
+        add(new JScrollPane(ohjePaneeli), BorderLayout.SOUTH);
         paaPaneeli.add(new EtusivuPaneeli(this));
 
-        this.setJMenuBar(menubar);
-        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        this.pack();
+        setJMenuBar(menubar);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        pack();
     }
 
     public Object getPaapaneeli()
