@@ -17,6 +17,7 @@ public class Kortti extends JComponent
     private double x;
     private double y;
     private boolean valittu;
+    private boolean valintaPaalla;
     private BufferedImage kuva;
     private Point sijainti;
     public final double LEVEYS = 100;
@@ -33,6 +34,7 @@ public class Kortti extends JComponent
         x = sijainti.getX();
         y = sijainti.getY();
         valittu = false;
+        valintaPaalla = true;
 
         try {
             asetaKuva();
@@ -93,8 +95,15 @@ public class Kortti extends JComponent
 
     public void toggleValinta()
     {
-        valittu = (valittu == false) ? true : false;
-        repaint();
+        if (valintaPaalla) {
+            valittu = (valittu == false) ? true : false;
+            repaint();
+        }
+        
+    }
+    
+    public void setValintaPaalle(boolean arvo) {
+        valintaPaalla = arvo;
     }
 
     @Override
