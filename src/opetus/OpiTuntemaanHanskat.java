@@ -28,6 +28,7 @@ public class OpiTuntemaanHanskat extends JPanel implements ActionListener
     private JLabel edellinenHuonompi;
     private MainMenu main;
 
+    private Kortti[] kortit;
     private int kuvausLaskuri;
 
     private String[] kuvaukset = {"Hai, eli high card, on nimensä mukaisesti käsi,"
@@ -239,7 +240,7 @@ public class OpiTuntemaanHanskat extends JPanel implements ActionListener
 
         private Kortti[] teeKasi(String kasi)
         {
-            Kortti[] kortit = new Kortti[5];
+            kortit = new Kortti[Extern.KORTTEJA_POYDALLA];
 
             if (kasi.equals(PokeriHanska.HAI)) {
                 kortit[0] = new Kortti("ruutu", 4, new Point(10, 10));
@@ -295,11 +296,18 @@ public class OpiTuntemaanHanskat extends JPanel implements ActionListener
                 kortit[2] = new Kortti("hertta", 12, new Point(10, 10));
                 kortit[3] = new Kortti("hertta", 13, new Point(10, 10));
                 kortit[4] = new Kortti("hertta", 14, new Point(10, 10));
-            } else {
+            } else
                 return null;
-            }
+
+            setValintaPoisPaalta();
             return kortit;
         }
+    }
+
+    public void setValintaPoisPaalta()
+    {
+        for (int i = 0; i < Extern.KORTTEJA_POYDALLA; i++)
+            kortit[i].setValintaPaalla(false);
     }
 
 }

@@ -1,10 +1,13 @@
 package pokeri;
 
+import java.awt.*;
 import raahauspeli.RaahausPeliPaneeli;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import javax.swing.*;
 import opetus.OpiTuntemaanHanskat;
 
@@ -86,14 +89,35 @@ public class MainMenu extends JFrame
         ohjePaneeli.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA,
                                      Extern.KORKEUS_IKKUNA / 7));
         ohjePaneeli.setBackground(Color.white);
+        ohjePaneeli.setLayout(null);
+        JButton paluu = new JButton(Extern.ETUSIVU);
+        paluu.addActionListener(tkuuntelija);
+        paluu.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA/8,
+                                     Extern.KORKEUS_IKKUNA / 7));
 
         this.add(paaPaneeli, BorderLayout.CENTER);
         ohjeTekstiAlue= new JTextArea("OHJE");
-        ohjeTekstiAlue.setColumns(50);
+        ohjeTekstiAlue.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 18));
+        ohjeTekstiAlue.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA/8*6,
+                                     Extern.KORKEUS_IKKUNA / 7));
+     //   ohjeTekstiAlue.setLayout(new FlowLayout(FlowLayout.LEFT));
+
+        ohjePaneeli.add(paluu);
+        ohjePaneeli.add(ohjeTekstiAlue);
+
+        Insets insets = ohjePaneeli.getInsets();
+        Dimension size = paluu.getPreferredSize();
+        paluu.setBounds(insets.left, insets.top,
+             size.width, size.height);
+
+        size = ohjeTekstiAlue.getPreferredSize();
+        ohjeTekstiAlue.setBounds(paluu.getWidth() + insets.left, insets.top,
+             size.width, size.height);
+
         ohjeTekstiAlue.setWrapStyleWord(true);
         ohjeTekstiAlue.setEditable(false);
         ohjeTekstiAlue.setLineWrap(true);
-        ohjePaneeli.add(ohjeTekstiAlue);
+
         JScrollPane jsc = new JScrollPane(ohjePaneeli);
         this.add(jsc, BorderLayout.SOUTH);
 
@@ -145,4 +169,11 @@ public class MainMenu extends JFrame
         return this;
     }
 
+    void setEtusivu() {
+        ohjeTekstiAlue.setText("");
+        paaPaneeli.removeAll();
+        paaPaneeli.add(new EtusivuPaneeli(this));
+        paaPaneeli.repaint();
+        paaPaneeli.validate();
+    }
 }

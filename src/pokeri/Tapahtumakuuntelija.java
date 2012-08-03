@@ -12,21 +12,23 @@ public class Tapahtumakuuntelija implements ActionListener, ItemListener,
 
     public Tapahtumakuuntelija(MainMenu m)
     {
-        main = m;
+            main = m;
     }
-
+ 
     @Override
     public void actionPerformed(ActionEvent ae)
     {
-        if (ae.getActionCommand().equals(Extern.RAAHAUSPELI))  {
+        if (ae.getActionCommand().equals(Extern.RAAHAUSPELI)) {
             main.setRaahauspeli();
-        } else if (ae.getActionCommand().equals(Extern.KORTTIPELI))  {
+        } else if (ae.getActionCommand().equals(Extern.KORTTIPELI)) {
             main.setPokeripeli();
         } else if (ae.getActionCommand().equals(Extern.OPETUS))  {
             main.setOpetuspaneeli();
+        } else if (ae.getActionCommand().equals(Extern.ETUSIVU)) {
+            main.setEtusivu();
         } else if (ae.getActionCommand().equals("Lopeta")) {
             main.dispose();
-        }
+        }    
     }
 
     @Override
