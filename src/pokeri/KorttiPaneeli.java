@@ -84,10 +84,27 @@ public class KorttiPaneeli extends JPanel
                 pakka.sekoita();
                 alustaKortit();
             } else if (ae.getActionCommand().equals("Pelaa käsi")) {
-                tilastot.setText(String.format("Pakassa: %d\nNostettu: %d",
+                tilastot.setText(String.format("Pakassa: %d, Nostettu: %d",
                                  pakka.jaljella(), pakka.nostettu()));
+                System.out.println(String.format("Väri: %s", tarkistaVari(poytakortit)));
+                for (String s : Extern.MAAT) {
+                    System.out.println(String.format("%s %d", s,
+                                       pakka.getMaaOtettuCount(s)));
+                }
             }
         }
+    }
+
+    public boolean tarkistaVari(Kortti[] kortit)
+    {
+        for (int i = 1; i < kortit.length; i++) {
+            Kortti k1 = kortit[i - 1];
+            Kortti k2 = kortit[i];
+
+            if (k1.compareVari(k2) == false)
+                return false;
+        }
+        return true;
     }
 
 }

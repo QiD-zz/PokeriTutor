@@ -110,14 +110,26 @@ public class Kortti extends JComponent
     }
 
     /**
-     *  Jos @param <b>k</b> on yhtäsuuri arvoltaan kuin verrattava, palauta 0
-     *  Jos @param <b>k</b> on pienempi, palauta -1, muutoin 1.
+     * @return 0, jos verrattavan kortin arvo on yhtäsuuri, -1 jos pienempi ja
+     * 1 jos suurempi.
      */
-    public int compareTo(Kortti k)
+    public int compareArvo(Kortti k)
     {
         if (k.getArvo() == arvo)
             return 0;
         return (k.getArvo() < arvo) ? -1 : 1;
+    }
+
+    /**
+     * @return palauta true, jos kortin väri on sama kuin verrattavan kortin
+     * väri, muuten false.
+     */
+    public boolean compareVari(Kortti k)
+    {
+        if (k.getMaa().equals("hertta") || k.getMaa().equals("ruutu") &&
+            maa.equals("hertta") || maa.equals("ruutu"))
+            return true;
+        return false;
     }
 
     @Override
