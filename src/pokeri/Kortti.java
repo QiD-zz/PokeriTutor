@@ -10,7 +10,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JComponent;
 
 
-public class Kortti extends JComponent
+public class Kortti extends JComponent implements Comparable
 {
     private String maa;
     private int arvo;
@@ -113,11 +113,17 @@ public class Kortti extends JComponent
      * @return 0, jos verrattavan kortin arvo on yhtäsuuri, -1 jos pienempi ja
      * 1 jos suurempi.
      */
-    public int compareArvo(Kortti k)
+    @Override
+    public int compareTo(Object o)
     {
+        Kortti k = null;
+
+       if (!(o instanceof Kortti))
+           return 2; // XXX Liekkö fiksuin tapa ilmaista, että oliot erilaisia
+        k = (Kortti) o;
         if (k.getArvo() == arvo)
             return 0;
-        return (k.getArvo() < arvo) ? -1 : 1;
+        return (arvo < k.getArvo()) ? -1 : 1;
     }
 
     /**

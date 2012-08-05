@@ -25,9 +25,11 @@ public class Pakka
         for (int i = 0; i < Extern.MAIDEN_LKM; i++)
             otetutMaat.put(Extern.MAAT[i], new Long(0));
 
-        for (int i = 0; i < Extern.KORTTEJA_PAKASSA; i++) {
-            Kortti k = new Kortti(Extern.MAAT[i % 4], (i % 14) + 1, new Point(0, 0));
-            pakka.add(i, k);
+        for (int i = 2; i <= Extern.KORTTEJA_PAKASSA / Extern.MAIDEN_LKM; i++) {
+            for (int maa = 0; maa < Extern.MAIDEN_LKM; maa++) {
+                Kortti k = new Kortti(Extern.MAAT[maa], i, new Point(0, 0));
+                pakka.add(k);
+            }
         }
     }
 
@@ -85,6 +87,7 @@ public class Pakka
                 nmbr++;
                 otetutMaat.put("risti", nmbr);
             }
+            pakka.trimToSize();
             otettu++;
         } catch (IndexOutOfBoundsException iobe) {
             k = new Kortti("", 0, new Point());
@@ -125,12 +128,24 @@ public class Pakka
             otettu++;
         }
 
+        System.out.println(String.format("PAKAN KOKO: %d", pakka.size()));
         return poistettava;
     }
 
     public void sekoita()
     {
         Collections.shuffle(pakka);
+    }
+
+    @Override
+    public String toString()
+    {
+        String full = "";
+
+        for (Kortti k : pakka)
+            full += k.toString() + "\n";
+
+        return full;
     }
 
 }
