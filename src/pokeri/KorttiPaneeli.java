@@ -1,6 +1,7 @@
 package pokeri;
 
 import java.awt.FlowLayout;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
@@ -33,6 +34,7 @@ public class KorttiPaneeli extends JPanel
         toiminnotPane.setLayout(new FlowLayout(FlowLayout.CENTER));
 
         pakka = Pakka.getPakka();
+        pakka.sekoita();
         alustaKortit();
 
         // Toiminnot
@@ -70,7 +72,7 @@ public class KorttiPaneeli extends JPanel
     {
         if (k.getValinta() == false) {
             k.toggleValinta();
-            k.repaint();
+            //k.repaint(); XXX Toimiiko teikällä ilman tätä?
         }
     }
 
@@ -87,16 +89,26 @@ public class KorttiPaneeli extends JPanel
                 pakka.sekoita();
                 alustaKortit();
             } else if (ae.getActionCommand().equals("pelaakasi")) {
-                boolean vari = false;
-                int suora = 0;
-
-                System.out.println(String.format("PAKKA: \n%s", pakka));
+                /* --KESKEN--
+                for (int i = 0; i < poytakortit.length; i++) {
+                    if (poytakortit[i].getValinta() == false) {
+                        Point vanhasijainti = poytakortit[i].getSijainti();
+                        poytakortit[i] = null;
+                        poytakortit[i] = pakka.otaKortti();
+                        if (poytakortit[i].getArvo() == 0) {
+                            System.out.println("Pakka tyhjä");
+                            tilastot.setText("Pakka tyhjä");
+                        }
+                        poytakortit[i].setSijainti(vanhasijainti);
+                        kortitPane.add(poytakortit[i]);
+                    }
+                }
+                kortitPane.repaint();
+                kortitPane.revalidate();
+                */
                 tilastot.setText(String.format("Pakassa: %d, Nostettu: %d",
                                  pakka.jaljella(), pakka.nostettu()));
-                vari = tarkistaVari(poytakortit);
-                suora = tarkistaSuora(poytakortit);
-                System.out.println(String.format("Väri: %s", vari));
-                System.out.println(String.format("Max suora: %d", suora));
+                evaluoiKasi(poytakortit);
             }
         }
     }
@@ -105,6 +117,80 @@ public class KorttiPaneeli extends JPanel
     {
         for (String s : Extern.MAAT)
         System.out.println(String.format("%s %d", s, pakka.getMaaOtettuCount(s)));
+    }
+
+    public void evaluoiKasi(Kortti[] kortit)
+    {
+        int nsamaa = 0;
+        boolean onVari = false;
+        boolean onSuora = false;
+
+        onVari = tarkistaVari(poytakortit);
+        onSuora = tarkistaSuora(poytakortit);
+        nsamaa = tarkistaNSamaa(poytakortit);
+        System.out.println(String.format("Värisuora: %s", tarkistaVarisuora(kortit)));
+        System.out.println(String.format("Väri: %s", onVari));
+        System.out.println(String.format("Suora: %s", onSuora));
+        System.out.println(String.format("N samaa: %d", nsamaa));
+        System.out.println(String.format("Hai: %d", tarkistaHai(kortit)));
+        System.out.println("-------");
+    }
+
+    /*
+     ******** Pokerikädet arvojärjestyksessä ********
+     * (Lähde: http://nettipokeri.info/pokerikadet)
+     *
+     * (Arvokkain ensin)
+     * Värisuora
+     * Neljä samaa
+     * Täyskäsi
+     * Väri
+     * Suora
+     * Kolme samaa
+     * Kaksi paria
+     * Pari
+     * Hai
+     */
+
+    public boolean tarkistaVarisuora(Kortti[] kortit)
+    {
+        if (tarkistaVari(kortit) && tarkistaSuora(kortit))
+            return true;
+        return false;
+    }
+
+    /**
+     * Tarkista montako samaa kortin arvoa löytyy
+     * @param kortit
+     * @return suurin löytynyt lukumäärä
+     */
+    public int tarkistaNSamaa(Kortti[] kortit)
+    {
+        int nsamaa = 0;
+        int nykSam = 0;
+        Kortti[] tmp = new Kortti[kortit.length];
+
+        System.arraycopy(kortit, 0, tmp, 0, tmp.length);
+        Arrays.sort(tmp);
+
+        for (int i = 1; i < tmp.length; i++) {
+            Kortti verrattava = tmp[i - 1];
+
+            if (verrattava.getArvo() == tmp[i].getArvo()) {
+                nykSam++;
+                if (nsamaa < nykSam)
+                    nsamaa = nykSam;
+            } else
+                nykSam = 0;
+        }
+        return (nsamaa > 0) ? nsamaa + 1 : 0;
+    }
+
+    public boolean tarkistaTayskasi(Kortti[] kortit)
+    {
+        boolean onTayskasi = false;
+
+        return onTayskasi;
     }
 
     public boolean tarkistaVari(Kortti[] kortit)
@@ -119,31 +205,33 @@ public class KorttiPaneeli extends JPanel
         return true;
     }
 
-    public int tarkistaSuora(Kortti[] kortit)
+    // FIXME Ilmeisesti ei toimi ihan täysin, joten pitänee testailla vielä
+    public boolean tarkistaSuora(Kortti[] kortit)
     {
-        int nykParas = 0;
-        int maxSuora = 0;
         Kortti[] tmp = new Kortti[kortit.length];
 
         System.arraycopy(kortit, 0, tmp, 0, tmp.length);
         Arrays.sort(tmp);
-        for (int i = 1; i < tmp.length; i++) {
-            Kortti k1 = tmp[i - 1];
-            Kortti k2 = tmp[i];
+        for (int i = 0; i < tmp.length - 1; i++) {
+            Kortti k1 = tmp[i];
+            Kortti k2 = tmp[i + 1];
 
-            if ((k1.getArvo() + 1) == k2.getArvo()) {
-                nykParas++;
-                if (nykParas > maxSuora)
-                    maxSuora = nykParas;
-            } else
-                nykParas = 0;
+            if ((k1.getArvo() + 1) != k2.getArvo())
+                return false;
         }
-        // Ei ota huomioon sitä, että parikin on jo kahden suora, joten
-        // korjataan se tässä
-        if (maxSuora > 0)
-            maxSuora++;
+        return true;
+    }
 
-        return maxSuora;
+    public int tarkistaHai(Kortti[] kortit)
+    {
+        int max = 0;
+
+        for (Kortti k : kortit) {
+            if (k.getArvo() > max)
+                max = k.getArvo();
+        }
+
+        return max;
     }
 
 }

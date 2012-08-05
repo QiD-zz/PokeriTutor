@@ -128,7 +128,6 @@ public class Pakka
             otettu++;
         }
 
-        System.out.println(String.format("PAKAN KOKO: %d", pakka.size()));
         return poistettava;
     }
 
