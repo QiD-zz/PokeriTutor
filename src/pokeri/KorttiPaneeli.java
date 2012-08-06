@@ -38,7 +38,7 @@ public class KorttiPaneeli extends JPanel
         toiminnotPane.setLayout(new FlowLayout(FlowLayout.CENTER));
 
         pakka = Pakka.getPakka();
-        //pakka.sekoita();
+        pakka.sekoita();
         alustaKortit();
 
         // Toiminnot
@@ -96,15 +96,16 @@ public class KorttiPaneeli extends JPanel
                 alustaUusiPeli();
             } else if (ae.getActionCommand().equals("pelaakasi")) {
                 System.out.println(String.format("#### %d ######", vaihtoKrt));
-                if (vaihtoKrt < Extern.VAIHTOJEN_LKM - 1) {
+                if (vaihtoKrt < Extern.VAIHTOJEN_LKM) {
                     vaihdaKortit(poytakortit);
                     tilastot.setText(String.format("Pakassa: %d, Nostettu: %d",
                                      pakka.jaljella(), pakka.nostettu()));
                     evaluoiKasi(poytakortit);
                     vaihtoKrt++;
+                    if (vaihtoKrt >= Extern.VAIHTOJEN_LKM)
+                        pelaaKasi.setEnabled(false);
                 } else {
                     tilastot.setText("Peli loppui");
-                    pelaaKasi.setEnabled(false);
                 }
             } else if (ae.getActionCommand().equals("naytapakka")) {
                 System.out.println("-------PAKKA-------");

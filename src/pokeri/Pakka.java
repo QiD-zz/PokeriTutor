@@ -5,10 +5,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 
 public class Pakka
 {
+    private long seed;
     private long otettu;
     private Map<String, Long> otetutMaat = new HashMap<String, Long>();
     private ArrayList<Kortti> pakka = new ArrayList<Kortti>(0);
@@ -16,6 +18,7 @@ public class Pakka
 
     private Pakka() // Singleton, vain yksi pakka on mahdollinen
     {
+        seed = System.nanoTime();
         pakka = null;
         otetutMaat = null;
         otetutMaat = new HashMap<String, Long>();
@@ -133,7 +136,7 @@ public class Pakka
 
     public void sekoita()
     {
-        Collections.shuffle(pakka);
+        Collections.shuffle(pakka, new Random(seed));
     }
 
     @Override
