@@ -131,12 +131,12 @@ public class Kortti extends JComponent implements Comparable
      * väri, muuten false.
      */
     public boolean compareVari(Kortti k)
-    { // FIXME Mieti tämä uudestaan huomenna uusilla aivoilla
-        if (k.getMaa().equals("hertta") || k.getMaa().equals("ruutu") &&
-            maa.equals("hertta") || maa.equals("ruutu"))
+    {
+        if ((k.getMaa().equals("hertta") || k.getMaa().equals("ruutu")) &&
+            (maa.equals("hertta") || maa.equals("ruutu")))
             return true;
-        if (k.getMaa().equals("risti") || k.getMaa().equals("pata") &&
-            maa.equals("risti") || maa.equals("pata"))
+        if ((k.getMaa().equals("risti") || k.getMaa().equals("pata")) &&
+            (maa.equals("risti") || maa.equals("pata")))
             return true;
         return false;
     }

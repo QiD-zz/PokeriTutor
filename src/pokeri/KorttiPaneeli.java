@@ -15,6 +15,7 @@ public class KorttiPaneeli extends JPanel
 {
     private JButton pelaaKasi;
     private JButton uusipeli;
+    private JButton naytapakka;
     private JPanel  kortitPane;
     private JPanel  toiminnotPane;
     private JTextArea tilastot;
@@ -34,7 +35,7 @@ public class KorttiPaneeli extends JPanel
         toiminnotPane.setLayout(new FlowLayout(FlowLayout.CENTER));
 
         pakka = Pakka.getPakka();
-        pakka.sekoita();
+        //pakka.sekoita();
         alustaKortit();
 
         // Toiminnot
@@ -42,11 +43,17 @@ public class KorttiPaneeli extends JPanel
         pelaaKasi.setActionCommand("pelaakasi");
         uusipeli = new JButton("Uusi peli");
         uusipeli.setActionCommand("uusipeli");
+        naytapakka = new JButton("Näytä pakka");
+        naytapakka.setActionCommand("naytapakka");
+
         kuuntelija = new KorttipaneelinKuuntelija();
         pelaaKasi.addActionListener(kuuntelija);
         uusipeli.addActionListener(kuuntelija);
+        naytapakka.addActionListener(kuuntelija);
+
         toiminnotPane.add(pelaaKasi);
         toiminnotPane.add(uusipeli);
+        toiminnotPane.add(naytapakka);
 
         add(kortitPane);
         add(toiminnotPane);
@@ -89,27 +96,37 @@ public class KorttiPaneeli extends JPanel
                 pakka.sekoita();
                 alustaKortit();
             } else if (ae.getActionCommand().equals("pelaakasi")) {
-                /* --KESKEN--
-                for (int i = 0; i < poytakortit.length; i++) {
-                    if (poytakortit[i].getValinta() == false) {
-                        Point vanhasijainti = poytakortit[i].getSijainti();
-                        poytakortit[i] = null;
-                        poytakortit[i] = pakka.otaKortti();
-                        if (poytakortit[i].getArvo() == 0) {
-                            System.out.println("Pakka tyhjä");
-                            tilastot.setText("Pakka tyhjä");
-                        }
-                        poytakortit[i].setSijainti(vanhasijainti);
-                        kortitPane.add(poytakortit[i]);
-                    }
-                }
-                kortitPane.repaint();
-                kortitPane.revalidate();
-                */
+                vaihdaKortit(poytakortit);
                 tilastot.setText(String.format("Pakassa: %d, Nostettu: %d",
                                  pakka.jaljella(), pakka.nostettu()));
                 evaluoiKasi(poytakortit);
+            } else if (ae.getActionCommand().equals("naytapakka")) {
+                System.out.println("-------PAKKA-------");
+                System.out.println(String.format("%s", pakka));
+                System.out.println("------/PAKKA-------");
             }
+        }
+    }
+
+    public void vaihdaKortit(Kortti[] kortit)
+    {
+       for (int i = 0; i < poytakortit.length; i++) {
+        if (poytakortit[i].getValinta() == false) {
+            Point vanhasijainti = poytakortit[i].getSijainti();
+
+            kortitPane.remove(poytakortit[i]);
+            poytakortit[i] = null;
+            poytakortit[i] = pakka.otaKortti();
+            if (poytakortit[i].getArvo() == 0) {
+                System.out.println("Pakka tyhjä");
+                tilastot.setText("Pakka tyhjä");
+                break;
+            }
+            poytakortit[i].setSijainti(vanhasijainti);
+            kortitPane.add(poytakortit[i]);
+        }
+        kortitPane.repaint();
+        kortitPane.revalidate();
         }
     }
 
@@ -220,6 +237,16 @@ public class KorttiPaneeli extends JPanel
                 return false;
         }
         return true;
+    }
+
+    public boolean tarkistaKaksiParia(Kortti[] kortit)
+    {
+        Kortti k1 = kortit[0];
+        Kortti k2 = kortit[1];
+        Kortti k3 = kortit[2];
+        Kortti k4 = kortit[3];
+        Kortti k5 = kortit[4];
+
     }
 
     public int tarkistaHai(Kortti[] kortit)
