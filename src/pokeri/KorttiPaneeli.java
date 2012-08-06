@@ -4,7 +4,14 @@ import java.awt.FlowLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -95,12 +102,15 @@ public class KorttiPaneeli extends JPanel
                 pelaaKasi.setEnabled(true);
                 alustaUusiPeli();
             } else if (ae.getActionCommand().equals("pelaakasi")) {
-                System.out.println(String.format("#### %d ######", vaihtoKrt));
                 if (vaihtoKrt < Extern.VAIHTOJEN_LKM) {
+                    Kortti[] tmp = new Kortti[poytakortit.length];
+
+                    System.arraycopy(poytakortit, 0, tmp, 0, tmp.length);
+                    Arrays.sort(tmp);
+                    evaluoiKasi(tmp);
                     vaihdaKortit(poytakortit);
                     tilastot.setText(String.format("Pakassa: %d, Nostettu: %d",
                                      pakka.jaljella(), pakka.nostettu()));
-                    evaluoiKasi(poytakortit);
                     vaihtoKrt++;
                     if (vaihtoKrt >= Extern.VAIHTOJEN_LKM)
                         pelaaKasi.setEnabled(false);
@@ -111,6 +121,7 @@ public class KorttiPaneeli extends JPanel
                 System.out.println("-------PAKKA-------");
                 System.out.println(String.format("%s", pakka));
                 System.out.println("------/PAKKA-------");
+                evaluoiKasi(poytakortit);
             }
         }
     }
@@ -157,6 +168,7 @@ public class KorttiPaneeli extends JPanel
     public void evaluoiKasi(Kortti[] kortit)
     {
         int nsamaa = 0;
+        int tkasiVaiKaksiParia = 0;
         boolean onVari = false;
         boolean onSuora = false;
 
@@ -168,6 +180,15 @@ public class KorttiPaneeli extends JPanel
         System.out.println(String.format("Suora: %s", onSuora));
         System.out.println(String.format("N samaa: %d", nsamaa));
         System.out.println(String.format("Hai: %d", tarkistaHai(kortit)));
+        tkasiVaiKaksiParia = tarkistaTayskasiTaiKaksiParia(kortit);
+        System.out.println(String.format("tarkistaTaysKjne: %d", tkasiVaiKaksiParia));
+        switch (tkasiVaiKaksiParia) {
+        case 2:
+            System.out.println("Kaksi paria");
+            break;
+        case 3:
+            System.out.println("Täyskäsi");
+        }
         System.out.println("-------");
     }
 
@@ -203,15 +224,11 @@ public class KorttiPaneeli extends JPanel
     {
         int nsamaa = 0;
         int nykSam = 0;
-        Kortti[] tmp = new Kortti[kortit.length];
 
-        System.arraycopy(kortit, 0, tmp, 0, tmp.length);
-        Arrays.sort(tmp);
+        for (int i = 1; i < kortit.length; i++) {
+            Kortti edel = kortit[i - 1];
 
-        for (int i = 1; i < tmp.length; i++) {
-            Kortti verrattava = tmp[i - 1];
-
-            if (verrattava.getArvo() == tmp[i].getArvo()) {
+            if (edel.getArvo() == kortit[i].getArvo()) {
                 nykSam++;
                 if (nsamaa < nykSam)
                     nsamaa = nykSam;
@@ -221,50 +238,54 @@ public class KorttiPaneeli extends JPanel
         return (nsamaa > 0) ? nsamaa + 1 : 0;
     }
 
-    public boolean tarkistaTayskasi(Kortti[] kortit)
+    /**
+     * Tarkista tehottomasti onko kyseessä kaksi paria vai täyskäsi
+     * @param kortit
+     * @return 2, jos kyseessä on kaksi paria, 3 jos kyseessä täyskäsi,
+     * 0 jos ei mitään
+     */
+    public int tarkistaTayskasiTaiKaksiParia(Kortti[] kortit)
     {
-        boolean onTayskasi = false;
+        int kesk = 0;
+        int[] esiintymat = new int[kortit.length];
 
-        return onTayskasi;
+        // Toteutus on typerä, hidas, mutta toimiva
+        for (int i = 0; i < kortit.length; i++) {
+            esiintymat[i] = 0;
+
+            for (int j = 0; j < kortit.length; j++) {
+                if (kortit[i].getArvo() == kortit[j].getArvo())
+                    esiintymat[i]++;
+            }
+        }
+        Arrays.sort(esiintymat);
+        kesk = (int) Math.ceil(esiintymat.length / 2.0);
+        if (esiintymat[0] != 2 || esiintymat[1] != 2)
+            return 0;
+
+        return esiintymat[kesk];
     }
 
     public boolean tarkistaVari(Kortti[] kortit)
     {
         for (int i = 1; i < kortit.length; i++) {
-            Kortti k1 = kortit[i - 1];
-            Kortti k2 = kortit[i];
+            Kortti edel = kortit[i - 1];
 
-            if (k1.compareVari(k2) == false)
+            if (edel.compareVari(kortit[i]) == false)
                 return false;
         }
         return true;
     }
 
-    // FIXME Ilmeisesti ei toimi ihan täysin, joten pitänee testailla vielä
     public boolean tarkistaSuora(Kortti[] kortit)
     {
-        Kortti[] tmp = new Kortti[kortit.length];
+        for (int i = 0; i < kortit.length - 1; i++) {
+            Kortti seur = kortit[i + 1];
 
-        System.arraycopy(kortit, 0, tmp, 0, tmp.length);
-        Arrays.sort(tmp);
-        for (int i = 0; i < tmp.length - 1; i++) {
-            Kortti k1 = tmp[i];
-            Kortti k2 = tmp[i + 1];
-
-            if ((k1.getArvo() + 1) != k2.getArvo())
+            if ((kortit[i].getArvo() + 1) != seur.getArvo())
                 return false;
         }
         return true;
-    }
-
-    public boolean tarkistaKaksiParia(Kortti[] kortit)
-    {
-        Kortti k1 = kortit[0];
-        Kortti k2 = kortit[1];
-        Kortti k3 = kortit[2];
-        Kortti k4 = kortit[3];
-        Kortti k5 = kortit[4];
-
     }
 
     public int tarkistaHai(Kortti[] kortit)
