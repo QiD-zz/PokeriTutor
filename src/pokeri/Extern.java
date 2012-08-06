@@ -9,6 +9,7 @@ public class Extern
     public final static int KORTTEJA_MAASSA = 13;
     public final static int LEVEYS_IKKUNA = 1000;
     public final static int KORKEUS_IKKUNA = 1000;
+    public final static int VAIHTOJEN_LKM = 2;
     public final static String[] MAAT = { "ruutu", "hertta", "pata", "risti" };
 
     //komennot

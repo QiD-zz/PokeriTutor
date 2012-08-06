@@ -132,11 +132,7 @@ public class Kortti extends JComponent implements Comparable
      */
     public boolean compareVari(Kortti k)
     {
-        if ((k.getMaa().equals("hertta") || k.getMaa().equals("ruutu")) &&
-            (maa.equals("hertta") || maa.equals("ruutu")))
-            return true;
-        if ((k.getMaa().equals("risti") || k.getMaa().equals("pata")) &&
-            (maa.equals("risti") || maa.equals("pata")))
+        if (maa.equals(k.getMaa()))
             return true;
         return false;
     }

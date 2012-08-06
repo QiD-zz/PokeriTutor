@@ -13,6 +13,7 @@ import javax.swing.JTextArea;
 
 public class KorttiPaneeli extends JPanel
 {
+    private int     vaihtoKrt;
     private JButton pelaaKasi;
     private JButton uusipeli;
     private JButton naytapakka;
@@ -25,6 +26,8 @@ public class KorttiPaneeli extends JPanel
 
     public KorttiPaneeli(JTextArea til)
     {
+        vaihtoKrt = 0;
+
         kortitPane = new JPanel();
         toiminnotPane = new JPanel();
         tilastot = til;
@@ -89,23 +92,37 @@ public class KorttiPaneeli extends JPanel
         public void actionPerformed(ActionEvent ae)
         {
             if (ae.getActionCommand().equals("uusipeli")) {
-                kortitPane.removeAll();
-                poytakortit = null;
-                poytakortit = new Kortti[Extern.KORTTEJA_POYDALLA];
-                pakka = Pakka.uusiPakka();
-                pakka.sekoita();
-                alustaKortit();
+                pelaaKasi.setEnabled(true);
+                alustaUusiPeli();
             } else if (ae.getActionCommand().equals("pelaakasi")) {
-                vaihdaKortit(poytakortit);
-                tilastot.setText(String.format("Pakassa: %d, Nostettu: %d",
-                                 pakka.jaljella(), pakka.nostettu()));
-                evaluoiKasi(poytakortit);
+                System.out.println(String.format("#### %d ######", vaihtoKrt));
+                if (vaihtoKrt < Extern.VAIHTOJEN_LKM - 1) {
+                    vaihdaKortit(poytakortit);
+                    tilastot.setText(String.format("Pakassa: %d, Nostettu: %d",
+                                     pakka.jaljella(), pakka.nostettu()));
+                    evaluoiKasi(poytakortit);
+                    vaihtoKrt++;
+                } else {
+                    tilastot.setText("Peli loppui");
+                    pelaaKasi.setEnabled(false);
+                }
             } else if (ae.getActionCommand().equals("naytapakka")) {
                 System.out.println("-------PAKKA-------");
                 System.out.println(String.format("%s", pakka));
                 System.out.println("------/PAKKA-------");
             }
         }
+    }
+
+    public void alustaUusiPeli()
+    {
+        kortitPane.removeAll();
+        poytakortit = null;
+        poytakortit = new Kortti[Extern.KORTTEJA_POYDALLA];
+        pakka = Pakka.uusiPakka();
+        pakka.sekoita();
+        alustaKortit();
+        vaihtoKrt = 0;
     }
 
     public void vaihdaKortit(Kortti[] kortit)
