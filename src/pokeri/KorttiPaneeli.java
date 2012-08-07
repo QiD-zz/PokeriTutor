@@ -4,14 +4,7 @@ import java.awt.FlowLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -23,7 +16,7 @@ public class KorttiPaneeli extends JPanel
     private int     vaihtoKrt;
     private JButton pelaaKasi;
     private JButton uusipeli;
-    private JButton naytapakka;
+    private JButton jaa;
     private JPanel  kortitPane;
     private JPanel  toiminnotPane;
     private JTextArea tilastot;
@@ -51,19 +44,20 @@ public class KorttiPaneeli extends JPanel
         // Toiminnot
         pelaaKasi = new JButton("Pelaa käsi");
         pelaaKasi.setActionCommand("pelaakasi");
+        pelaaKasi.setEnabled(false);
         uusipeli = new JButton("Uusi peli");
         uusipeli.setActionCommand("uusipeli");
-        naytapakka = new JButton("Näytä pakka");
-        naytapakka.setActionCommand("naytapakka");
+        jaa = new JButton("Jää tähän");
+        jaa.setActionCommand("jaa");
 
         kuuntelija = new KorttipaneelinKuuntelija();
         pelaaKasi.addActionListener(kuuntelija);
         uusipeli.addActionListener(kuuntelija);
-        naytapakka.addActionListener(kuuntelija);
+        jaa.addActionListener(kuuntelija);
 
         toiminnotPane.add(pelaaKasi);
+        toiminnotPane.add(jaa);
         toiminnotPane.add(uusipeli);
-        toiminnotPane.add(naytapakka);
 
         add(kortitPane);
         add(toiminnotPane);
@@ -96,35 +90,30 @@ public class KorttiPaneeli extends JPanel
         @Override
         public void actionPerformed(ActionEvent ae)
         {
-            Kortti[] tmp = new Kortti[poytakortit.length];
-
             if (ae.getActionCommand().equals("uusipeli")) {
                 pelaaKasi.setEnabled(true);
                 alustaUusiPeli();
+                uusipeli.setEnabled(false);
             } else if (ae.getActionCommand().equals("pelaakasi")) {
                 if (vaihtoKrt < Extern.VAIHTOJEN_LKM) {
-                    System.arraycopy(poytakortit, 0, tmp, 0, tmp.length);
-                    Arrays.sort(tmp);
-
-                    evaluoiKasi(tmp);
+                    evaluoiKasi(poytakortit);
                     vaihdaKortit(poytakortit);
                     tilastot.setText(String.format("Pakassa: %d, Nostettu: %d",
                                      pakka.jaljella(), pakka.nostettu()));
                     vaihtoKrt++;
                     if (vaihtoKrt == Extern.VAIHTOJEN_LKM) {
                         pelaaKasi.setEnabled(false);
-                        tilastot.setText("Peli loppui");
+                        uusipeli.setEnabled(true);
+                        evaluoiKasi(poytakortit);
+                        //tilastot.setText("Peli loppui");
                     }
                 }
-            } else if (ae.getActionCommand().equals("naytapakka")) {
+            } else if (ae.getActionCommand().equals("jaa")) {
                 System.out.println("-------PAKKA-------");
                 System.out.println(String.format("%s", pakka));
                 System.out.println("------/PAKKA-------");
 
-                System.arraycopy(poytakortit, 0, tmp, 0, tmp.length);
-                Arrays.sort(tmp);
-
-                evaluoiKasi(tmp);
+                evaluoiKasi(poytakortit);
             }
         }
     }
@@ -138,6 +127,7 @@ public class KorttiPaneeli extends JPanel
         pakka.sekoita();
         alustaKortit();
         vaihtoKrt = 0;
+        tilastot.setText("");
     }
 
     public void vaihdaKortit(Kortti[] kortit)
@@ -172,27 +162,61 @@ public class KorttiPaneeli extends JPanel
     {
         int nsamaa = 0;
         int tkasiVaiKaksiParia = 0;
+        boolean onVariSuora = false;
         boolean onVari = false;
         boolean onSuora = false;
+        Kortti[] tmp = new Kortti[poytakortit.length];
 
-        onVari = tarkistaVari(poytakortit);
-        onSuora = tarkistaSuora(poytakortit);
-        nsamaa = tarkistaNSamaa(poytakortit);
-        System.out.println(String.format("Värisuora: %s", tarkistaVarisuora(kortit)));
-        System.out.println(String.format("Väri: %s", onVari));
-        System.out.println(String.format("Suora: %s", onSuora));
-        System.out.println(String.format("N samaa: %d", nsamaa));
-        System.out.println(String.format("Hai: %d", tarkistaHai(kortit)));
-        tkasiVaiKaksiParia = tarkistaTayskasiTaiKaksiParia(kortit);
-        System.out.println(String.format("tarkistaTaysKjne: %d", tkasiVaiKaksiParia));
-        switch (tkasiVaiKaksiParia) {
-        case 2:
-            System.out.println("Kaksi paria");
-            break;
-        case 3:
-            System.out.println("Täyskäsi");
+        System.arraycopy(poytakortit, 0, tmp, 0, tmp.length);
+        Arrays.sort(tmp);
+
+        onVariSuora = tarkistaVarisuora(tmp);
+        onVari = tarkistaVari(tmp);
+        onSuora = tarkistaSuora(tmp);
+        nsamaa = tarkistaNSamaa(tmp);
+        tkasiVaiKaksiParia = tarkistaTayskasiTaiKaksiParia(tmp);
+
+        if (onVariSuora)
+            tilastot.setText("Värisuora");
+        else if (onVari)
+            tilastot.setText("Väri");
+        else if (onSuora)
+            tilastot.setText("Suora");
+        else {
+            if (nsamaa > 0) {
+                switch (nsamaa) {
+                case 2:
+                    tilastot.setText("Pari");
+                    break;
+                case 3:
+                    tilastot.setText("Kolme samaa");
+                    break;
+                case 4:
+                    tilastot.setText("Neloset");
+                    break;
+                case 5:
+                    tilastot.setText("Vitoset");
+                default:
+                    break;
+                }
+            }
+
+            if (tkasiVaiKaksiParia > 0) {
+                switch (tkasiVaiKaksiParia) {
+                case 2: // Kaksi paria
+                    tilastot.setText("Kaksi paria");
+                    break;
+                case 5:
+                    tilastot.setText("Täyskäsi");
+                    break;
+                default:
+                    break;
+                }
+            }
+
+            if (tilastot.getText().equals(""))
+                tilastot.setText(Integer.toString(tarkistaHai(kortit)));
         }
-        System.out.println("-------");
     }
 
     /*
@@ -244,7 +268,7 @@ public class KorttiPaneeli extends JPanel
     /**
      * Tarkista tehottomasti onko kyseessä kaksi paria vai täyskäsi
      * @param kortit
-     * @return 2, jos kyseessä on kaksi paria, 3 jos kyseessä täyskäsi,
+     * @return 2, jos kyseessä on kaksi paria, 5 jos kyseessä täyskäsi,
      * 0 jos ei mitään
      */
     public int tarkistaTayskasiTaiKaksiParia(Kortti[] kortit)
@@ -262,11 +286,30 @@ public class KorttiPaneeli extends JPanel
             }
         }
         Arrays.sort(esiintymat);
-        kesk = (int) Math.ceil(esiintymat.length / 2.0);
-        if (esiintymat[0] != 2 || esiintymat[1] != 2)
-            return 0;
+        System.out.print("[");
+        for (int i = 0; i < esiintymat.length; i++)
+            System.out.print(String.format("%d, ", esiintymat[i]));
+        System.out.println("]");
 
-        return esiintymat[kesk];
+        kesk = (int) Math.floor(esiintymat.length / 2.0);
+        // Täydessä kädessä: 2 2 [3] 3 3 tai 3 3 [3] 2 2
+        if (esiintymat[kesk] == 3) { // Mahdollinen täyskäsi
+            if (esiintymat[1] == 2 || // Jos 2. tai 4. kortti on 2 -> tk
+                esiintymat[esiintymat.length - 2] == 2)
+                    return 5;
+        }
+        System.out.println(String.format("[[%d, %d]]", esiintymat[0], esiintymat[esiintymat.length - 1]));
+        System.out.println(String.format("kesk-1: %d, kesk+1: %d", esiintymat[kesk - 1], esiintymat[kesk + 1]));
+        // Kaksi paria: 1 2 [2] 2 2 tai 2 2 [2] 2 1
+        if (esiintymat[0] == 1 ||
+            esiintymat[esiintymat.length - 1] == 1) {
+                if (esiintymat[kesk - 1] == 2 &&
+                    esiintymat[kesk + 1] == 2) {
+                        return 2;
+                }
+        }
+
+        return 0;
     }
 
     public boolean tarkistaVari(Kortti[] kortit)

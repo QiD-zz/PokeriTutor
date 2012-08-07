@@ -7,15 +7,15 @@ import javax.swing.*;
 
 
 /*
- *  +---------+-------------+
+ *  +-----------------------+
  *  |[menu]                 |
  *  +-----------------------+
  *  |      paaPaneeli       |
- *  |                       | }--.
- *  |                       |     `-   `wrapper` sitoo paaPaneeli
- *  |                       |      .´¨  ja ohjePaneelin yhteen
- *  +-----------------------+    .´
- *  |      ohjePaneeli      | }-´
+ *  |                       |
+ *  |                       |
+ *  |                       |
+ *  +-----------------------+
+ *  |      ohjePaneeli      |
  *  +-----------------------+
  */
 public class MainMenu extends JFrame
