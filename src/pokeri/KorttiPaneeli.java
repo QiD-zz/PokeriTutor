@@ -174,12 +174,12 @@ public class KorttiPaneeli extends JPanel
 
     public String otetutMaat()
     {
-        String s = "";
+        StringBuilder sb = new StringBuilder();
 
         for (String m : Extern.MAAT)
-            s += String.format("%s %d", m, pakka.getMaaOtettuCount(m));
+            sb.append(String.format("%s %d", m, pakka.getMaaOtettuCount(m)));
 
-        return s;
+        return sb.toString();
     }
 
     public void evaluoiKasi(Kortti[] kortit)

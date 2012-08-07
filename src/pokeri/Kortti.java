@@ -207,7 +207,6 @@ public class Kortti extends JComponent implements Comparable
                 int sijt = 0; // Labelin tekstin sijainti
 
                 g.setFont(new Font(Font.SERIF, Font.PLAIN, 20));
-                fmt = g2.getFontMetrics();
                 g2.setPaint(Color.getHSBColor(336, 334, 100));
                 alareuna = (int) ((int) y + KORKEUS) - 64;
                 sijt = alareuna + 20;

@@ -143,12 +143,12 @@ public class Pakka
     @Override
     public String toString()
     {
-        String full = "";
+        StringBuilder sb = new StringBuilder();
 
         for (Kortti k : pakka)
-            full += k.toString() + "\n";
+            sb.append(k.toString()).append("\n");
 
-        return full;
+        return sb.toString();
     }
 
 }
