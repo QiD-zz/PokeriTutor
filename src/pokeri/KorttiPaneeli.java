@@ -87,11 +87,8 @@ public class KorttiPaneeli extends JPanel
 
     public void merkkaaValituksi(Kortti k)
     {
-        if (k.getValinta() == false) {
+        if (k.getValinta() == false)
             k.toggleValinta();
-            //k.repaint(); XXX Toimiiko teikällä ilman tätä?
-            //juu toimii
-        }
     }
 
     public class KorttipaneelinKuuntelija implements ActionListener
@@ -99,33 +96,35 @@ public class KorttiPaneeli extends JPanel
         @Override
         public void actionPerformed(ActionEvent ae)
         {
+            Kortti[] tmp = new Kortti[poytakortit.length];
+
             if (ae.getActionCommand().equals("uusipeli")) {
                 pelaaKasi.setEnabled(true);
                 alustaUusiPeli();
             } else if (ae.getActionCommand().equals("pelaakasi")) {
-                
                 if (vaihtoKrt < Extern.VAIHTOJEN_LKM) {
-                    Kortti[] tmp = new Kortti[poytakortit.length];
-
                     System.arraycopy(poytakortit, 0, tmp, 0, tmp.length);
                     Arrays.sort(tmp);
+
                     evaluoiKasi(tmp);
                     vaihdaKortit(poytakortit);
                     tilastot.setText(String.format("Pakassa: %d, Nostettu: %d",
                                      pakka.jaljella(), pakka.nostettu()));
                     vaihtoKrt++;
-                   
                     if (vaihtoKrt == Extern.VAIHTOJEN_LKM) {
                         pelaaKasi.setEnabled(false);
                         tilastot.setText("Peli loppui");
                     }
-                        
-                } 
+                }
             } else if (ae.getActionCommand().equals("naytapakka")) {
                 System.out.println("-------PAKKA-------");
                 System.out.println(String.format("%s", pakka));
                 System.out.println("------/PAKKA-------");
-                evaluoiKasi(poytakortit);
+
+                System.arraycopy(poytakortit, 0, tmp, 0, tmp.length);
+                Arrays.sort(tmp);
+
+                evaluoiKasi(tmp);
             }
         }
     }
