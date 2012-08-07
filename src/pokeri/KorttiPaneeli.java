@@ -90,6 +90,7 @@ public class KorttiPaneeli extends JPanel
         if (k.getValinta() == false) {
             k.toggleValinta();
             //k.repaint(); XXX Toimiiko teikällä ilman tätä?
+            //juu toimii
         }
     }
 
@@ -102,6 +103,7 @@ public class KorttiPaneeli extends JPanel
                 pelaaKasi.setEnabled(true);
                 alustaUusiPeli();
             } else if (ae.getActionCommand().equals("pelaakasi")) {
+                
                 if (vaihtoKrt < Extern.VAIHTOJEN_LKM) {
                     Kortti[] tmp = new Kortti[poytakortit.length];
 
@@ -112,11 +114,13 @@ public class KorttiPaneeli extends JPanel
                     tilastot.setText(String.format("Pakassa: %d, Nostettu: %d",
                                      pakka.jaljella(), pakka.nostettu()));
                     vaihtoKrt++;
-                    if (vaihtoKrt >= Extern.VAIHTOJEN_LKM)
+                   
+                    if (vaihtoKrt == Extern.VAIHTOJEN_LKM) {
                         pelaaKasi.setEnabled(false);
-                } else {
-                    tilastot.setText("Peli loppui");
-                }
+                        tilastot.setText("Peli loppui");
+                    }
+                        
+                } 
             } else if (ae.getActionCommand().equals("naytapakka")) {
                 System.out.println("-------PAKKA-------");
                 System.out.println(String.format("%s", pakka));

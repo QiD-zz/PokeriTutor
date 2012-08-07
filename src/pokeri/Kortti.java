@@ -17,6 +17,7 @@ public class Kortti extends JComponent implements Comparable
     private double x;
     private double y;
     private boolean valittu;
+    private boolean valintaPaalla;
     private BufferedImage kuva;
     private Point sijainti;
     public final double LEVEYS = 100;
@@ -33,6 +34,7 @@ public class Kortti extends JComponent implements Comparable
         x = sijainti.getX();
         y = sijainti.getY();
         valittu = false;
+        valintaPaalla = true;
 
         try {
             asetaKuva();
@@ -100,6 +102,10 @@ public class Kortti extends JComponent implements Comparable
     public void poistaValinta()
     {
         valittu = false;
+    }
+    
+    public void valintaPaalleTaiPois(boolean arvo) {
+        valintaPaalla = arvo;
     }
 
     @Override
@@ -194,20 +200,23 @@ public class Kortti extends JComponent implements Comparable
                      fontinLeveys, (int)y + (int)(KORKEUS / 2 + 10));
         }
 
-        if (valittu) { // Merkkaa kortti valituksi
-            int alareuna = 0; // Kortin alareuna
-            int sijt = 0; // Labelin tekstin sijainti
-
-            g.setFont(new Font(Font.SERIF, Font.PLAIN, 20));
-            fmt = g2.getFontMetrics();
-            g2.setPaint(Color.getHSBColor(336, 334, 100));
-            alareuna = (int) ((int) y + KORKEUS) - 64;
-            sijt = alareuna + 20;
-            g2.fill(new RoundRectangle2D.Double(x + 1, alareuna, LEVEYS - 1,
-                    KORKEUS / 5, 0, 0));
-            g2.setPaint(Color.getHSBColor(73, 100, 68));
-            g2.drawString("Valittu", (int)x + 15, sijt);
+        if (valintaPaalla) {
+            if (valittu) { // Merkkaa kortti valituksi         
+                int alareuna = 0; // Kortin alareuna         
+                int sijt = 0; // Labelin tekstin sijainti  
+                
+                g.setFont(new Font(Font.SERIF, Font.PLAIN, 20));           
+                fmt = g2.getFontMetrics();           
+                g2.setPaint(Color.getHSBColor(336, 334, 100));           
+                alareuna = (int) ((int) y + KORKEUS) - 64;          
+                sijt = alareuna + 20;          
+                g2.fill(new RoundRectangle2D.Double(x + 1, alareuna, LEVEYS - 1,            
+                        KORKEUS / 5, 0, 0));          
+                g2.setPaint(Color.getHSBColor(73, 100, 68));         
+                g2.drawString("Valittu", (int)x + 15, sijt);
+            }
         }
+        
     }
 
     private BufferedImage rotate(BufferedImage image, double angle)
