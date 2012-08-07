@@ -137,6 +137,7 @@ public class Pakka
     public void sekoita()
     {
         Collections.shuffle(pakka, new Random(seed));
+        Collections.shuffle(pakka, new Random(seed));
     }
 
     @Override

@@ -65,7 +65,8 @@ public class MainMenu extends JFrame
     private void alustaOhjePaneeli()
     {
         ohjePaneeli = new JPanel();
-        ohjeTekstiAlue = new JTextArea("OHJE");
+        ohjeTekstiAlue = new JTextArea("Ohjeet ja tilastot " +
+                                       "käyttävät tätä tilaa");
         JButton paluu = new JButton(Extern.ETUSIVU);
         Dimension paluuSize;
         Insets insets;
@@ -83,9 +84,8 @@ public class MainMenu extends JFrame
                              Extern.KORKEUS_IKKUNA / 7));
 
         paluu.addActionListener(tkuuntelija);
-        paluu.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA/8,
+        paluu.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA / 8,
                                Extern.KORKEUS_IKKUNA / 7));
-         //   ohjeTekstiAlue.setLayout(new FlowLayout(FlowLayout.LEFT));
 
         ohjePaneeli.add(paluu);
         ohjePaneeli.add(ohjeTekstiAlue);
@@ -126,6 +126,11 @@ public class MainMenu extends JFrame
         return paaPaneeli;
     }
 
+    public String getOhjeTeksti()
+    {
+        return ohjeTekstiAlue.getText();
+    }
+
     public void setOhjeTekstiAlue(String teksti)
     {
         ohjeTekstiAlue.setText(teksti);
@@ -142,9 +147,9 @@ public class MainMenu extends JFrame
 
     public void setPokeripeli()
     {
-        ohjeTekstiAlue.setText("");
+        ohjeTekstiAlue.setText("Aloita valitsemalla Uusi peli");
         paaPaneeli.removeAll();
-        paaPaneeli.add(new KorttiPaneeli(ohjeTekstiAlue));
+        paaPaneeli.add(new KorttiPaneeli(this));
         paaPaneeli.repaint();
         paaPaneeli.validate();
     }

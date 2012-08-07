@@ -31,7 +31,7 @@ public class OpiTuntemaanHanskat extends JPanel implements ActionListener
     private Kortti[] kortit;
     private int kuvausLaskuri;
 
-    private String[] kuvaukset = {"Hai, eli high card, on nimensä mukaisesti käsi,"
+    private final String[] kuvaukset = {"Hai, eli high card, on nimensä mukaisesti käsi,"
             + " jossa ei ole mitään kombinaatioita vaan käden arvon määrittää sen "
             + "korkein kortti. Esimerkkikädessä korkein kortti on ässä, joten käden"
             + " nimi on \"ässä-hai\".","Pari on käsi, jossa on kaksi samaa korttia."

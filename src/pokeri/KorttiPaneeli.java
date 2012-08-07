@@ -8,29 +8,30 @@ import java.util.Arrays;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 
 
 public class KorttiPaneeli extends JPanel
 {
     private int     vaihtoKrt;
-    private JButton pelaaKasi;
-    private JButton uusipeli;
     private JButton jaa;
+    private JButton pelaaKasi;
+    private JButton statistiikka;
+    private JButton uusipeli;
     private JPanel  kortitPane;
     private JPanel  toiminnotPane;
-    private JTextArea tilastot;
+    private MainMenu main;
+
     private KorttipaneelinKuuntelija kuuntelija;
     private Pakka    pakka;
     private Kortti[] poytakortit = new Kortti[Extern.KORTTEJA_POYDALLA];
 
-    public KorttiPaneeli(JTextArea til)
+    public KorttiPaneeli(MainMenu m)
     {
         vaihtoKrt = 0;
 
         kortitPane = new JPanel();
         toiminnotPane = new JPanel();
-        tilastot = til;
+        main = m;
 
         // Layout määrittelyt
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
@@ -45,18 +46,24 @@ public class KorttiPaneeli extends JPanel
         pelaaKasi = new JButton("Pelaa käsi");
         pelaaKasi.setActionCommand("pelaakasi");
         pelaaKasi.setEnabled(false);
-        uusipeli = new JButton("Uusi peli");
-        uusipeli.setActionCommand("uusipeli");
         jaa = new JButton("Jää tähän");
         jaa.setActionCommand("jaa");
+        jaa.setEnabled(false);
+        statistiikka = new JButton("Tilastoja");
+        statistiikka.setActionCommand("stats");
+        statistiikka.setEnabled(false);
+        uusipeli = new JButton("Uusi peli");
+        uusipeli.setActionCommand("uusipeli");
 
         kuuntelija = new KorttipaneelinKuuntelija();
         pelaaKasi.addActionListener(kuuntelija);
-        uusipeli.addActionListener(kuuntelija);
         jaa.addActionListener(kuuntelija);
+        statistiikka.addActionListener(kuuntelija);
+        uusipeli.addActionListener(kuuntelija);
 
         toiminnotPane.add(pelaaKasi);
         toiminnotPane.add(jaa);
+        toiminnotPane.add(statistiikka);
         toiminnotPane.add(uusipeli);
 
         add(kortitPane);
@@ -90,30 +97,43 @@ public class KorttiPaneeli extends JPanel
         @Override
         public void actionPerformed(ActionEvent ae)
         {
-            if (ae.getActionCommand().equals("uusipeli")) {
-                pelaaKasi.setEnabled(true);
-                alustaUusiPeli();
-                uusipeli.setEnabled(false);
-            } else if (ae.getActionCommand().equals("pelaakasi")) {
+            if (ae.getActionCommand().equals("pelaakasi")) {
                 if (vaihtoKrt < Extern.VAIHTOJEN_LKM) {
-                    evaluoiKasi(poytakortit);
                     vaihdaKortit(poytakortit);
-                    tilastot.setText(String.format("Pakassa: %d, Nostettu: %d",
-                                     pakka.jaljella(), pakka.nostettu()));
+
                     vaihtoKrt++;
                     if (vaihtoKrt == Extern.VAIHTOJEN_LKM) {
                         pelaaKasi.setEnabled(false);
+                        jaa.setEnabled(false);
                         uusipeli.setEnabled(true);
                         evaluoiKasi(poytakortit);
-                        //tilastot.setText("Peli loppui");
                     }
                 }
             } else if (ae.getActionCommand().equals("jaa")) {
-                System.out.println("-------PAKKA-------");
-                System.out.println(String.format("%s", pakka));
-                System.out.println("------/PAKKA-------");
-
                 evaluoiKasi(poytakortit);
+                jaa.setEnabled(false);
+                pelaaKasi.setEnabled(false);
+                uusipeli.setEnabled(true);
+            } else if (ae.getActionCommand().equals("uusipeli")) {
+                alustaUusiPeli();
+                pelaaKasi.setEnabled(true);
+                statistiikka.setEnabled(true);
+                uusipeli.setEnabled(false);
+                jaa.setEnabled(true);
+            } else if (ae.getActionCommand().equals("stats")) {
+                String txt = "";
+
+                txt += "-------<PAKKA>-------\n";
+                txt += pakka + "\n";
+                txt += "------</PAKKA>-------\n\n";
+                txt += "----<OTETUT MAAT>----\n";
+                txt += otetutMaat();
+                txt += "---</OTETUT MAAT>----\n\n";
+                txt += "-------NOSTETTU-------\n";
+                txt += String.format("Pakassa: %d, Nostettu: %d",
+                        pakka.jaljella(), pakka.nostettu());
+                txt += "------/NOSTETTU-------\n\n";
+                main.setOhjeTekstiAlue(txt);
             }
         }
     }
@@ -127,7 +147,7 @@ public class KorttiPaneeli extends JPanel
         pakka.sekoita();
         alustaKortit();
         vaihtoKrt = 0;
-        tilastot.setText("");
+        main.setOhjeTekstiAlue("");
     }
 
     public void vaihdaKortit(Kortti[] kortit)
@@ -141,7 +161,7 @@ public class KorttiPaneeli extends JPanel
             poytakortit[i] = pakka.otaKortti();
             if (poytakortit[i].getArvo() == 0) {
                 System.out.println("Pakka tyhjä");
-                tilastot.setText("Pakka tyhjä");
+                main.setOhjeTekstiAlue("Pakka tyhjä");
                 break;
             }
             poytakortit[i].setSijainti(vanhasijainti);
@@ -152,10 +172,14 @@ public class KorttiPaneeli extends JPanel
         }
     }
 
-    public void testaaOtetutMaat() // XXX Testimetodi, poista jossain välissä
+    public String otetutMaat()
     {
-        for (String s : Extern.MAAT)
-        System.out.println(String.format("%s %d", s, pakka.getMaaOtettuCount(s)));
+        String s = "";
+
+        for (String m : Extern.MAAT)
+            s += String.format("%s %d", m, pakka.getMaaOtettuCount(m));
+
+        return s;
     }
 
     public void evaluoiKasi(Kortti[] kortit)
@@ -176,26 +200,25 @@ public class KorttiPaneeli extends JPanel
         nsamaa = tarkistaNSamaa(tmp);
         tkasiVaiKaksiParia = tarkistaTayskasiTaiKaksiParia(tmp);
 
-        if (onVariSuora)
-            tilastot.setText("Värisuora");
-        else if (onVari)
-            tilastot.setText("Väri");
+        if (onVariSuora) {
+            main.setOhjeTekstiAlue("Värisuora");
+            return;
+        } else if (onVari)
+            main.setOhjeTekstiAlue("Väri");
         else if (onSuora)
-            tilastot.setText("Suora");
+            main.setOhjeTekstiAlue("Suora");
         else {
-            if (nsamaa > 0) {
+            if (nsamaa > 0 && tkasiVaiKaksiParia != 5) {
                 switch (nsamaa) {
                 case 2:
-                    tilastot.setText("Pari");
+                    main.setOhjeTekstiAlue("Pari");
                     break;
                 case 3:
-                    tilastot.setText("Kolme samaa");
+                    main.setOhjeTekstiAlue("Kolme samaa");
                     break;
                 case 4:
-                    tilastot.setText("Neloset");
+                    main.setOhjeTekstiAlue("Neljä samaa");
                     break;
-                case 5:
-                    tilastot.setText("Vitoset");
                 default:
                     break;
                 }
@@ -204,18 +227,18 @@ public class KorttiPaneeli extends JPanel
             if (tkasiVaiKaksiParia > 0) {
                 switch (tkasiVaiKaksiParia) {
                 case 2: // Kaksi paria
-                    tilastot.setText("Kaksi paria");
+                    main.setOhjeTekstiAlue("Kaksi paria");
                     break;
                 case 5:
-                    tilastot.setText("Täyskäsi");
+                    main.setOhjeTekstiAlue("Täyskäsi");
                     break;
                 default:
                     break;
                 }
             }
 
-            if (tilastot.getText().equals(""))
-                tilastot.setText(Integer.toString(tarkistaHai(kortit)));
+            if (main.getOhjeTeksti().equals(""))
+                main.setOhjeTekstiAlue("Hai: " + Integer.toString(tarkistaHai(kortit)));
         }
     }
 
@@ -286,10 +309,6 @@ public class KorttiPaneeli extends JPanel
             }
         }
         Arrays.sort(esiintymat);
-        System.out.print("[");
-        for (int i = 0; i < esiintymat.length; i++)
-            System.out.print(String.format("%d, ", esiintymat[i]));
-        System.out.println("]");
 
         kesk = (int) Math.floor(esiintymat.length / 2.0);
         // Täydessä kädessä: 2 2 [3] 3 3 tai 3 3 [3] 2 2
@@ -298,8 +317,6 @@ public class KorttiPaneeli extends JPanel
                 esiintymat[esiintymat.length - 2] == 2)
                     return 5;
         }
-        System.out.println(String.format("[[%d, %d]]", esiintymat[0], esiintymat[esiintymat.length - 1]));
-        System.out.println(String.format("kesk-1: %d, kesk+1: %d", esiintymat[kesk - 1], esiintymat[kesk + 1]));
         // Kaksi paria: 1 2 [2] 2 2 tai 2 2 [2] 2 1
         if (esiintymat[0] == 1 ||
             esiintymat[esiintymat.length - 1] == 1) {

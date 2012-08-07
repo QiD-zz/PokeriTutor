@@ -47,10 +47,7 @@ public class Tapahtumakuuntelija implements ActionListener, ItemListener,
         if (cmpntn instanceof Kortti) {
             Kortti k = (Kortti) cmpntn;
 
-            //System.out.println("Ennen: " + k);
             k.toggleValinta();
-            //System.out.println("Jälk : " + k);
-            //System.out.println("--");
         }
     }
 
