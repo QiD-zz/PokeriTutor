@@ -8,7 +8,7 @@
 Helpoin tapa hankkia ohjelma omalle koneelle onnistuu näin (vaatii `git`
 ohjelman):
 
-	`git clone git://github.com/pokeriopas/PokerTutor.git`
+	git clone git://github.com/pokeriopas/PokerTutor.git
 
 tai hakemalla [zip](https://github.com/pokeriopas/PokerTutor/zipball/master)
 tiedoston viimeisimmästä versioista.
@@ -17,5 +17,5 @@ Ohjelman on kirjoitettu Javalla, joten se pitää kääntää aluksi. Kääntäm
 onnistuu joko avaamalla projekti Netbeansiin, tai kääntämällä ja ajamalle se
 `ant` komennolla seuraavasti:
 
-	`ant run`
+	ant run
 
