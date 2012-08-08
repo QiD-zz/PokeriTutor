@@ -13,6 +13,8 @@ ohjelman):
 tai hakemalla [zip](https://github.com/pokeriopas/PokerTutor/zipball/master)
 tiedoston viimeisimmästä versioista.
 
+Siirry hakemistoon (esim. `cd PokerTutor`)
+
 Ohjelman on kirjoitettu Javalla, joten se pitää kääntää aluksi. Kääntäminen
 onnistuu joko avaamalla projekti Netbeansiin, tai kääntämällä ja ajamalle se
 `ant` komennolla seuraavasti:
