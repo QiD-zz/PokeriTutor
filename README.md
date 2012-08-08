@@ -1,16 +1,21 @@
-## Opetusopas pokerille (TAO-kurssi)
+# Opetusopas pokerille (TAO-kurssi)
 
-#### TODO:
-[ ] Statistiikkaa näkyviin (Kortteja jaettu / jäljellä)
+## Riippuvuudet
+* Java 1.6 tai uudempi
+* Netbeans tai Apache Ant ohjelman kääntämiseen
 
-[½] Layout fiksummaksi (ei ole dynaaminen nyt, pitäisikö olla?)
+## Alkuun pääseminen
+Helpoin tapa hankkia ohjelma omalle koneelle onnistuu näin (vaatii `git`
+ohjelman):
 
-#### DONE:
-[X] Olisiko järkevää siirtää tuo vasemmalla esiintyvä "menu"-valikko
-oikean menu barin taakse? Silloin tilaa olisi paremmin käytettävissä.
+	`git clone git://github.com/pokeriopas/PokerTutor.git`
 
-[X] Kortti- ja pakkaluokka
+tai hakemalla [zip](https://github.com/pokeriopas/PokerTutor/zipball/master)
+tiedoston viimeisimmästä versioista.
 
-[X] Perustoiminnallisuus
+Ohjelman on kirjoitettu Javalla, joten se pitää kääntää aluksi. Kääntäminen
+onnistuu joko avaamalla projekti Netbeansiin, tai kääntämällä ja ajamalle se
+`ant` komennolla seuraavasti:
 
-[X] Klikkaus kortissa tunnistaa kortin eikä esim. JPanea
+	`ant run`
+
