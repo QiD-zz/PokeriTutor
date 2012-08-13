@@ -71,6 +71,12 @@ public class KasiTaulu extends JPanel
                 this.add(kortit[i]);
             }
         }
+        
+        public void setKorttiTaulussa(Kortti kortti, int paikka) {
+            kortit[paikka] = kortti;
+            this.remove(paikka);
+            this.add(kortti, paikka);
+        }
 
         public PokeriHanska getHanska()
         {
@@ -82,11 +88,11 @@ public class KasiTaulu extends JPanel
             kortit = new Kortti[Extern.KORTTEJA_POYDALLA];
 
             if (kasi.equals(PokeriHanska.HAI)) {
-                kortit[0] = new Kortti("ruutu", 4, new Point(10, 10));
-                kortit[1] = new Kortti("risti", 9, new Point(10, 10));
-                kortit[2] = new Kortti("risti", 13, new Point(10, 10));
-                kortit[3] = new Kortti("hertta", 5, new Point(10, 10));
-                kortit[4] = new Kortti("ruutu", 14, new Point(10, 10));
+                kortit[0] = new Kortti("ruutu", 4, Extern.PERUSPISTE10X10Y);
+                kortit[1] = new Kortti("risti", 9, Extern.PERUSPISTE10X10Y);
+                kortit[2] = new Kortti("risti", 13, Extern.PERUSPISTE10X10Y);
+                kortit[3] = new Kortti("hertta", 5, Extern.PERUSPISTE10X10Y);
+                kortit[4] = new Kortti("ruutu", 14, Extern.PERUSPISTE10X10Y);
                 setValintaPoisPaalta();
             } else if (kasi.equals(PokeriHanska.PARI)) {
                 kortit[0] = new Kortti("risti", 14, new Point(10, 10));

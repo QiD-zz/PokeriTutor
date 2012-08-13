@@ -36,9 +36,17 @@ public class PokeriHanska {
     }
     
     public PokeriHanska(int luku) {
-         arvot = Arvo.values();
+        arvot = Arvo.values();
         arvo = arvot[luku];
         kasi = kadet[luku];
+    }
+    
+    public PokeriHanska(String nimi) {
+        if (testaaNimi(nimi)) {
+            kasi = nimi;
+            System.out.println(nimi);
+            arvo = arvot[testaaNimenJarjNro(nimi)];
+        }     
     }
     
     public String getHanskaName() {
@@ -74,5 +82,30 @@ public class PokeriHanska {
         } else {
             return null;
         }
+    }
+    
+    private boolean testaaNimi(String nimi) {
+        boolean tosi = false;
+        
+        for (int i = 0; i < kadet.length; i++) {
+            if (nimi.equals(kadet[i])) {
+                tosi = true;
+            }         
+        }
+        
+        return tosi;
+    }
+    
+    private int testaaNimenJarjNro(String nimi) {
+        int nro = -1;
+        
+        for (int i = 0; i < kadet.length; i++) {
+            System.out.println(kadet[i]);
+            if (nimi.equals(kadet[i])) {
+                nro = i;
+            }         
+        }
+        System.out.println(nro);
+        return nro;
     }
 }
