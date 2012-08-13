@@ -45,6 +45,7 @@ public class PokeriHanska {
         if (testaaNimi(nimi)) {
             kasi = nimi;
             System.out.println(nimi);
+            arvot = Arvo.values();
             arvo = arvot[testaaNimenJarjNro(nimi)];
         }     
     }

@@ -32,6 +32,7 @@ public class MonivalinnanKuuntelija implements ActionListener{
             KasiTaulu kasiTaulu = new KasiTaulu(new PokeriHanska(6));
             Random rnd = new Random();
             skenu = new Skenaario(rnd.nextInt(Extern.SKENAARIOIDEN_LKM));
+            taulu.setSkenaario(skenu);
             Kortti[] kortit = new Kortti[5];
             
             for (int i = 0; i < kortit.length; i++) {
@@ -49,10 +50,15 @@ public class MonivalinnanKuuntelija implements ActionListener{
             taulu.validate();
         } else if (e.getActionCommand().equals(Extern.MONIVALINTAVASTAUS)) {
             ValintaPaneeli vp = taulu.getValintaPaneeli();
-            System.out.println(vp.getVastaus());
-            PokeriHanska vastaus = new PokeriHanska(vp.getVastaus());
             
-            if (vastaus.equals(skenu.getOikeaVastaus())) {
+            String vastaus = vp.getVastaus();
+            if (skenu == null) {
+                
+                skenu = taulu.getSkenaario();
+            }
+            String oikea = skenu.getOikeaVastaus().getHanskaName();
+            if (vastaus.equals(oikea)) {
+                System.out.println("OIKEIN ON");
                 taulu.setOhjeTeksti("Oikea vastaus");
             }
         }

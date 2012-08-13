@@ -23,6 +23,7 @@ public class MonivalintaTaulu extends JPanel {
     
     MainMenu main;
     private ValintaPaneeli vp;
+    private Skenaario aktiivinenSkenaario;
     
     public MonivalintaTaulu(MainMenu m) {
         main = m;
@@ -31,6 +32,7 @@ public class MonivalintaTaulu extends JPanel {
         KasiTaulu kasiTaulu = new KasiTaulu(new PokeriHanska(3));
         vp = new ValintaPaneeli(this, new PokeriHanska(PokeriHanska.Arvo.KAKSIPARIA),
                 new PokeriHanska(PokeriHanska.Arvo.HAI), new PokeriHanska(PokeriHanska.Arvo.VARISUORA));
+        aktiivinenSkenaario = new Skenaario(0);
         this.add(kasiTaulu);
         this.add(vp);
     }
@@ -44,8 +46,17 @@ public class MonivalintaTaulu extends JPanel {
         vp = uusi;
     }
     
+    public void setSkenaario(Skenaario uusi) {
+        aktiivinenSkenaario = uusi;
+    }
+    
+    public Skenaario getSkenaario() {
+        return aktiivinenSkenaario;
+    }
+    
     public void setOhjeTeksti(String teksti) {
         main.setOhjeTekstiAlue(teksti);
+        main.repaint();
     }
    
 }
