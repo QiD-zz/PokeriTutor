@@ -4,6 +4,7 @@ import java.awt.*;
 import raahauspeli.RaahausPeliPaneeli;
 import opetus.OpiTuntemaanHanskat;
 import javax.swing.*;
+import opetus.MonivalintaTaulu;
 
 
 /*
@@ -168,11 +169,19 @@ public class MainMenu extends JFrame
         return this;
     }
 
-    void setEtusivu()
+    public void setEtusivu()
     {
         ohjeTekstiAlue.setText("");
         paaPaneeli.removeAll();
         paaPaneeli.add(new EtusivuPaneeli(this));
+        paaPaneeli.repaint();
+        paaPaneeli.validate();
+    }
+
+    public void setMonivalinta() {
+        ohjeTekstiAlue.setText("");
+        paaPaneeli.removeAll();
+        paaPaneeli.add(new MonivalintaTaulu(this));
         paaPaneeli.repaint();
         paaPaneeli.validate();
     }

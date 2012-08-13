@@ -17,4 +17,5 @@ public class Extern
     public final static String KORTTIPELI = "KorttiPeli";
     public final static String OPETUS = "Opetus";
     public final static String ETUSIVU = "Etusivulle";
+    public static final String MONIVALINTAPELI = "monivalintapeli";
 }
