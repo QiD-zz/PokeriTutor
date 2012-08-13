@@ -18,4 +18,6 @@ public class Extern
     public final static String OPETUS = "Opetus";
     public final static String ETUSIVU = "Etusivulle";
     public static final String MONIVALINTAPELI = "monivalintapeli";
+    
+    public static final String UUSIMONIVALINTATEHTAVA = "uusi tehtävä";
 }
