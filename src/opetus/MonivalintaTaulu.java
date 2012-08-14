@@ -59,11 +59,11 @@ public class MonivalintaTaulu extends JPanel {
     }
     
     public void setSkenaario(Skenaario uusi) {
-        aktiivinenSkenaario = uusi;
+        skenu = uusi;
     }
     
     public Skenaario getSkenaario() {
-        return aktiivinenSkenaario;
+        return skenu;
     }
     
     public void setOhjeTeksti(String teksti) {

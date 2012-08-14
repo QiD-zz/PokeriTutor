@@ -50,11 +50,18 @@ public class MonivalinnanKuuntelija implements ActionListener{
             ValintaPaneeli vp = taulu.getValintaPaneeli();
             skenu = taulu.getAktiivinenSkenaario();
             System.out.println(vp.getVastaus());
+            if (vp.getVastaus() != null) {
             PokeriHanska vastaus = new PokeriHanska(vp.getVastaus());
             
-            if (vastaus.equals(skenu.getOikeaVastaus())) {
-                taulu.setOhjeTeksti(skenu.getOhjeTeksti());
+                if (vastaus.equals(skenu.getOikeaVastaus())) {
+                    taulu.setOhjeTeksti(skenu.getOhjeTeksti());
+                } else {
+                    taulu.setOhjeTeksti("Väärä vastaus, kokeile uudelleen.");
+                }
+            } else {
+                taulu.setOhjeTeksti("Et ole valinnut yhtään vaihtoehtoa.");
             }
+            
         }
     }
     
