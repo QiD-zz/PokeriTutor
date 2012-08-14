@@ -45,6 +45,7 @@ public class PokeriHanska {
         if (testaaNimi(nimi)) {
             kasi = nimi;
             System.out.println(nimi);
+            arvot = Arvo.values();
             arvo = arvot[testaaNimenJarjNro(nimi)];
         }     
     }
@@ -107,5 +108,17 @@ public class PokeriHanska {
         }
         System.out.println(nro);
         return nro;
+    }
+    
+    @Override
+    public boolean equals(Object o) {
+        boolean totuusArvo = false;
+        if (o instanceof PokeriHanska) {
+            PokeriHanska toinen = (PokeriHanska)o;
+            if (this.arvo.equals(toinen.arvo)) {
+                totuusArvo = true;
+            } 
+        } 
+        return totuusArvo;
     }
 }

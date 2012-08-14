@@ -19,6 +19,7 @@ public class Skenaario {
     private PokeriHanska hanska3;
     
     private PokeriHanska oikeaVastaus;
+    private String oikeanVastauksenTeksti;
     
     private Kortti[] kortit;
     
@@ -38,6 +39,11 @@ public class Skenaario {
     private PokeriHanska[] oikeatVastaukset = {new PokeriHanska(PokeriHanska.Arvo.VARI)
             ,new PokeriHanska(PokeriHanska.Arvo.NELOSET)};
     
+    private String[] ohjeTekstit = {"Oikein. Kun pöydässä on neljä samaa värikorttia ja neljä peräkkäistä "
+            + "numeroa on värin vetäminen kannattavampaa, sillä pakasta löytyy päistä avoinna olevaan"
+            + " suoraan kahdeksan korttia (kuninkaat ja kasit), jotka voivat parantaa tätä kättä,"
+            + " mutta värikortteja on pakassa vielä yksi enemmän eli yhdeksän, siis kaikki ruudut.","Kyllä"};
+    
     public Skenaario(int numero) {
         
         hanska1 = vaihtoehdot[numero][0];
@@ -45,6 +51,7 @@ public class Skenaario {
         hanska3 = vaihtoehdot[numero][2];
         
         oikeaVastaus = oikeatVastaukset[numero];
+        oikeanVastauksenTeksti = ohjeTekstit[numero];
         
         kortit = korttiVaihtoehdot[numero];
     }
@@ -67,5 +74,9 @@ public class Skenaario {
     
     public Kortti getKortti(int numero) {
         return kortit[numero];
+    }
+    
+    public String getOhjeTeksti() {
+        return oikeanVastauksenTeksti;
     }
 }
