@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.util.*;
 import javax.swing.*;
 import javax.swing.Timer;
+import pokeri.Extern;
 
 /**
  *
@@ -60,11 +61,11 @@ public class RaahausPeliPaneeli extends JPanel implements ActionListener
         uusiPeli = new JButton("Uusi peli");
         uusiPeli.addActionListener(this);
         tulos = new JLabel();
-        tulos.setBorder(BorderFactory.createTitledBorder("Tulos"));
+        tulos.setBorder(BorderFactory.createTitledBorder("Viimeisin tulos"));
         tulos.setPreferredSize(new Dimension(150, 50));
         kello = new Timer(1000, this);       
         
-        peliSuunta = new JTextArea("lol");
+        peliSuunta = new JTextArea();
         peliSuunta.setWrapStyleWord(true);
         peliSuunta.setLineWrap(true);
      //   peliSuunta.setBackground(this.getBackground());
@@ -114,11 +115,11 @@ public class RaahausPeliPaneeli extends JPanel implements ActionListener
         this.add(oikeanPohja);
         
         JScrollPane jscroll = new JScrollPane(HoF);
-        jscroll.setPreferredSize(new Dimension(125, 300));
-        jscroll.setBorder(BorderFactory.createTitledBorder("Parhaat tulokset"));
+        jscroll.setPreferredSize(new Dimension(200, 300));
+        jscroll.setBorder(BorderFactory.createTitledBorder("Parhaat tulokset (sekuntteina)"));
         this.add(jscroll);
         
-        this.setPreferredSize(new Dimension(800, 400));
+        this.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA, 400));
     }
 
     @Override
@@ -191,10 +192,13 @@ public class RaahausPeliPaneeli extends JPanel implements ActionListener
         if (voitto) {
            endTime = Calendar.getInstance().getTime();          
            long delay = endTime.getTime()-startTime.getTime();
-           String tulosteksti = String.valueOf((double)delay/1000)+" sekuntia";
+           double delayAsDouble = (double)delay/1000;
+           String tulosteksti = String.valueOf(delayAsDouble)+" sekuntia";
            tulos.setText(String.valueOf(tulosteksti));
-           parhaatTulokset.addElement(tulosteksti);
+           parhaatTulokset.addElement(delayAsDouble);
            Object[] temp = parhaatTulokset.toArray();
+           
+           
            Arrays.sort(temp);
            
            parhaatTulokset.clear();

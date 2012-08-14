@@ -14,7 +14,7 @@ public class Extern
     public final static int VAIHTOJEN_LKM = 2;
     public final static String[] MAAT = { "ruutu", "hertta", "pata", "risti" };
 
-    public final static int SKENAARIOIDEN_LKM = 2;
+    public final static int SKENAARIOIDEN_LKM = 4;
     //komennot
     public final static String RAAHAUSPELI = "RaahausPeli";
     public final static String KORTTIPELI = "KorttiPeli";
