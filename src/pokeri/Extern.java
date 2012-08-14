@@ -21,9 +21,9 @@ public class Extern
     public final static String OPETUS = "Opetus";
     public final static String ETUSIVU = "Etusivulle";
     public static final String MONIVALINTAPELI = "monivalintapeli";
-    
+
     public static final String UUSIMONIVALINTATEHTAVA = "uusi tehtävä";
     public static final String MONIVALINTAVASTAUS = "vastasin, olinko oikeassa?";
-    
+
     public static final Point PERUSPISTE10X10Y = new Point(10, 10);
 }

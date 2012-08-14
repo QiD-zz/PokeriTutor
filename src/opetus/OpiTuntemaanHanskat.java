@@ -7,7 +7,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import pokeri.Extern;
-import pokeri.Kortti;
 import pokeri.MainMenu;
 import raahauspeli.PokeriHanska;
 

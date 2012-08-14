@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package opetus;
 
 import pokeri.Extern;
@@ -12,8 +8,8 @@ import raahauspeli.PokeriHanska;
  *
  * @author hurvittelu
  */
-public class Skenaario {
-    
+public class Skenaario
+{
     private PokeriHanska hanska1;
     private PokeriHanska hanska2;
     private PokeriHanska hanska3;
@@ -72,40 +68,47 @@ public class Skenaario {
             + "epätodennäköisempää kun suorasta puuttuu kortti suoran keskeltä verrattuna sellaiseen tilanteeseen, "
             + "että suora on auki molemmista päistä. Värin vetäminen kolmesta kortista on vieläkin epätodennäköisempi "
             + "vaihtoehto."};
-    
-    public Skenaario(int numero) {
-        
+
+    public Skenaario(int numero)
+    {
         hanska1 = vaihtoehdot[numero][0];
         hanska2 = vaihtoehdot[numero][1];
         hanska3 = vaihtoehdot[numero][2];
-        
+
         oikeaVastaus = oikeatVastaukset[numero];
         oikeanVastauksenTeksti = ohjeTekstit[numero];
-        
+
         kortit = korttiVaihtoehdot[numero];
     }
-    
-    public PokeriHanska getEkaHanska() {
+
+    public PokeriHanska getEkaHanska()
+    {
         return hanska1;
     }
-    
-    public PokeriHanska getTokaHanska() {
+
+    public PokeriHanska getTokaHanska()
+    {
         return hanska2;
     }
-    
-    public PokeriHanska getKolmasHanska() {
+
+    public PokeriHanska getKolmasHanska()
+    {
         return hanska3;
     }
-    
-    public PokeriHanska getOikeaVastaus() {
+
+    public PokeriHanska getOikeaVastaus()
+    {
         return oikeaVastaus;
     }
-    
-    public Kortti getKortti(int numero) {
+
+    public Kortti getKortti(int numero)
+    {
         return kortit[numero];
     }
-    
-    public String getOhjeTeksti() {
+
+    public String getOhjeTeksti()
+    {
         return oikeanVastauksenTeksti;
     }
+
 }
