@@ -28,6 +28,7 @@ public class MonivalinnanKuuntelija implements ActionListener
         if (e.getActionCommand().equals(Extern.UUSIMONIVALINTATEHTAVA)) {
             Random rnd = new Random();
             KasiTaulu kasiTaulu = new KasiTaulu(new PokeriHanska(6));
+            
 
             taulu.removeAll();
             int uusiSkenu = rnd.nextInt(Extern.SKENAARIOIDEN_LKM);
@@ -40,6 +41,7 @@ public class MonivalinnanKuuntelija implements ActionListener
             for (int i = 0; i < Extern.KORTTEJA_POYDALLA; i++) {
                 kasiTaulu.setKorttiTaulussa(skenu.getKortti(i), i);
             }
+            kasiTaulu.setValintaPoisPaalta();
             taulu.add(kasiTaulu);
             ValintaPaneeli vp = new ValintaPaneeli(taulu, skenu.getEkaHanska(),
                 skenu.getTokaHanska(), skenu.getKolmasHanska());
@@ -59,10 +61,16 @@ public class MonivalinnanKuuntelija implements ActionListener
             else {
                 PokeriHanska vastaus = new PokeriHanska(vp.getVastaus());
 
-                if (vastaus.equals(skenu.getOikeaVastaus()))
+                if (vastaus.equals(skenu.getOikeaVastaus())) {
                     taulu.setOhjeTeksti(skenu.getOhjeTeksti());
+                }               
                 else
+                {
+                    vp.setVastaaDisabled();
                     taulu.setOhjeTeksti("Väärä vastaus, kokeile uudelleen.");
+                    
+                }
+                   
             }
         }
     }

@@ -27,15 +27,20 @@ public class MonivalintaTaulu extends JPanel
         edellisenSkenaarionNro = rnd.nextInt(Extern.SKENAARIOIDEN_LKM);
         skenu = new Skenaario(edellisenSkenaarionNro);
         KasiTaulu kasiTaulu = new KasiTaulu(new PokeriHanska(3));
+        
 
         for (int i = 0; i < Extern.KORTTEJA_POYDALLA; i++) {
             kasiTaulu.setKorttiTaulussa(skenu.getKortti(i), i);
         }
 
+        kasiTaulu.setValintaPoisPaalta();
         vp = new ValintaPaneeli(this, skenu.getEkaHanska(),
                 skenu.getTokaHanska(), skenu.getKolmasHanska());
         this.add(kasiTaulu);
         this.add(vp);
+        main.setOhjeTekstiAlue("Tässä pelissä on tarkoitus valita kolmesta vaihtoehtoisesta "
+                + "vedosta kaikkein paras erilaisissa tilanteissa. Jokaisessa tehtävässä on vain "
+                + "yksi mahdollisuus vastata oikein. Kokeile onnistutko saamaan kaikki oikein. :)");
     }
     
     public int getEdellinenSkenaarionNro() {

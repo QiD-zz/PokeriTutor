@@ -21,6 +21,8 @@ import raahauspeli.PokeriHanska;
     private JRadioButton tokaNappi;
     private JRadioButton kolmasNappi;
     private ButtonGroup ryhma;
+    
+    private JButton vastaa;
 
     public ValintaPaneeli(MonivalintaTaulu taulu, PokeriHanska eka,
                           PokeriHanska toka, PokeriHanska kolmas)
@@ -47,7 +49,7 @@ import raahauspeli.PokeriHanska;
         ryhma.add(tokaNappi);
         ryhma.add(kolmasNappi);
 
-        JButton vastaa = new JButton("Vastaa");
+        vastaa = new JButton("Vastaa");
         JButton uusi = new JButton("Uusi tehtävä");
         MonivalinnanKuuntelija kuuntelija = new MonivalinnanKuuntelija(taulu);
         uusi.addActionListener(kuuntelija);
@@ -71,6 +73,10 @@ import raahauspeli.PokeriHanska;
 
         this.add(paneeli);      
         this.add(paneeli2);
+    }
+    
+    public void setVastaaDisabled() {
+        vastaa.setEnabled(false);
     }
     
     public String getVastaus()
