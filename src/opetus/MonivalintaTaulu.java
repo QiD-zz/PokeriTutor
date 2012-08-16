@@ -1,6 +1,7 @@
 package opetus;
 
 import java.awt.*;
+import java.util.Random;
 import javax.swing.JPanel;
 import pokeri.Extern;
 import pokeri.MainMenu;
@@ -15,13 +16,16 @@ public class MonivalintaTaulu extends JPanel
     MainMenu main;
     private ValintaPaneeli vp;
     private Skenaario skenu;
+    private int edellisenSkenaarionNro;
 
     public MonivalintaTaulu(MainMenu m)
     {
         main = m;
         this.setLayout(new FlowLayout(FlowLayout.CENTER));
         this.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA, Extern.KORKEUS_IKKUNA/2));
-        skenu = new Skenaario(0);
+        Random rnd = new Random();
+        edellisenSkenaarionNro = rnd.nextInt(Extern.SKENAARIOIDEN_LKM);
+        skenu = new Skenaario(edellisenSkenaarionNro);
         KasiTaulu kasiTaulu = new KasiTaulu(new PokeriHanska(3));
 
         for (int i = 0; i < Extern.KORTTEJA_POYDALLA; i++) {
@@ -32,6 +36,14 @@ public class MonivalintaTaulu extends JPanel
                 skenu.getTokaHanska(), skenu.getKolmasHanska());
         this.add(kasiTaulu);
         this.add(vp);
+    }
+    
+    public int getEdellinenSkenaarionNro() {
+        return edellisenSkenaarionNro;
+    }
+    
+    public void setEdellinenSkenaarionNro(int nro) {
+        edellisenSkenaarionNro = nro;
     }
 
     public Skenaario getAktiivinenSkenaario()

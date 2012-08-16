@@ -30,7 +30,12 @@ public class MonivalinnanKuuntelija implements ActionListener
             KasiTaulu kasiTaulu = new KasiTaulu(new PokeriHanska(6));
 
             taulu.removeAll();
-            skenu = new Skenaario(rnd.nextInt(Extern.SKENAARIOIDEN_LKM));
+            int uusiSkenu = rnd.nextInt(Extern.SKENAARIOIDEN_LKM);
+            while (uusiSkenu == taulu.getEdellinenSkenaarionNro()) {
+                uusiSkenu = rnd.nextInt(Extern.SKENAARIOIDEN_LKM);
+            }
+            skenu = new Skenaario(uusiSkenu);
+            taulu.setEdellinenSkenaarionNro(uusiSkenu);
             taulu.setAktiivinenSkenaario(skenu);
             for (int i = 0; i < Extern.KORTTEJA_POYDALLA; i++) {
                 kasiTaulu.setKorttiTaulussa(skenu.getKortti(i), i);

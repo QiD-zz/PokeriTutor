@@ -8,6 +8,8 @@ import java.util.Arrays;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import raahauspeli.PokeriHanska;
+import raahauspeli.PokeriHanska.Arvo;
 
 
 public class KorttiPaneeli extends JPanel
@@ -24,6 +26,8 @@ public class KorttiPaneeli extends JPanel
     private KorttipaneelinKuuntelija kuuntelija;
     private Pakka    pakka;
     private Kortti[] poytakortit = new Kortti[Extern.KORTTEJA_POYDALLA];
+    
+    private PokeriHanska tamanHetkinenKasi;
 
     public KorttiPaneeli(MainMenu m)
     {
@@ -100,6 +104,8 @@ public class KorttiPaneeli extends JPanel
             if (ae.getActionCommand().equals("pelaakasi")) {
                 if (vaihtoKrt < Extern.VAIHTOJEN_LKM) {
                     vaihdaKortit(poytakortit);
+                    evaluoiKasi(poytakortit);
+                    laskeMahdollisuudet();
 
                     vaihtoKrt++;
                     if (vaihtoKrt == Extern.VAIHTOJEN_LKM) {
@@ -137,6 +143,15 @@ public class KorttiPaneeli extends JPanel
             }
         }
     }
+    
+    public void laskeMahdollisuudet()  {
+        
+        if (tamanHetkinenKasi.equals(new PokeriHanska(PokeriHanska.Arvo.HAI))) {
+            long korttejaPakassa = pakka.jaljella();
+            int valittu = poytakortit[0].getArvo();
+            System.out.println("Mahikset papoytakortitrantua pariin on: " );
+        }
+    }
 
     public void alustaUusiPeli()
     {
@@ -148,6 +163,7 @@ public class KorttiPaneeli extends JPanel
         alustaKortit();
         vaihtoKrt = 0;
         main.setOhjeTekstiAlue("");
+        evaluoiKasi(poytakortit);
     }
 
     public void vaihdaKortit(Kortti[] kortit)
@@ -202,22 +218,30 @@ public class KorttiPaneeli extends JPanel
 
         if (onVariSuora) {
             main.setOhjeTekstiAlue("Värisuora");
+            tamanHetkinenKasi = new PokeriHanska(PokeriHanska.Arvo.VARISUORA);
             return;
-        } else if (onVari)
+        } else if (onVari) {
             main.setOhjeTekstiAlue("Väri");
-        else if (onSuora)
-            main.setOhjeTekstiAlue("Suora");
+            tamanHetkinenKasi = new PokeriHanska(PokeriHanska.Arvo.VARI);
+        }          
+        else if (onSuora) {
+            main.setOhjeTekstiAlue("Suora"); 
+            tamanHetkinenKasi = new PokeriHanska(PokeriHanska.Arvo.SUORA);
+        }         
         else {
             if (nsamaa > 0 && tkasiVaiKaksiParia != 5) {
                 switch (nsamaa) {
                 case 2:
                     main.setOhjeTekstiAlue("Pari");
+                    tamanHetkinenKasi = new PokeriHanska(PokeriHanska.Arvo.PARI);
                     break;
                 case 3:
                     main.setOhjeTekstiAlue("Kolme samaa");
+                    tamanHetkinenKasi = new PokeriHanska(PokeriHanska.Arvo.KOLMOSET);
                     break;
                 case 4:
                     main.setOhjeTekstiAlue("Neljä samaa");
+                    tamanHetkinenKasi = new PokeriHanska(PokeriHanska.Arvo.NELOSET);
                     break;
                 default:
                     break;
@@ -228,9 +252,11 @@ public class KorttiPaneeli extends JPanel
                 switch (tkasiVaiKaksiParia) {
                 case 2: // Kaksi paria
                     main.setOhjeTekstiAlue("Kaksi paria");
+                    tamanHetkinenKasi = new PokeriHanska(PokeriHanska.Arvo.KAKSIPARIA);
                     break;
                 case 5:
                     main.setOhjeTekstiAlue("Täyskäsi");
+                    tamanHetkinenKasi = new PokeriHanska(PokeriHanska.Arvo.TAYSKASI);
                     break;
                 default:
                     break;
