@@ -28,6 +28,7 @@ public class MainMenu extends JFrame
     private RaahausPeliPaneeli raahausPeli;
     private Tapahtumakuuntelija tkuuntelija;
     private JScrollPane ohjePane;
+    private JButton paluu;
 
     public MainMenu()
     {
@@ -67,19 +68,21 @@ public class MainMenu extends JFrame
     private void alustaOhjePaneeli()
     {
         ohjePaneeli = new JPanel();
-        ohjeTekstiAlue = new JTextArea("Ohjeet ja tilastot " +
-                                       "käyttävät tätä tilaa");
-        JButton paluu = new JButton(Extern.ETUSIVU);
+        ohjeTekstiAlue = new JTextArea("Ohjeistus ja tilastot käyttävät tätä tilaa");
+        paluu = new JButton(Extern.ETUSIVU);
         Dimension paluuSize;
         Insets insets;
 
+        paluu.setBackground(new Color(220, 120, 120));
+        paluu.setOpaque(true);
+        paluu.setVisible(false);
         ohjePaneeli.setBackground(Color.white);
         ohjePaneeli.setLayout(null);
         ohjeTekstiAlue.setWrapStyleWord(true);
         ohjeTekstiAlue.setEditable(false);
         ohjeTekstiAlue.setLineWrap(true);
 
-        ohjeTekstiAlue.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 18));
+        ohjeTekstiAlue.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 15));
         ohjeTekstiAlue.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA /
                                         8 * 7, Extern.KORKEUS_IKKUNA / 7));
         ohjePaneeli.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA,
@@ -88,8 +91,6 @@ public class MainMenu extends JFrame
         paluu.addActionListener(tkuuntelija);
         paluu.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA / 8,
                                Extern.KORKEUS_IKKUNA / 7));
-
-        ohjePaneeli.add(paluu);
 
         insets = ohjePaneeli.getInsets();
         paluuSize = paluu.getPreferredSize();
@@ -104,9 +105,11 @@ public class MainMenu extends JFrame
         ohjePane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         ohjePane.setBounds(paluu.getWidth() + insets.left, insets.top,
                                  paluuSize.width, paluuSize.height);
-        ohjePaneeli.add(ohjePane);
+        ohjeTekstiAlue.setBackground(new Color(210, 210, 240));
         ohjeTekstiAlue.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA /
                                         8 * 7, Extern.KORKEUS_IKKUNA / 4));
+        ohjePaneeli.add(paluu);
+        ohjePaneeli.add(ohjePane);
     }
 
     private void alustaElementit()
@@ -131,7 +134,7 @@ public class MainMenu extends JFrame
         pack();
     }
 
-    public Object getPaapaneeli()
+    public JPanel getPaapaneeli()
     {
         return paaPaneeli;
     }
@@ -148,51 +151,58 @@ public class MainMenu extends JFrame
 
     public void setRaahauspeli()
     {
+        paluu.setVisible(true);
         ohjeTekstiAlue.setText("");
         paaPaneeli.removeAll();
         paaPaneeli.add(new RaahausPeliPaneeli());
         paaPaneeli.repaint();
-        paaPaneeli.validate();
+        paaPaneeli.revalidate();
     }
 
     public void setPokeripeli()
     {
-        ohjeTekstiAlue.setText("Aloita valitsemalla Uusi peli");
+        paluu.setVisible(true);
+        ohjeTekstiAlue.setText("Aloita valitsemalla Uusi peli\n"
+                + "Kortin valinta tapahtuu korttia klikkaamalla");
         paaPaneeli.removeAll();
         paaPaneeli.add(new KorttiPaneeli(this));
         paaPaneeli.repaint();
-        paaPaneeli.validate();
+        paaPaneeli.revalidate();
     }
 
     public void setOpetuspaneeli()
     {
-          ohjeTekstiAlue.setText("");
-          paaPaneeli.removeAll();
-          paaPaneeli.add(new OpiTuntemaanHanskat(this));
-          paaPaneeli.repaint();
-          paaPaneeli.validate();
+        paluu.setVisible(true);
+        ohjeTekstiAlue.setText("");
+        paaPaneeli.removeAll();
+        paaPaneeli.add(new OpiTuntemaanHanskat(this));
+        paaPaneeli.repaint();
+        paaPaneeli.revalidate();
+    }
+
+    public void setEtusivu()
+    {
+        paluu.setVisible(false);
+        ohjeTekstiAlue.setText("");
+        paaPaneeli.removeAll();
+        paaPaneeli.add(new EtusivuPaneeli(this));
+        paaPaneeli.repaint();
+        paaPaneeli.revalidate();
+    }
+
+    public void setMonivalinta()
+    {
+        paluu.setVisible(true);
+        ohjeTekstiAlue.setText("");
+        paaPaneeli.removeAll();
+        paaPaneeli.add(new MonivalintaTaulu(this));
+        paaPaneeli.repaint();
+        paaPaneeli.revalidate();
     }
 
     public MainMenu getMainMenu() // FIXME Onko tälle käyttöä?
     {
         return this;
-    }
-
-    public void setEtusivu()
-    {
-        ohjeTekstiAlue.setText("");
-        paaPaneeli.removeAll();
-        paaPaneeli.add(new EtusivuPaneeli(this));
-        paaPaneeli.repaint();
-        paaPaneeli.validate();
-    }
-
-    public void setMonivalinta() {
-        ohjeTekstiAlue.setText("");
-        paaPaneeli.removeAll();
-        paaPaneeli.add(new MonivalintaTaulu(this));
-        paaPaneeli.repaint();
-        paaPaneeli.validate();
     }
 
 }

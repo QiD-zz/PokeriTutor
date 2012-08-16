@@ -40,8 +40,7 @@ public class Kortti extends JComponent implements Comparable
             asetaKuva();
         } catch (IOException ioe) {
             System.out.println(String.format(
-                    "Kortin kuvan lisääminen epäonnistui: %s",
-                    ioe.getStackTrace()));
+                    "Kortin kuvan lisääminen epäonnistui: %s", ioe.getMessage()));
         }
     }
 

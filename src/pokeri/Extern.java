@@ -1,5 +1,6 @@
 package pokeri;
 
+import java.awt.Color;
 import java.awt.Point;
 import java.util.Collections;
 import java.util.HashMap;
@@ -51,4 +52,7 @@ public class Extern
     public final static String MONIVALINTAVASTAUS = "vastasin, olinko oikeassa?";
 
     public final static Point PERUSPISTE10X10Y = new Point(10, 10);
+
+    // Variteemat
+    public final static Color PASTELLITAUSTA = new Color(238, 232, 170);
 }

@@ -32,7 +32,9 @@ public class KorttiPaneeli extends JPanel
         vaihtoKrt = 0;
 
         kortitPane = new JPanel();
+        kortitPane.setBackground(Extern.PASTELLITAUSTA);
         toiminnotPane = new JPanel();
+        toiminnotPane.setBackground(Extern.PASTELLITAUSTA);
         main = m;
 
         // Layout määrittelyt

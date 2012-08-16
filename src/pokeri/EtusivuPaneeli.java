@@ -27,7 +27,7 @@ public class EtusivuPaneeli extends JPanel
 
         setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA, Extern.KORKEUS_IKKUNA));
         setLayout(new FlowLayout(FlowLayout.CENTER));
-        setBackground(new Color(238, 232, 170));
+        setBackground(Extern.PASTELLITAUSTA);
 
         opiKadet = new JButton("Opi tuntemaan pokerikädet");
         opiKadet.setBackground(new Color(107, 142, 35));
