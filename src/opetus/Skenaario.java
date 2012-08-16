@@ -47,7 +47,7 @@ public class Skenaario
     
     private PokeriHanska[] oikeatVastaukset = {new PokeriHanska(PokeriHanska.Arvo.VARI)
             ,new PokeriHanska(PokeriHanska.Arvo.NELOSET),new PokeriHanska(PokeriHanska.Arvo.SUORA),
-    new PokeriHanska(PokeriHanska.Arvo.SUORA)};
+    new PokeriHanska(PokeriHanska.Arvo.KOLMOSET)};
     
     private String[] ohjeTekstit = {"Oikein. Kun pöydässä on neljä samaa värikorttia ja neljä peräkkäistä "
             + "numeroa on värin vetäminen kannattavampaa, sillä pakasta löytyy päistä avoinna olevaan"

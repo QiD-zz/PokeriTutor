@@ -27,6 +27,8 @@ public class MainMenu extends JFrame
     private JTextArea ohjeTekstiAlue;
     private RaahausPeliPaneeli raahausPeli;
     private Tapahtumakuuntelija tkuuntelija;
+    
+    private JScrollPane ohjePane;
 
     public MainMenu()
     {
@@ -80,7 +82,7 @@ public class MainMenu extends JFrame
 
         ohjeTekstiAlue.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 18));
         ohjeTekstiAlue.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA /
-                                        8 * 6, Extern.KORKEUS_IKKUNA / 7));
+                                        8 * 7, Extern.KORKEUS_IKKUNA / 7));
         ohjePaneeli.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA,
                              Extern.KORKEUS_IKKUNA / 7));
 
@@ -89,7 +91,7 @@ public class MainMenu extends JFrame
                                Extern.KORKEUS_IKKUNA / 7));
 
         ohjePaneeli.add(paluu);
-        ohjePaneeli.add(ohjeTekstiAlue);
+        
 
         insets = ohjePaneeli.getInsets();
         paluuSize = paluu.getPreferredSize();
@@ -98,6 +100,15 @@ public class MainMenu extends JFrame
         paluuSize = ohjeTekstiAlue.getPreferredSize();
         ohjeTekstiAlue.setBounds(paluu.getWidth() + insets.left, insets.top,
                                  paluuSize.width, paluuSize.height);
+        ohjePane = new JScrollPane(ohjeTekstiAlue);
+        ohjePane.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA /
+                                        8 * 7, Extern.KORKEUS_IKKUNA / 7));
+        ohjePane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+        ohjePane.setBounds(paluu.getWidth() + insets.left, insets.top,
+                                 paluuSize.width, paluuSize.height);
+        ohjePaneeli.add(ohjePane);
+        ohjeTekstiAlue.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA /
+                                        8 * 7, Extern.KORKEUS_IKKUNA / 4));
     }
 
     private void alustaElementit()
