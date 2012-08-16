@@ -9,7 +9,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import raahauspeli.PokeriHanska;
-import raahauspeli.PokeriHanska.Arvo;
 
 
 public class KorttiPaneeli extends JPanel
@@ -26,7 +25,6 @@ public class KorttiPaneeli extends JPanel
     private KorttipaneelinKuuntelija kuuntelija;
     private Pakka    pakka;
     private Kortti[] poytakortit = new Kortti[Extern.KORTTEJA_POYDALLA];
-    
     private PokeriHanska tamanHetkinenKasi;
 
     public KorttiPaneeli(MainMenu m)
@@ -143,9 +141,9 @@ public class KorttiPaneeli extends JPanel
             }
         }
     }
-    
-    public void laskeMahdollisuudet()  {
-        
+
+    public void laskeMahdollisuudet()
+    {
         if (tamanHetkinenKasi.equals(new PokeriHanska(PokeriHanska.Arvo.HAI))) {
             long korttejaPakassa = pakka.jaljella();
             int valittu = poytakortit[0].getArvo();
@@ -223,12 +221,10 @@ public class KorttiPaneeli extends JPanel
         } else if (onVari) {
             main.setOhjeTekstiAlue("Väri");
             tamanHetkinenKasi = new PokeriHanska(PokeriHanska.Arvo.VARI);
-        }          
-        else if (onSuora) {
-            main.setOhjeTekstiAlue("Suora"); 
+        } else if (onSuora) {
+            main.setOhjeTekstiAlue("Suora");
             tamanHetkinenKasi = new PokeriHanska(PokeriHanska.Arvo.SUORA);
-        }         
-        else {
+        } else {
             if (nsamaa > 0 && tkasiVaiKaksiParia != 5) {
                 switch (nsamaa) {
                 case 2:

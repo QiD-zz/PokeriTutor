@@ -27,7 +27,6 @@ public class MainMenu extends JFrame
     private JTextArea ohjeTekstiAlue;
     private RaahausPeliPaneeli raahausPeli;
     private Tapahtumakuuntelija tkuuntelija;
-    
     private JScrollPane ohjePane;
 
     public MainMenu()
@@ -91,7 +90,6 @@ public class MainMenu extends JFrame
                                Extern.KORKEUS_IKKUNA / 7));
 
         ohjePaneeli.add(paluu);
-        
 
         insets = ohjePaneeli.getInsets();
         paluuSize = paluu.getPreferredSize();
