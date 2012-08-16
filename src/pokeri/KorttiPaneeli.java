@@ -103,7 +103,6 @@ public class KorttiPaneeli extends JPanel
                 if (vaihtoKrt < Extern.VAIHTOJEN_LKM) {
                     vaihdaKortit(poytakortit);
                     evaluoiKasi(poytakortit);
-                    laskeMahdollisuudet();
 
                     vaihtoKrt++;
                     if (vaihtoKrt == Extern.VAIHTOJEN_LKM) {
@@ -127,9 +126,6 @@ public class KorttiPaneeli extends JPanel
             } else if (ae.getActionCommand().equals("stats")) {
                 String txt = "";
 
-                txt += "-------<PAKKA>-------\n";
-                txt += pakka + "\n";
-                txt += "------</PAKKA>-------\n\n";
                 txt += "----<OTETUT MAAT>----\n";
                 txt += otetutMaat();
                 txt += "---</OTETUT MAAT>----\n\n";
@@ -139,15 +135,6 @@ public class KorttiPaneeli extends JPanel
                 txt += "------/NOSTETTU-------\n\n";
                 main.setOhjeTekstiAlue(txt);
             }
-        }
-    }
-
-    public void laskeMahdollisuudet()
-    {
-        if (tamanHetkinenKasi.equals(new PokeriHanska(PokeriHanska.Arvo.HAI))) {
-            long korttejaPakassa = pakka.jaljella();
-            int valittu = poytakortit[0].getArvo();
-            System.out.println("Mahikset papoytakortitrantua pariin on: " );
         }
     }
 
@@ -174,7 +161,6 @@ public class KorttiPaneeli extends JPanel
             poytakortit[i] = null;
             poytakortit[i] = pakka.otaKortti();
             if (poytakortit[i].getArvo() == 0) {
-                System.out.println("Pakka tyhjä");
                 main.setOhjeTekstiAlue("Pakka tyhjä");
                 break;
             }
@@ -381,7 +367,6 @@ public class KorttiPaneeli extends JPanel
             if (k.getArvo() > max)
                 max = k.getArvo();
         }
-
         return max;
     }
 

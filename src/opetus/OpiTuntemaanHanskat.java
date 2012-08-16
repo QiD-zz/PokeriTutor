@@ -26,8 +26,6 @@ public class OpiTuntemaanHanskat extends JPanel implements ActionListener
     private JLabel seuraavaParempi;
     private JLabel edellinenHuonompi;
     private MainMenu main;
-
-    
     private int kuvausLaskuri;
 
     private final String[] kuvaukset = {"Hai, eli high card, on nimensä mukaisesti käsi,"

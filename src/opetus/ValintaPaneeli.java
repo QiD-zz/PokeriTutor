@@ -21,14 +21,13 @@ import raahauspeli.PokeriHanska;
     private JRadioButton tokaNappi;
     private JRadioButton kolmasNappi;
     private ButtonGroup ryhma;
-    
     private JButton vastaa;
 
     public ValintaPaneeli(MonivalintaTaulu taulu, PokeriHanska eka,
                           PokeriHanska toka, PokeriHanska kolmas)
     {
-        this.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA/2, Extern.KORKEUS_IKKUNA/3));
-        this.setLayout(new FlowLayout(FlowLayout.LEFT));
+        setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA/2, Extern.KORKEUS_IKKUNA/3));
+        setLayout(new FlowLayout(FlowLayout.LEFT));
         JPanel paneeli = new JPanel();
         paneeli.setLayout(new GridLayout(3, 1));
 
@@ -74,8 +73,9 @@ import raahauspeli.PokeriHanska;
         this.add(paneeli);      
         this.add(paneeli2);
     }
-    
-    public void setVastaaDisabled() {
+
+    public void setVastaaDisabled()
+    {
         vastaa.setEnabled(false);
     }
     

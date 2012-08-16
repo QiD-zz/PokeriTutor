@@ -42,12 +42,14 @@ public class MonivalintaTaulu extends JPanel
                 + "vedosta kaikkein paras erilaisissa tilanteissa. Jokaisessa tehtävässä on vain "
                 + "yksi mahdollisuus vastata oikein. Kokeile onnistutko saamaan kaikki oikein. :)");
     }
-    
-    public int getEdellinenSkenaarionNro() {
+
+    public int getEdellinenSkenaarionNro()
+    {
         return edellisenSkenaarionNro;
     }
-    
-    public void setEdellinenSkenaarionNro(int nro) {
+
+    public void setEdellinenSkenaarionNro(int nro)
+    {
         edellisenSkenaarionNro = nro;
     }
 

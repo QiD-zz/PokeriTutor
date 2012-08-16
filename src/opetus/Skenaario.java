@@ -10,34 +10,33 @@ import raahauspeli.PokeriHanska;
  */
 public class Skenaario
 {
+    private String oikeanVastauksenTeksti;
     private PokeriHanska hanska1;
     private PokeriHanska hanska2;
     private PokeriHanska hanska3;
-    
     private PokeriHanska oikeaVastaus;
-    private String oikeanVastauksenTeksti;
-    
     private Kortti[] kortit;
     
     private Kortti[][] korttiVaihtoehdot = {{new Kortti("ruutu", 12, Extern.PERUSPISTE10X10Y),
         new Kortti("ruutu", 4, Extern.PERUSPISTE10X10Y), new Kortti("ruutu", 10, Extern.PERUSPISTE10X10Y),
         new Kortti("ruutu", 9, Extern.PERUSPISTE10X10Y),new Kortti("risti", 12, Extern.PERUSPISTE10X10Y)},
         
-    {new Kortti("pata", 12, Extern.PERUSPISTE10X10Y),new Kortti("ruutu", 12, Extern.PERUSPISTE10X10Y),
+        {new Kortti("pata", 12, Extern.PERUSPISTE10X10Y),new Kortti("ruutu", 12, Extern.PERUSPISTE10X10Y),
         new Kortti("ruutu", 10, Extern.PERUSPISTE10X10Y),new Kortti("ruutu", 9, Extern.PERUSPISTE10X10Y),
         new Kortti("risti", 12, Extern.PERUSPISTE10X10Y)},
-    
-    {new Kortti("hertta", 7, Extern.PERUSPISTE10X10Y),new Kortti("ruutu", 8, Extern.PERUSPISTE10X10Y),
+
+        {new Kortti("hertta", 7, Extern.PERUSPISTE10X10Y),new Kortti("ruutu", 8, Extern.PERUSPISTE10X10Y),
         new Kortti("ruutu", 10, Extern.PERUSPISTE10X10Y),new Kortti("hertta", 9, Extern.PERUSPISTE10X10Y),
         new Kortti("risti", 7, Extern.PERUSPISTE10X10Y)},
-    
-    {new Kortti("ruutu", 11, Extern.PERUSPISTE10X10Y),new Kortti("ruutu", 8, Extern.PERUSPISTE10X10Y),
+
+        {new Kortti("ruutu", 11, Extern.PERUSPISTE10X10Y),new Kortti("ruutu", 8, Extern.PERUSPISTE10X10Y),
         new Kortti("ruutu", 10, Extern.PERUSPISTE10X10Y),new Kortti("hertta", 7, Extern.PERUSPISTE10X10Y),
         new Kortti("risti", 8, Extern.PERUSPISTE10X10Y)},
-    
-    {new Kortti("ruutu", 7, Extern.PERUSPISTE10X10Y),new Kortti("ruutu", 6, Extern.PERUSPISTE10X10Y),
+
+        {new Kortti("ruutu", 7, Extern.PERUSPISTE10X10Y),new Kortti("ruutu", 6, Extern.PERUSPISTE10X10Y),
         new Kortti("ruutu", 8, Extern.PERUSPISTE10X10Y),new Kortti("ruutu", 5, Extern.PERUSPISTE10X10Y),
-        new Kortti("risti", 8, Extern.PERUSPISTE10X10Y)}};
+        new Kortti("risti", 8, Extern.PERUSPISTE10X10Y)}
+    };
     
     private PokeriHanska[][] vaihtoehdot = {{new PokeriHanska(PokeriHanska.Arvo.VARI),
         new PokeriHanska(PokeriHanska.Arvo.SUORA),new PokeriHanska(PokeriHanska.Arvo.PARI)},
@@ -51,10 +50,10 @@ public class Skenaario
         new PokeriHanska(PokeriHanska.Arvo.KAKSIPARIA),new PokeriHanska(PokeriHanska.Arvo.KOLMOSET)}
     };
     
-    private PokeriHanska[] oikeatVastaukset = {new PokeriHanska(PokeriHanska.Arvo.VARI)
-            ,new PokeriHanska(PokeriHanska.Arvo.NELOSET),new PokeriHanska(PokeriHanska.Arvo.SUORA),
-    new PokeriHanska(PokeriHanska.Arvo.KOLMOSET), new PokeriHanska(PokeriHanska.Arvo.VARISUORA)
-};
+    private PokeriHanska[] oikeatVastaukset = {new PokeriHanska(PokeriHanska.Arvo.VARI),
+        new PokeriHanska(PokeriHanska.Arvo.NELOSET),new PokeriHanska(PokeriHanska.Arvo.SUORA),
+        new PokeriHanska(PokeriHanska.Arvo.KOLMOSET), new PokeriHanska(PokeriHanska.Arvo.VARISUORA)
+    };
     
     private String[] ohjeTekstit = {"Oikein. Kun pöydässä on neljä samaa värikorttia ja neljä peräkkäistä "
             + "numeroa on värin vetäminen kannattavampaa, sillä pakasta löytyy päistä avoinna olevaan"
