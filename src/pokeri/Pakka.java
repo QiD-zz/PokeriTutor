@@ -8,9 +8,9 @@ import java.util.Map;
 import java.util.Random;
 
 
-public class Pakka
+public final class Pakka
 {
-    private long seed;
+    private long seed = System.nanoTime();
     private long otettu;
     private Map<String, Long> otetutMaat = new HashMap<String, Long>();
     private ArrayList<Kortti> pakka = new ArrayList<Kortti>(0);
@@ -18,7 +18,6 @@ public class Pakka
 
     private Pakka() // Singleton, vain yksi pakka on mahdollinen
     {
-        seed = System.nanoTime();
         pakka = null;
         otetutMaat = null;
         otetutMaat = new HashMap<String, Long>();
@@ -26,7 +25,7 @@ public class Pakka
         otettu = 0;
 
         for (int i = 0; i < Extern.MAIDEN_LKM; i++)
-            otetutMaat.put(Extern.MAAT[i], new Long(0));
+            otetutMaat.put(Extern.MAAT[i], Long.valueOf(0));
 
         for (int i = 2; i <= Extern.KORTTEJA_PAKASSA / Extern.MAIDEN_LKM; i++) {
             for (int maa = 0; maa < Extern.MAIDEN_LKM; maa++) {
@@ -70,7 +69,7 @@ public class Pakka
         Kortti k;
 
         try {
-            k = pakka.remove(0);
+            k = pakka.remove(pakka.size() - 1);
             long nmbr = 0;
 
             if (k.getMaa().equals("ruutu")) {
@@ -137,7 +136,7 @@ public class Pakka
     public void sekoita()
     {
         Collections.shuffle(pakka, new Random(seed));
-        Collections.shuffle(pakka, new Random(seed));
+        Collections.shuffle(pakka, new Random());
     }
 
     @Override
