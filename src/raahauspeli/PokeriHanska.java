@@ -8,26 +8,26 @@ import pokeri.Kortti;
  */
 public class PokeriHanska
 {
-    public static String VARISUORA = "Värisuora";
-    public static String NELOSET = "Neloset";
-    public static String TAYSKASI = "Täyskäsi";
-    public static String VARI = "Väri";
-    public static String SUORA = "Suora";
-    public static String KOLMOSET = "Kolmoset";
-    public static String KAKSIPARIA = "Kaksi paria";
-    public static String PARI = "Pari";
-    public static String HAI = "Hai";
+    public final static String VARISUORA  = "Värisuora";
+    public final static String NELOSET    = "Neloset";
+    public final static String TAYSKASI   = "Täyskäsi";
+    public final static String VARI       = "Väri";
+    public final static String SUORA      = "Suora";
+    public final static String KOLMOSET   = "Kolmoset";
+    public final static String KAKSIPARIA = "Kaksi paria";
+    public final static String PARI       = "Pari";
+    public final static String HAI        = "Hai";
 
-    public Arvo arvo;
-    private Arvo[] arvot;
-    public String kasi;
+    public  String kasi;
+    public  Arvo   arvo;
+    private Arvo[]   arvot;
     private Kortti[] kortit;
 
-    public static enum Arvo {
-        VARISUORA, NELOSET, TAYSKASI, VARI, SUORA, KOLMOSET, KAKSIPARIA, PARI, HAI
-    }
-    public static String kadet[] = {"Värisuora","Neloset","Täyskäsi","Väri","Suora"
-    ,"Kolmoset","Kaksi paria","Pari","Hai"};
+    public static enum Arvo { VARISUORA, NELOSET, TAYSKASI, VARI, SUORA,
+                              KOLMOSET, KAKSIPARIA, PARI, HAI }
+    public final static String kadet[] = { VARISUORA, NELOSET, TAYSKASI, VARI,
+                                           SUORA, KOLMOSET, KAKSIPARIA, PARI,
+                                           HAI };
 
     public PokeriHanska(Arvo arvo_)
     {
@@ -46,7 +46,6 @@ public class PokeriHanska
     {
         if (testaaNimi(nimi)) {
             kasi = nimi;
-            System.out.println(nimi);
             arvot = Arvo.values();
             arvo = arvot[testaaNimenJarjNro(nimi)];
         }     
@@ -93,7 +92,7 @@ public class PokeriHanska
         }
     }
 
-    private boolean testaaNimi(String nimi)
+    public static boolean testaaNimi(String nimi)
     {
         for (int i = 0; i < kadet.length; i++) {
             if (nimi.equals(kadet[i]))
@@ -107,12 +106,10 @@ public class PokeriHanska
         int nro = -1;
         
         for (int i = 0; i < kadet.length; i++) {
-            System.out.println(kadet[i]);
             if (nimi.equals(kadet[i])) {
                 nro = i;
             }         
         }
-        System.out.println(nro);
         return nro;
     }
 

@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.util.Arrays;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import raahauspeli.PokeriHanska;
 
@@ -18,12 +19,14 @@ public class KorttiPaneeli extends JPanel
     private JButton pelaaKasi;
     private JButton statistiikka;
     private JButton uusipeli;
+    private JLabel  pistenaytto;
     private JPanel  kortitPane;
     private JPanel  toiminnotPane;
     private MainMenu main;
 
     private KorttipaneelinKuuntelija kuuntelija;
-    private Pakka    pakka;
+    private Pakka pakka;
+    private Pisteytys pisteet;
     private Kortti[] poytakortit = new Kortti[Extern.KORTTEJA_POYDALLA];
     private PokeriHanska tamanHetkinenKasi;
 
@@ -45,6 +48,9 @@ public class KorttiPaneeli extends JPanel
         pakka = Pakka.getPakka();
         pakka.sekoita();
         alustaKortit();
+        pisteet = new Pisteytys();
+        pistenaytto = new JLabel(String.format("Pisteet %5d  ",
+                                 pisteet.getPisteet()));
 
         // Toiminnot
         pelaaKasi = new JButton("Pelaa käsi");
@@ -65,6 +71,7 @@ public class KorttiPaneeli extends JPanel
         statistiikka.addActionListener(kuuntelija);
         uusipeli.addActionListener(kuuntelija);
 
+        toiminnotPane.add(pistenaytto);
         toiminnotPane.add(pelaaKasi);
         toiminnotPane.add(jaa);
         toiminnotPane.add(statistiikka);
@@ -112,6 +119,7 @@ public class KorttiPaneeli extends JPanel
                         jaa.setEnabled(false);
                         uusipeli.setEnabled(true);
                         evaluoiKasi(poytakortit);
+                        pisteet.laskePisteet(parsiKasiOhjetekstista());
                     }
                 }
             } else if (ae.getActionCommand().equals("jaa")) {
@@ -119,25 +127,41 @@ public class KorttiPaneeli extends JPanel
                 jaa.setEnabled(false);
                 pelaaKasi.setEnabled(false);
                 uusipeli.setEnabled(true);
+                pisteet.laskePisteet(parsiKasiOhjetekstista());
+            } else if (ae.getActionCommand().equals("stats")) {
+                String txt = "";
+
+                txt += "----OTETUT MAAT----\n";
+                txt += otetutMaat();
+                txt += "\n----NOSTETTU----\n";
+                txt += String.format("Pakassa: %d, Nostettu: %d\n",
+                        pakka.jaljella(), pakka.nostettu());
+                main.setOhjeTekstiAlue(txt);
             } else if (ae.getActionCommand().equals("uusipeli")) {
                 alustaUusiPeli();
                 pelaaKasi.setEnabled(true);
                 statistiikka.setEnabled(true);
                 uusipeli.setEnabled(false);
                 jaa.setEnabled(true);
-            } else if (ae.getActionCommand().equals("stats")) {
-                String txt = "";
-
-                txt += "----OTETUT MAAT----\n";
-                txt += otetutMaat();
-                txt += "---/OTETUT MAAT----\n\n";
-                txt += "-------NOSTETTU-------\n";
-                txt += String.format("Pakassa: %d, Nostettu: %d\n",
-                        pakka.jaljella(), pakka.nostettu());
-                txt += "------/NOSTETTU-------\n\n";
-                main.setOhjeTekstiAlue(txt);
             }
+            paivitaPisteet();
         }
+    }
+
+    public String parsiKasiOhjetekstista()
+    {
+        int idx = 0;
+
+        idx = main.getOhjeTeksti().indexOf(' ');
+        if (idx > 0)
+            return main.getOhjeTeksti().substring(0, idx);
+        return "";
+    }
+
+    public void paivitaPisteet()
+    {
+        pistenaytto.setText(String.format("Pisteet %5d  ",
+                            pisteet.getPisteet()));
     }
 
     public void alustaUusiPeli()
@@ -149,6 +173,7 @@ public class KorttiPaneeli extends JPanel
         pakka.sekoita();
         alustaKortit();
         vaihtoKrt = 0;
+        //pisteet.nollaaPisteet();
         main.setOhjeTekstiAlue("");
         evaluoiKasi(poytakortit);
     }
@@ -179,7 +204,8 @@ public class KorttiPaneeli extends JPanel
         StringBuilder sb = new StringBuilder();
 
         for (String m : Extern.MAAT)
-            sb.append(String.format("%s (%d kpl)\n", m, pakka.getMaaOtettuCount(m)));
+            sb.append(String.format("%s (%d kpl)\n", m,
+                      pakka.getMaaOtettuCount(m)));
 
         return sb.toString();
     }
@@ -203,29 +229,35 @@ public class KorttiPaneeli extends JPanel
         tkasiVaiKaksiParia = tarkistaTayskasiTaiKaksiParia(tmp);
 
         if (onVariSuora) {
-            main.setOhjeTekstiAlue("Värisuora");
-            tamanHetkinenKasi = new PokeriHanska(PokeriHanska.Arvo.VARISUORA);
+            tamanHetkinenKasi = new PokeriHanska(raahauspeli.PokeriHanska.VARISUORA);
+            main.setOhjeTekstiAlue(String.format("Värisuora (%d pistettä)",
+                 pisteet.VOITTOPISTE.get(raahauspeli.PokeriHanska.VARISUORA)));
             return;
         } else if (onVari) {
-            main.setOhjeTekstiAlue("Väri");
-            tamanHetkinenKasi = new PokeriHanska(PokeriHanska.Arvo.VARI);
+            main.setOhjeTekstiAlue(String.format("Väri (%d pistettä)",
+                 pisteet.VOITTOPISTE.get(raahauspeli.PokeriHanska.VARI)));
+            tamanHetkinenKasi = new PokeriHanska(raahauspeli.PokeriHanska.VARI);
         } else if (onSuora) {
-            main.setOhjeTekstiAlue("Suora");
-            tamanHetkinenKasi = new PokeriHanska(PokeriHanska.Arvo.SUORA);
+            main.setOhjeTekstiAlue(String.format("Suora (%d pistettä)",
+                 pisteet.VOITTOPISTE.get(raahauspeli.PokeriHanska.SUORA)));
+            tamanHetkinenKasi = new PokeriHanska(raahauspeli.PokeriHanska.SUORA);
         } else {
             if (nsamaa > 0 && tkasiVaiKaksiParia != 5) {
                 switch (nsamaa) {
                 case 2:
-                    main.setOhjeTekstiAlue("Pari");
-                    tamanHetkinenKasi = new PokeriHanska(PokeriHanska.Arvo.PARI);
+                    main.setOhjeTekstiAlue(String.format("Pari (%d pistettä)",
+                         pisteet.VOITTOPISTE.get(raahauspeli.PokeriHanska.PARI)));
+                    tamanHetkinenKasi = new PokeriHanska(raahauspeli.PokeriHanska.PARI);
                     break;
                 case 3:
-                    main.setOhjeTekstiAlue("Kolme samaa");
-                    tamanHetkinenKasi = new PokeriHanska(PokeriHanska.Arvo.KOLMOSET);
+                    main.setOhjeTekstiAlue(String.format("Kolmoset (%d pistettä)",
+                         pisteet.VOITTOPISTE.get(raahauspeli.PokeriHanska.KOLMOSET)));
+                    tamanHetkinenKasi = new PokeriHanska(raahauspeli.PokeriHanska.KOLMOSET);
                     break;
                 case 4:
-                    main.setOhjeTekstiAlue("Neljä samaa");
-                    tamanHetkinenKasi = new PokeriHanska(PokeriHanska.Arvo.NELOSET);
+                    main.setOhjeTekstiAlue(String.format("Neloset (%d pistettä)",
+                         pisteet.VOITTOPISTE.get(raahauspeli.PokeriHanska.NELOSET)));
+                    tamanHetkinenKasi = new PokeriHanska(raahauspeli.PokeriHanska.NELOSET);
                     break;
                 default:
                     break;
@@ -235,20 +267,27 @@ public class KorttiPaneeli extends JPanel
             if (tkasiVaiKaksiParia > 0) {
                 switch (tkasiVaiKaksiParia) {
                 case 2: // Kaksi paria
-                    main.setOhjeTekstiAlue("Kaksi paria");
-                    tamanHetkinenKasi = new PokeriHanska(PokeriHanska.Arvo.KAKSIPARIA);
+                    main.setOhjeTekstiAlue(String.format("Kaksi paria (%d pistettä)",
+                         pisteet.VOITTOPISTE.get(raahauspeli.PokeriHanska.KAKSIPARIA)));
+                    tamanHetkinenKasi = new PokeriHanska(raahauspeli.PokeriHanska.KAKSIPARIA);
                     break;
                 case 5:
-                    main.setOhjeTekstiAlue("Täyskäsi");
-                    tamanHetkinenKasi = new PokeriHanska(PokeriHanska.Arvo.TAYSKASI);
+                    main.setOhjeTekstiAlue(String.format("Täyskäsi (%d pistettä)",
+                         pisteet.VOITTOPISTE.get(raahauspeli.PokeriHanska.TAYSKASI)));
+                    tamanHetkinenKasi = new PokeriHanska(raahauspeli.PokeriHanska.TAYSKASI);
                     break;
                 default:
                     break;
                 }
             }
 
-            if (main.getOhjeTeksti().equals(""))
-                main.setOhjeTekstiAlue("Hai: " + Integer.toString(tarkistaHai(kortit)));
+            if (main.getOhjeTeksti().equals("")) {
+                int hai = 0;
+
+                hai = tarkistaHai(kortit);
+                main.setOhjeTekstiAlue(String.format("Hai %d (%d pistettä)",
+                     hai, pisteet.VOITTOPISTE.get(raahauspeli.PokeriHanska.HAI)));
+            }
         }
     }
 

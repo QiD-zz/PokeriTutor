@@ -122,10 +122,8 @@ public class Kortti extends JComponent implements Comparable
     @Override
     public int compareTo(Object o)
     {
-        Kortti k = null;
+        Kortti k;
 
-       if (!(o instanceof Kortti))
-           return 2; // XXX Liekö fiksuin tapa ilmaista, että oliot erilaisia
         k = (Kortti) o;
         if (k.getArvo() == arvo)
             return 0;
