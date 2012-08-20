@@ -79,7 +79,7 @@ public class Pisteytys
             if (!tiednimi.exists())
                 tiednimi.createNewFile();
 
-            fwrter = new FileWriter(PISTEET_TIEDOSTO, true); // append
+            fwrter = new FileWriter(tiednimi, true); // append
             bwrter = new BufferedWriter(fwrter);
 
             bwrter.write(teksti);
@@ -96,8 +96,8 @@ public class Pisteytys
         SimpleDateFormat pvmFmt;
         String tallennusMuoto = "";
 
-        pvmFmt = new SimpleDateFormat("[dd.MM.yyyy] hh:mm");
-        tallennusMuoto = String.format("%s\t%d", pvmFmt.format(pvm), pisteet);
+        pvmFmt = new SimpleDateFormat("[dd.MM.yyyy] HH:mm");
+        tallennusMuoto = String.format("%s\t%d\n", pvmFmt.format(pvm), pisteet);
 
         tallennaTiedLoppuun(tallennusMuoto);
     }

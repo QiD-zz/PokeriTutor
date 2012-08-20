@@ -120,6 +120,7 @@ public class KorttiPaneeli extends JPanel
                         uusipeli.setEnabled(true);
                         evaluoiKasi(poytakortit);
                         pisteet.laskePisteet(parsiKasiOhjetekstista());
+                        pisteet.tallennaPisteet();
                     }
                 }
             } else if (ae.getActionCommand().equals("jaa")) {
@@ -128,6 +129,7 @@ public class KorttiPaneeli extends JPanel
                 pelaaKasi.setEnabled(false);
                 uusipeli.setEnabled(true);
                 pisteet.laskePisteet(parsiKasiOhjetekstista());
+                pisteet.tallennaPisteet();
             } else if (ae.getActionCommand().equals("stats")) {
                 String txt = "";
 
