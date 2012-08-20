@@ -1,12 +1,19 @@
 package pokeri;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Pisteytys
 {
     private int pisteet;
+    private final String PISTEET_TIEDOSTO = "pisteet.txt";
     public final static Map<String, Integer> VOITTOPISTE =
             Collections.unmodifiableMap(new HashMap<String, Integer>() {{
         /*
@@ -60,6 +67,39 @@ public class Pisteytys
     public int getPisteet()
     {
         return pisteet;
+    }
+
+    public void tallennaTiedLoppuun(String teksti)
+    {
+        FileWriter      fwrter;
+        BufferedWriter  bwrter;
+        File tiednimi = new File(PISTEET_TIEDOSTO);
+
+        try {
+            if (!tiednimi.exists())
+                tiednimi.createNewFile();
+
+            fwrter = new FileWriter(PISTEET_TIEDOSTO, true); // append
+            bwrter = new BufferedWriter(fwrter);
+
+            bwrter.write(teksti);
+            bwrter.close(); // sulkee myös fwrterin
+        } catch (IOException ex) {
+            System.out.println(String.format("Tiedostoon %s kirjoitus epäonnistui: %s",
+                    PISTEET_TIEDOSTO, ex.getMessage()));
+        }
+    }
+
+    public void tallennaPisteet()
+    {
+        Date pvm = new Date();
+        SimpleDateFormat pvmFmt;
+        String tallennusMuoto = "";
+
+        pvmFmt = new SimpleDateFormat("[dd.MM.yyyy] hh:mm");
+        tallennusMuoto = String.format("%s\t%d", pvmFmt.format(pvm), pisteet);
+
+        tallennaTiedLoppuun(tallennusMuoto);
     }
 
 }
