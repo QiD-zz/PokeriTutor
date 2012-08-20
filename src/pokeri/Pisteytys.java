@@ -13,8 +13,12 @@ import java.util.Map;
 public class Pisteytys
 {
     private int pisteet;
-    public final String PISTEET_TIEDOSTO = "pisteet.txt";
-    public final static Map<String, Integer> VOITTOPISTE =
+    private int panos;
+    // Vakiot
+    public  final int ALKUPISTEET = 10;
+    public  final int PANOSMAX    =  5;
+    private final String PISTEET_TIEDOSTO = "pisteet.txt";
+    private final static Map<String, Integer> VOITTOPISTE =
             Collections.unmodifiableMap(new HashMap<String, Integer>() {{
         /*
          * (Arvokkain ensin)
@@ -39,12 +43,15 @@ public class Pisteytys
         put(raahauspeli.PokeriHanska.HAI, 0);
     }});
 
-    // Vakiot
-    public final int ALKUPISTEET = 20;
-
     public Pisteytys()
     {
-        pisteet = 0;
+        pisteet = ALKUPISTEET;
+        panos = 1;
+    }
+
+    public int getPistePanosKerroin(String kasi)
+    {
+        return VOITTOPISTE.get(kasi) * panos;
     }
 
     public void laskePisteet(String kasi)
@@ -54,19 +61,44 @@ public class Pisteytys
         if (raahauspeli.PokeriHanska.testaaNimi(kasi) == false)
             return;
 
-        tienatutPst = VOITTOPISTE.get(kasi);
-
+        tienatutPst = VOITTOPISTE.get(kasi) * panos;
         pisteet += tienatutPst;
     }
 
     public void nollaaPisteet()
     {
-        pisteet = 0;
+        pisteet = ALKUPISTEET;
+        panos = 1;
+    }
+
+    public int getPanos()
+    {
+        return panos;
     }
 
     public int getPisteet()
     {
         return pisteet;
+    }
+
+    public void vaihdaPanos()
+    {
+        if (panos + 1 <= pisteet && panos + 1 <= PANOSMAX)
+            panos++;
+        else {
+            if (pisteet == 0)
+                panos = 0;
+            else
+                panos = 1;
+        }
+    }
+
+    /* Vähennä panoksen määrän verran pisteitä */
+    public void vahennaPisteita()
+    {
+        if (panos > pisteet)
+            panos = pisteet;
+        pisteet -= panos;
     }
 
     public String getTiedostoPolkuJaNimi()

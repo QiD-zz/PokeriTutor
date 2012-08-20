@@ -137,6 +137,8 @@ public final class Pakka
     {
         Collections.shuffle(pakka, new Random(seed));
         Collections.shuffle(pakka, new Random());
+        Collections.shuffle(pakka, new Random(seed));
+        Collections.shuffle(pakka, new Random());
     }
 
     @Override

@@ -16,6 +16,8 @@ public class Extern
 
     // Variteemat
     public final static Color PASTELLITAUSTA = new Color(238, 232, 170);
+    public final static Color PAINIKETAUSTA1 = new Color(218, 200, 120);
+    public final static Color PAINIKETAUSTA2 = new Color(200, 212, 150);
 
     // Peliin liittyvät asiat
     public final static int KORTTEJA_MAASSA   = 13;
