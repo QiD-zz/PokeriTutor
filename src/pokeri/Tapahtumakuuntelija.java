@@ -8,7 +8,6 @@ public class Tapahtumakuuntelija implements ActionListener, ItemListener,
                                                 MouseListener
 {
     private MainMenu main;
-    private EtusivuPaneeli etusivu;
 
     public Tapahtumakuuntelija(MainMenu m)
     {

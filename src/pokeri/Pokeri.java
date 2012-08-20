@@ -1,8 +1,12 @@
 package pokeri;
 
 
-public class Pokeri
+public final class Pokeri
 {
+    private Pokeri()
+    {
+    }
+
     public static void main(String[] args)
     {
         new MainMenu().setVisible(true);

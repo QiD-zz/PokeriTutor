@@ -2,64 +2,41 @@ package pokeri;
 
 import java.awt.Color;
 import java.awt.Point;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 
 
-public class Extern
+public final class Extern
 {
+    private Extern()
+    {
+    }
+
     // Visuaaliset hommat
-    public final static int LEVEYS_IKKUNA  = 1000;
-    public final static int KORKEUS_IKKUNA = 1000;
-    public final static Point PERUSPISTE10X10Y = new Point(10, 10);
+    public static final int LEVEYS_IKKUNA  = 1000;
+    public static final int KORKEUS_IKKUNA = 1000;
+    public static final Point PERUSPISTE10X10Y = new Point(10, 10);
 
     // Variteemat
-    public final static Color PASTELLITAUSTA = new Color(238, 232, 170);
-    public final static Color PAINIKETAUSTA1 = new Color(218, 200, 120);
-    public final static Color PAINIKETAUSTA2 = new Color(200, 212, 150);
+    public static final Color PASTELLITAUSTA = new Color(238, 232, 170);
+    public static final Color PAINIKETAUSTA1 = new Color(218, 200, 120);
+    public static final Color PAINIKETAUSTA2 = new Color(200, 212, 150);
 
     // Peliin liittyvät asiat
-    public final static int KORTTEJA_MAASSA   = 13;
-    public final static int KORTTEJA_PAKASSA  = 52;
-    public final static int KORTTEJA_POYDALLA =  5;
-    public final static int MAIDEN_LKM        =  4;
-    public final static int SKENAARIOIDEN_LKM =  5;
-    public final static int VAIHTOJEN_LKM     =  2;
+    public static final int KORTTEJA_MAASSA   = 13;
+    public static final int KORTTEJA_PAKASSA  = 52;
+    public static final int KORTTEJA_POYDALLA =  5;
+    public static final int MAIDEN_LKM        =  4;
+    public static final int SKENAARIOIDEN_LKM =  5;
+    public static final int VAIHTOJEN_LKM     =  2;
 
-    public final static String[] MAAT = { "ruutu", "hertta", "pata", "risti" };
-    public final static Map<String, Integer> VOITTOPISTE =
-        Collections.unmodifiableMap(new HashMap<String, Integer>() {{
-        /*
-         * (Arvokkain ensin)
-         * Värisuora
-         * Neljä samaa
-         * Täyskäsi
-         * Väri
-         * Suora
-         * Kolme samaa
-         * Kaksi paria
-         * Pari
-         * Hai
-         */
-        put(raahauspeli.PokeriHanska.VARISUORA, 100);
-        put(raahauspeli.PokeriHanska.NELOSET, 80);
-        put(raahauspeli.PokeriHanska.TAYSKASI, 50);
-        put(raahauspeli.PokeriHanska.VARI, 40);
-        put(raahauspeli.PokeriHanska.SUORA, 40);
-        put(raahauspeli.PokeriHanska.KOLMOSET, 20);
-        put(raahauspeli.PokeriHanska.KAKSIPARIA, 15);
-        put(raahauspeli.PokeriHanska.PARI, 5);
-        put(raahauspeli.PokeriHanska.HAI, 0);
-    }});
+    public static final String[] MAAT = { "ruutu", "hertta", "pata", "risti" };
 
     // Komennot
-    public final static String RAAHAUSPELI = "RaahausPeli";
-    public final static String KORTTIPELI  = "KorttiPeli";
-    public final static String OPETUS      = "Opetus";
-    public final static String ETUSIVU     = "Etusivulle";
-    public final static String MONIVALINTAPELI = "monivalintapeli";
-    public final static String UUSIMONIVALINTATEHTAVA = "uusi tehtävä";
-    public final static String MONIVALINTAVASTAUS = "vastasin, olinko oikeassa?";
+    public static final String RAAHAUSPELI = "RaahausPeli";
+    public static final String KORTTIPELI  = "KorttiPeli";
+    public static final String OPETUS      = "Opetus";
+    public static final String ETUSIVU     = "Etusivulle";
+    public static final String MONIVALINTAPELI = "monivalintapeli";
+    public static final String UUSIMONIVALINTATEHTAVA = "uusi tehtävä";
+    public static final String MONIVALINTAVASTAUS = "vastasin, olinko oikeassa?";
 
 }

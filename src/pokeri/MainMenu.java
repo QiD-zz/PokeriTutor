@@ -25,7 +25,6 @@ public class MainMenu extends JFrame
     private JPanel paaPaneeli;
     private JPanel ohjePaneeli;
     private JTextArea ohjeTekstiAlue;
-    private RaahausPeliPaneeli raahausPeli;
     private Tapahtumakuuntelija tkuuntelija;
     private JScrollPane ohjePane;
     private JButton paluu;
@@ -115,7 +114,6 @@ public class MainMenu extends JFrame
     private void alustaElementit()
     {
         paaPaneeli = new JPanel();
-        raahausPeli = new RaahausPeliPaneeli();
 
         setLayout(new BorderLayout(2, 0));
         alustaMenu();

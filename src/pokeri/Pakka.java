@@ -13,7 +13,7 @@ public final class Pakka
     private long seed = System.nanoTime();
     private long otettu;
     private Map<String, Long> otetutMaat = new HashMap<String, Long>();
-    private ArrayList<Kortti> pakka = new ArrayList<Kortti>(0);
+    private ArrayList<Kortti> pakka = new ArrayList<Kortti>();
     private static Pakka instance = null;
 
     private Pakka() // Singleton, vain yksi pakka on mahdollinen
@@ -107,7 +107,7 @@ public final class Pakka
                 break;
             }
         }
-        if (maaOK == false)
+        if (!maaOK)
             return 0;
         return otetutMaat.get(maa);
     }

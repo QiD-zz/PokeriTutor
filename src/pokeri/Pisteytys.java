@@ -110,7 +110,7 @@ public class Pisteytys
         return "";
     }
 
-    public void tallennaTiedLoppuun(String teksti)
+    public void tallennaTiedLoppuun(String teksti) // FIXME pistä tänne date yms.
     {
         FileWriter      fwrter;
         BufferedWriter  bwrter;
@@ -138,7 +138,7 @@ public class Pisteytys
         String tallennusMuoto = "";
 
         pvmFmt = new SimpleDateFormat("[dd.MM.yyyy] HH:mm");
-        tallennusMuoto = String.format("%s\t%d\n", pvmFmt.format(pvm), pisteet);
+        tallennusMuoto = String.format("Pokeri: %s\t%d%n", pvmFmt.format(pvm), pisteet);
 
         tallennaTiedLoppuun(tallennusMuoto);
     }
