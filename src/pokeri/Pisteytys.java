@@ -13,7 +13,7 @@ import java.util.Map;
 public class Pisteytys
 {
     private int pisteet;
-    private final String PISTEET_TIEDOSTO = "pisteet.txt";
+    public final String PISTEET_TIEDOSTO = "pisteet.txt";
     public final static Map<String, Integer> VOITTOPISTE =
             Collections.unmodifiableMap(new HashMap<String, Integer>() {{
         /*
@@ -67,6 +67,15 @@ public class Pisteytys
     public int getPisteet()
     {
         return pisteet;
+    }
+
+    public String getTiedostoPolkuJaNimi()
+    {
+        File tiednimi = new File(PISTEET_TIEDOSTO);
+
+        if (tiednimi.exists())
+            return String.format("%s", tiednimi.getAbsolutePath());
+        return "";
     }
 
     public void tallennaTiedLoppuun(String teksti)

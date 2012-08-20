@@ -19,6 +19,7 @@ public class KorttiPaneeli extends JPanel
     private JButton pelaaKasi;
     private JButton statistiikka;
     private JButton uusipeli;
+    private JButton tallenna;
     private JLabel  pistenaytto;
     private JPanel  kortitPane;
     private JPanel  toiminnotPane;
@@ -64,17 +65,22 @@ public class KorttiPaneeli extends JPanel
         statistiikka.setEnabled(false);
         uusipeli = new JButton("Uusi peli");
         uusipeli.setActionCommand("uusipeli");
+        tallenna = new JButton("Tallenna pisteet");
+        tallenna.setActionCommand("tallenna");
+        tallenna.setEnabled(false);
 
         kuuntelija = new KorttipaneelinKuuntelija();
         pelaaKasi.addActionListener(kuuntelija);
         jaa.addActionListener(kuuntelija);
         statistiikka.addActionListener(kuuntelija);
         uusipeli.addActionListener(kuuntelija);
+        tallenna.addActionListener(kuuntelija);
 
         toiminnotPane.add(pistenaytto);
         toiminnotPane.add(pelaaKasi);
         toiminnotPane.add(jaa);
         toiminnotPane.add(statistiikka);
+        toiminnotPane.add(tallenna);
         toiminnotPane.add(uusipeli);
 
         add(kortitPane);
@@ -117,19 +123,19 @@ public class KorttiPaneeli extends JPanel
                     if (vaihtoKrt == Extern.VAIHTOJEN_LKM) {
                         pelaaKasi.setEnabled(false);
                         jaa.setEnabled(false);
+                        tallenna.setEnabled(true);
                         uusipeli.setEnabled(true);
                         evaluoiKasi(poytakortit);
                         pisteet.laskePisteet(parsiKasiOhjetekstista());
-                        pisteet.tallennaPisteet();
                     }
                 }
             } else if (ae.getActionCommand().equals("jaa")) {
                 evaluoiKasi(poytakortit);
                 jaa.setEnabled(false);
                 pelaaKasi.setEnabled(false);
+                tallenna.setEnabled(true);
                 uusipeli.setEnabled(true);
                 pisteet.laskePisteet(parsiKasiOhjetekstista());
-                pisteet.tallennaPisteet();
             } else if (ae.getActionCommand().equals("stats")) {
                 String txt = "";
 
@@ -139,12 +145,19 @@ public class KorttiPaneeli extends JPanel
                 txt += String.format("Pakassa: %d, Nostettu: %d\n",
                         pakka.jaljella(), pakka.nostettu());
                 main.setOhjeTekstiAlue(txt);
+            } else if (ae.getActionCommand().equals("tallenna")) {
+                pisteet.tallennaPisteet();
+                main.setOhjeTekstiAlue(String.format(
+                        "Pisteet tallennettu %s tiedostoon",
+                        pisteet.getTiedostoPolkuJaNimi()));
+                tallenna.setEnabled(false);
             } else if (ae.getActionCommand().equals("uusipeli")) {
                 alustaUusiPeli();
                 pelaaKasi.setEnabled(true);
-                statistiikka.setEnabled(true);
-                uusipeli.setEnabled(false);
                 jaa.setEnabled(true);
+                statistiikka.setEnabled(true);
+                tallenna.setEnabled(false);
+                uusipeli.setEnabled(false);
             }
             paivitaPisteet();
         }
