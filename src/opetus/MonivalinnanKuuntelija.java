@@ -42,6 +42,7 @@ public class MonivalinnanKuuntelija implements ActionListener
                 kasiTaulu.setKorttiTaulussa(skenu.getKortti(i), i);
             }
             kasiTaulu.setValintaPoisPaalta();
+            kasiTaulu.setBackground(Extern.SKENAARIOPELINTAUSTAVARI);
             taulu.add(kasiTaulu);
             ValintaPaneeli vp = new ValintaPaneeli(taulu, skenu.getEkaHanska(),
                 skenu.getTokaHanska(), skenu.getKolmasHanska());

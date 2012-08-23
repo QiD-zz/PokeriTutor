@@ -50,12 +50,12 @@ public class RaahausPeliPaneeli extends JPanel implements ActionListener
         parhaatTulokset = new DefaultListModel();
         HoF = new JList(parhaatTulokset);
         this.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
-        this.setBackground(Color.lightGray);
+        this.setBackground(Extern.RAAHAUSPELINTAUSTAVARI);
         KasiTransferHandler handleri = new KasiTransferHandler();
         vasen = new JPanel();
-        vasen.setBackground(Color.lightGray);
+        vasen.setBackground(Extern.RAAHAUSPELINTAUSTAVARI);
         oikea = new JPanel();
-        oikea.setBackground(Color.lightGray);
+        oikea.setBackground(Extern.RAAHAUSPELINTAUSTAVARI);
         oikea.setLayout(new FlowLayout(FlowLayout.CENTER));
         
         uusiPeli = new JButton("Uusi peli");
@@ -77,7 +77,7 @@ public class RaahausPeliPaneeli extends JPanel implements ActionListener
         oikea.add(tulos);
         oikea.setPreferredSize(new Dimension(150, 250));
         JPanel oikeanPohja = new JPanel(new FlowLayout(FlowLayout.LEADING));
-        oikeanPohja.setBackground(Color.lightGray);
+        oikeanPohja.setBackground(Extern.RAAHAUSPELINTAUSTAVARI);
         oikeanPohja.add(oikea);
         
         listamalli = new DefaultListModel();

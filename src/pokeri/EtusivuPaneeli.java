@@ -60,6 +60,7 @@ public class EtusivuPaneeli extends JPanel
         JPanel keskikaista = new JPanel(new FlowLayout(FlowLayout.CENTER));
         keskikaista.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA/2, Extern.KORKEUS_IKKUNA/4));
         keskikaista.setLayout(new GridLayout(2, 2, 2, 2));
+        keskikaista.setBackground(Extern.PASTELLITAUSTA);
         keskikaista.add(opiKadet);
         keskikaista.add(kadetJarj);
         keskikaista.add(monivalintapeli);

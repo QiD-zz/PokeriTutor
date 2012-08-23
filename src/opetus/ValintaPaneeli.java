@@ -30,10 +30,14 @@ import raahauspeli.PokeriHanska;
         setLayout(new FlowLayout(FlowLayout.LEFT));
         JPanel paneeli = new JPanel();
         paneeli.setLayout(new GridLayout(3, 1));
+        this.setBackground(Extern.SKENAARIOPELINTAUSTAVARI);
 
-        ekaNappi = new JRadioButton(eka.getHanskaName());           
+        ekaNappi = new JRadioButton(eka.getHanskaName());   
+        ekaNappi.setBackground(Extern.SKENAARIOPELINTAUSTAVARI);
         tokaNappi = new JRadioButton(toka.getHanskaName());
+        tokaNappi.setBackground(Extern.SKENAARIOPELINTAUSTAVARI);
         kolmasNappi = new JRadioButton(kolmas.getHanskaName());
+        kolmasNappi.setBackground(Extern.SKENAARIOPELINTAUSTAVARI);
 
         ekaNappi.setFont(new Font(Font.SERIF, Font.BOLD, 25));
         tokaNappi.setFont(new Font(Font.SERIF, Font.BOLD, 25));
@@ -70,6 +74,8 @@ import raahauspeli.PokeriHanska;
         paneeli.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA / 5, Extern.KORKEUS_IKKUNA / 9));
         paneeli2.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA / 5, Extern.KORKEUS_IKKUNA / 9));
 
+        paneeli.setBackground(Extern.SKENAARIOPELINTAUSTAVARI);
+        paneeli2.setBackground(Extern.SKENAARIOPELINTAUSTAVARI);
         this.add(paneeli);      
         this.add(paneeli2);
     }

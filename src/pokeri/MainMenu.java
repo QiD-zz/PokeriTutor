@@ -56,6 +56,10 @@ public class MainMenu extends JFrame
         mitem.addActionListener(tkuuntelija);
         menu.add(mitem);
 
+        mitem = new JMenuItem(Extern.MONIVALINTAPELI);
+        mitem.addActionListener(tkuuntelija);
+        menu.add(mitem);
+        
         mitem = new JMenuItem("Lopeta");
         mitem.addActionListener(tkuuntelija);
         menu.add(mitem);
@@ -122,6 +126,7 @@ public class MainMenu extends JFrame
         paaPaneeli.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA,
                                     Extern.KORKEUS_IKKUNA / 3));
         paaPaneeli.addMouseListener(tkuuntelija);
+        paaPaneeli.setBackground(Extern.PASTELLITAUSTA);
 
         add(paaPaneeli, BorderLayout.CENTER);
         add(new JScrollPane(ohjePaneeli), BorderLayout.SOUTH);
@@ -153,6 +158,7 @@ public class MainMenu extends JFrame
         ohjeTekstiAlue.setText("");
         paaPaneeli.removeAll();
         paaPaneeli.add(new RaahausPeliPaneeli());
+        paaPaneeli.setBackground(Extern.RAAHAUSPELINTAUSTAVARI);
         paaPaneeli.repaint();
         paaPaneeli.revalidate();
     }
@@ -164,6 +170,7 @@ public class MainMenu extends JFrame
                 + "Kortin valinta tapahtuu korttia klikkaamalla");
         paaPaneeli.removeAll();
         paaPaneeli.add(new KorttiPaneeli(this));
+        paaPaneeli.setBackground(Color.LIGHT_GRAY);
         paaPaneeli.repaint();
         paaPaneeli.revalidate();
     }
@@ -174,6 +181,7 @@ public class MainMenu extends JFrame
         ohjeTekstiAlue.setText("");
         paaPaneeli.removeAll();
         paaPaneeli.add(new OpiTuntemaanHanskat(this));
+        paaPaneeli.setBackground(Color.lightGray);
         paaPaneeli.repaint();
         paaPaneeli.revalidate();
     }
@@ -194,6 +202,7 @@ public class MainMenu extends JFrame
         ohjeTekstiAlue.setText("");
         paaPaneeli.removeAll();
         paaPaneeli.add(new MonivalintaTaulu(this));
+        paaPaneeli.setBackground(Extern.SKENAARIOPELINTAUSTAVARI);
         paaPaneeli.repaint();
         paaPaneeli.revalidate();
     }

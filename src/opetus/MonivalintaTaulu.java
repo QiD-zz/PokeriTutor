@@ -23,11 +23,12 @@ public class MonivalintaTaulu extends JPanel
         main = m;
         this.setLayout(new FlowLayout(FlowLayout.CENTER));
         this.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA, Extern.KORKEUS_IKKUNA/2));
+        this.setBackground(Extern.SKENAARIOPELINTAUSTAVARI);
         Random rnd = new Random();
         edellisenSkenaarionNro = rnd.nextInt(Extern.SKENAARIOIDEN_LKM);
         skenu = new Skenaario(edellisenSkenaarionNro);
         KasiTaulu kasiTaulu = new KasiTaulu(new PokeriHanska(3));
-        
+        kasiTaulu.setBackground(Extern.SKENAARIOPELINTAUSTAVARI);
 
         for (int i = 0; i < Extern.KORTTEJA_POYDALLA; i++) {
             kasiTaulu.setKorttiTaulussa(skenu.getKortti(i), i);
@@ -36,6 +37,7 @@ public class MonivalintaTaulu extends JPanel
         kasiTaulu.setValintaPoisPaalta();
         vp = new ValintaPaneeli(this, skenu.getEkaHanska(),
                 skenu.getTokaHanska(), skenu.getKolmasHanska());
+
         this.add(kasiTaulu);
         this.add(vp);
         main.setOhjeTekstiAlue("Tässä pelissä on tarkoitus valita kolmesta vaihtoehtoisesta "
