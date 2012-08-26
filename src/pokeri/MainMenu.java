@@ -192,6 +192,7 @@ public class MainMenu extends JFrame
         ohjeTekstiAlue.setText("");
         paaPaneeli.removeAll();
         paaPaneeli.add(new EtusivuPaneeli(this));
+        paaPaneeli.setBackground(Extern.PASTELLITAUSTA);
         paaPaneeli.repaint();
         paaPaneeli.revalidate();
     }
