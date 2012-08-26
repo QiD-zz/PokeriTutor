@@ -45,19 +45,19 @@ public class MainMenu extends JFrame
 
         menu = new JMenu("Tiedosto");
 
-        mitem = new JMenuItem(Extern.RAAHAUSPELI);
-        mitem.addActionListener(tkuuntelija);
-        menu.add(mitem);
-
-        mitem = new JMenuItem(Extern.KORTTIPELI);
-        mitem.addActionListener(tkuuntelija);
-        menu.add(mitem);
-
         mitem = new JMenuItem(Extern.OPETUS);
         mitem.addActionListener(tkuuntelija);
         menu.add(mitem);
 
+        mitem = new JMenuItem(Extern.RAAHAUSPELI);
+        mitem.addActionListener(tkuuntelija);
+        menu.add(mitem);
+
         mitem = new JMenuItem(Extern.MONIVALINTAPELI);
+        mitem.addActionListener(tkuuntelija);
+        menu.add(mitem);
+
+        mitem = new JMenuItem(Extern.KORTTIPELI);
         mitem.addActionListener(tkuuntelija);
         menu.add(mitem);
 
@@ -75,6 +75,8 @@ public class MainMenu extends JFrame
         ohjeTekstiAlue = new JTextArea("Ohjeistus ja tilastot käyttävät tätä tilaa");
         paluu = new JButton(Extern.ETUSIVU);
         lopeta = new JButton(Extern.LOPETA);
+        lopeta.setBackground(Extern.LOPETATAUSTA);
+        lopeta.setOpaque(true);
         Dimension paluuSize;
         Insets insets;
 
@@ -113,7 +115,7 @@ public class MainMenu extends JFrame
         ohjePane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         ohjePane.setBounds(paluu.getWidth() + insets.left, insets.top,
                                  paluuSize.width, paluuSize.height);
-        ohjeTekstiAlue.setBackground(new Color(210, 210, 240));
+        ohjeTekstiAlue.setBackground(Extern.OHJETAUSTA);
         ohjeTekstiAlue.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA /
                                         8 * 7, Extern.KORKEUS_IKKUNA / 4));
         ohjePaneeli.add(paluu);
@@ -178,10 +180,9 @@ public class MainMenu extends JFrame
                 + "Kortin valinta tapahtuu korttia klikkaamalla");
         paaPaneeli.removeAll();
         paaPaneeli.add(new KorttiPaneeli(this));
-        paaPaneeli.setBackground(Color.LIGHT_GRAY);
+        paaPaneeli.setBackground(Extern.POKERIPELITAUSTA);
         paaPaneeli.repaint();
         paaPaneeli.revalidate();
-        paaPaneeli.setBackground(Extern.POKERIPELITAUSTA);
     }
 
     public void setOpetuspaneeli()
@@ -190,7 +191,7 @@ public class MainMenu extends JFrame
         ohjeTekstiAlue.setText("");
         paaPaneeli.removeAll();
         paaPaneeli.add(new OpiTuntemaanHanskat(this));
-        paaPaneeli.setBackground(Color.lightGray);
+        paaPaneeli.setBackground(Extern.POKERIKADETTAUSTA);
         paaPaneeli.repaint();
         paaPaneeli.revalidate();
     }
@@ -210,17 +211,15 @@ public class MainMenu extends JFrame
     public void setEtusivu()
     {
         paluu.setVisible(false);
+        lopeta.setVisible(true);
+        lopeta.setBackground(Extern.LOPETATAUSTA);
+        lopeta.setOpaque(true);
         ohjeTekstiAlue.setText("");
         paaPaneeli.removeAll();
         paaPaneeli.add(new EtusivuPaneeli(this));
         paaPaneeli.repaint();
         paaPaneeli.revalidate();
         paaPaneeli.setBackground(Extern.PASTELLITAUSTA);
-    }
-
-    public MainMenu getMainMenu() // FIXME Onko tälle käyttöä?
-    {
-        return this;
     }
 
 }
