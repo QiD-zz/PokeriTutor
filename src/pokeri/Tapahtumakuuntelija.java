@@ -27,7 +27,7 @@ public class Tapahtumakuuntelija implements ActionListener, ItemListener,
             main.setEtusivu();
         } else if (ae.getActionCommand().equals(Extern.MONIVALINTAPELI)) {
             main.setMonivalinta();
-        } else if (ae.getActionCommand().equals("Lopeta")) {
+        } else if (ae.getActionCommand().equals(Extern.LOPETA)) {
             main.dispose();
         }    
     }

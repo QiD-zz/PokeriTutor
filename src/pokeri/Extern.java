@@ -41,5 +41,6 @@ public final class Extern
     public static final String MONIVALINTAPELI = "Monivalintapeli";
     public static final String UUSIMONIVALINTATEHTAVA = "uusi tehtävä";
     public static final String MONIVALINTAVASTAUS = "vastasin, olinko oikeassa?";
+    public static final String LOPETA = "Lopeta";
 
 }

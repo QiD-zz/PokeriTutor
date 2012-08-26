@@ -28,6 +28,7 @@ public class MainMenu extends JFrame
     private Tapahtumakuuntelija tkuuntelija;
     private JScrollPane ohjePane;
     private JButton paluu;
+    private JButton lopeta;
 
     public MainMenu()
     {
@@ -73,6 +74,7 @@ public class MainMenu extends JFrame
         ohjePaneeli = new JPanel();
         ohjeTekstiAlue = new JTextArea("Ohjeistus ja tilastot käyttävät tätä tilaa");
         paluu = new JButton(Extern.ETUSIVU);
+        lopeta = new JButton(Extern.LOPETA);
         Dimension paluuSize;
         Insets insets;
 
@@ -94,10 +96,13 @@ public class MainMenu extends JFrame
         paluu.addActionListener(tkuuntelija);
         paluu.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA / 8,
                                Extern.KORKEUS_IKKUNA / 7));
+        lopeta.addActionListener(tkuuntelija);
 
         insets = ohjePaneeli.getInsets();
         paluuSize = paluu.getPreferredSize();
         paluu.setBounds(insets.left, insets.top, paluuSize.width,
+                        paluuSize.height);
+        lopeta.setBounds(insets.left, insets.top, paluuSize.width,
                         paluuSize.height);
         paluuSize = ohjeTekstiAlue.getPreferredSize();
         ohjeTekstiAlue.setBounds(paluu.getWidth() + insets.left, insets.top,
@@ -112,6 +117,7 @@ public class MainMenu extends JFrame
         ohjeTekstiAlue.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA /
                                         8 * 7, Extern.KORKEUS_IKKUNA / 4));
         ohjePaneeli.add(paluu);
+        ohjePaneeli.add(lopeta);
         ohjePaneeli.add(ohjePane);
     }
 
@@ -155,6 +161,7 @@ public class MainMenu extends JFrame
     public void setRaahauspeli()
     {
         paluu.setVisible(true);
+        lopeta.setVisible(false);
         ohjeTekstiAlue.setText("");
         paaPaneeli.removeAll();
         paaPaneeli.add(new RaahausPeliPaneeli());
@@ -166,6 +173,7 @@ public class MainMenu extends JFrame
     public void setPokeripeli()
     {
         paluu.setVisible(true);
+        lopeta.setVisible(false);
         ohjeTekstiAlue.setText("Aloita valitsemalla Uusi peli\n"
                 + "Kortin valinta tapahtuu korttia klikkaamalla");
         paaPaneeli.removeAll();
@@ -189,6 +197,7 @@ public class MainMenu extends JFrame
     public void setEtusivu()
     {
         paluu.setVisible(false);
+        lopeta.setVisible(true);
         ohjeTekstiAlue.setText("");
         paaPaneeli.removeAll();
         paaPaneeli.add(new EtusivuPaneeli(this));
