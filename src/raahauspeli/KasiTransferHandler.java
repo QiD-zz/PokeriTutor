@@ -123,6 +123,6 @@ public class KasiTransferHandler extends TransferHandler
 
             alkuunPain = false;
             index = -1;
-            boolean voititko = RaahausPeliPaneeli.testaaVoitto();
+            RaahausPeliPaneeli.testaaVoitto();
         }  
 }
