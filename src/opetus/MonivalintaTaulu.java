@@ -7,10 +7,7 @@ import pokeri.Extern;
 import pokeri.MainMenu;
 import raahauspeli.PokeriHanska;
 
-/**
- *
- * @author Kuisma Kuusniemi 81197
- */
+
 public class MonivalintaTaulu extends JPanel
 {
     MainMenu main;

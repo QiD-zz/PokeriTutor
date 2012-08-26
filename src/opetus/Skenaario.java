@@ -4,10 +4,6 @@ import pokeri.Extern;
 import pokeri.Kortti;
 import raahauspeli.PokeriHanska;
 
-/**
- *
- * @author Kuisma Kuusniemi 81197
- */
 public class Skenaario
 {
     private String oikeanVastauksenTeksti;

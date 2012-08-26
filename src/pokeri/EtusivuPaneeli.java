@@ -7,10 +7,6 @@ import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-/**
- *
- * @author Kuisma Kuusniemi 81197
- */
 public class EtusivuPaneeli extends JPanel
 {
     private Tapahtumakuuntelija tkuuntelija;

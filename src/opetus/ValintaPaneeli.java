@@ -11,10 +11,6 @@ import javax.swing.JRadioButton;
 import pokeri.Extern;
 import raahauspeli.PokeriHanska;
 
-/**
- *
- * @author Kuisma Kuusniemi 81197
- */
  public class ValintaPaneeli extends JPanel
  {
     private JRadioButton ekaNappi;
@@ -42,10 +38,6 @@ import raahauspeli.PokeriHanska;
         ekaNappi.setFont(new Font(Font.SERIF, Font.BOLD, 25));
         tokaNappi.setFont(new Font(Font.SERIF, Font.BOLD, 25));
         kolmasNappi.setFont(new Font(Font.SERIF, Font.BOLD, 25));
-
-        System.out.println(ekaNappi.getText());
-        System.out.println(tokaNappi.getText());
-        System.out.println(kolmasNappi.getText());
 
         ryhma = new ButtonGroup();
         ryhma.add(ekaNappi);

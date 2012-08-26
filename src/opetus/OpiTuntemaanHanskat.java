@@ -10,10 +10,6 @@ import pokeri.Extern;
 import pokeri.MainMenu;
 import raahauspeli.PokeriHanska;
 
-/**
- *
- * @author Kuisma Kuusniemi 81197
- */
 public class OpiTuntemaanHanskat extends JPanel implements ActionListener
 {
     private JButton oikealle;
@@ -84,10 +80,8 @@ public class OpiTuntemaanHanskat extends JPanel implements ActionListener
         vasemmalle = new JButton("Edellinen käsi");
         edellinenHuonompi = new JLabel();
         edellinenHuonompi.setFont(new Font(Font.SERIF, Font.BOLD, 25));
-       // edellinenHuonompi.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA/6-10, 30));
         seuraavaParempi = new JLabel(PokeriHanska.PARI);
         seuraavaParempi.setFont(new Font(Font.SERIF, Font.BOLD, 25));
-        //seuraavaParempi.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA/6-10, 30));
         oikealle = new JButton("Seuraava käsi");
         vasemmalle.addActionListener(this);
         vasemmalle.setEnabled(false);
@@ -102,13 +96,11 @@ public class OpiTuntemaanHanskat extends JPanel implements ActionListener
         tyhja.add(edellinenHuonompi);
         tyhja2.add(oikealle);
         tyhja2.add(seuraavaParempi);
-        this.add(tyhja); //this.add(vasemmalle);
+        this.add(tyhja); 
         nimenPaneeli = new JPanel(new FlowLayout(FlowLayout.CENTER));
         nimenPaneeli.setPreferredSize(new Dimension((Extern.LEVEYS_IKKUNA/3)*2, 250));
         nimenPaneeli.setBackground(Color.lightGray);
-       // nykyinenKasi.setPreferredSize(new Dimension(540, 250));
         nykyinenKasi.setBackground(this.getBackground());
-      //  ohjeTeksti.setText(kuvaukset[kuvausLaskuri]);
         nykyinenKasi.setLayout(new FlowLayout(FlowLayout.CENTER));
         nykyinenKasi.setText(alkuHanska.getHanskaName());
         nimenPaneeli.add(nykyinenKasi);

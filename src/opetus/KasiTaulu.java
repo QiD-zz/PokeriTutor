@@ -9,10 +9,6 @@ import pokeri.Extern;
 import pokeri.Kortti;
 import raahauspeli.PokeriHanska;
 
-/**
- *
- * @author Kuisma Kuusniemi 81197
- */
 public class KasiTaulu extends JPanel
     {
     

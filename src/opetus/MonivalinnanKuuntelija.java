@@ -6,10 +6,6 @@ import java.util.Random;
 import pokeri.Extern;
 import raahauspeli.PokeriHanska;
 
-/**
- *
- * @author Kuisma Kuusniemi 81197
- */
 public class MonivalinnanKuuntelija implements ActionListener
 {
     private MonivalintaTaulu taulu;
