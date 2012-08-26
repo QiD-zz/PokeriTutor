@@ -1,6 +1,5 @@
 package opetus;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Point;
@@ -20,7 +19,6 @@ public class KasiTaulu extends JPanel
             int hanskanLuku = hanska.arvo.ordinal();
 
             this.setLayout(new FlowLayout(FlowLayout.CENTER));
-            //this.setBackground(Color.lightGray);
             Kortti[] kortit = new Kortti[5];
             kortit = teeKasi(PokeriHanska.HAI);
             this.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA, 170));

@@ -98,10 +98,11 @@ public class OpiTuntemaanHanskat extends JPanel implements ActionListener
         this.add(tyhja); 
         nimenPaneeli = new JPanel(new FlowLayout(FlowLayout.CENTER));
         nimenPaneeli.setPreferredSize(new Dimension((Extern.LEVEYS_IKKUNA/3)*2, 250));
-        nykyinenKasi.setBackground(this.getBackground());
+        nykyinenKasi.setBackground(Extern.POKERIKADETTAUSTA);
         nykyinenKasi.setLayout(new FlowLayout(FlowLayout.CENTER));
         nykyinenKasi.setText(alkuHanska.getHanskaName());
         nimenPaneeli.add(nykyinenKasi);
+        nimenPaneeli.setBackground(Extern.POKERIKADETTAUSTA);
         main.setOhjeTekstiAlue(kuvaukset[kuvausLaskuri]);
         ohjeTekstinPaikka = new JPanel();
         ohjeTekstinPaikka.add(nimenPaneeli);
@@ -118,6 +119,7 @@ public class OpiTuntemaanHanskat extends JPanel implements ActionListener
             PokeriHanska vanhaHanska = kasiTaulu.getHanska();
             PokeriHanska uusHanska = new PokeriHanska(vanhaHanska.arvo.ordinal()-1);
             kasiTaulu = new KasiTaulu(uusHanska);
+            kasiTaulu.setBackground(Extern.POKERIKADETTAUSTA);
             kasiTaulunPaikka.removeAll();
 
             edellinenHuonompi.setText(vanhaHanska.getHanskaName());
