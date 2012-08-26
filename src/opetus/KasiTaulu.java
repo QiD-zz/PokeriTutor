@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package opetus;
 
 import java.awt.Color;
@@ -15,7 +11,7 @@ import raahauspeli.PokeriHanska;
 
 /**
  *
- * @author hurvittelu
+ * @author Kuisma Kuusniemi 81197
  */
 public class KasiTaulu extends JPanel
     {
@@ -36,11 +32,9 @@ public class KasiTaulu extends JPanel
             this.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA, 170));
             switch(hanska.arvo.ordinal()) {
                 case 8:
-                    System.out.println("TÄÄLLÄ");
                     kortit = teeKasi(PokeriHanska.HAI);
                     break;
                 case 7:
-                    System.out.println("TÄÄLLÄ");
                     kortit = teeKasi(PokeriHanska.PARI);
                     break;
                  case 6:

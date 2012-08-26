@@ -2,10 +2,6 @@ package raahauspeli;
 
 import pokeri.Kortti;
 
-/**
- *
- * @author hurvittelu
- */
 public class PokeriHanska
 {
     public final static String VARISUORA  = "Värisuora";

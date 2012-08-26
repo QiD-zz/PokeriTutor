@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author hurvittelu
+ * @author Kuisma Kuusniemi 81197
  */
 public class EtusivuPaneeli extends JPanel
 {

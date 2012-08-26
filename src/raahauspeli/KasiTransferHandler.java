@@ -7,10 +7,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
 
-/**
- *
- * @author Kuisma Kuusniemi
- */
 public class KasiTransferHandler extends TransferHandler
 {
      private int index = -1;
@@ -20,9 +16,7 @@ public class KasiTransferHandler extends TransferHandler
             super();
         }
 
-            /**
-         * We only support importing strings.
-         */
+ 
         public boolean canImport(TransferHandler.TransferSupport info) {
             info.setShowDropLocation(false); // no visual feedback
         try {
@@ -38,9 +32,6 @@ public class KasiTransferHandler extends TransferHandler
             return true;
            }
 
-        /**
-         * Bundle up the selected item in a single list for export.
-         */
         protected Transferable createTransferable(JComponent c) {           
             // this handler is bound on a JList
             JList list = (JList)c;
@@ -50,10 +41,6 @@ public class KasiTransferHandler extends TransferHandler
             return new PokeriHanskaTransferable(hanska);
         }
 
-
-         /**
-         * We support copy and move actions.
-         */
         public int getSourceActions(JComponent c) {
        
             return TransferHandler.MOVE;
@@ -94,21 +81,11 @@ public class KasiTransferHandler extends TransferHandler
                 if (( i*list.getFixedCellHeight()) < tiputusPaikka.getDropPoint().getY() && 
                    tiputusPaikka.getDropPoint().getY() < ( (i+1)*list.getFixedCellHeight())) {
                     osumaIndeksi = i;
-                    System.out.println(list.getFixedCellHeight()*i);
                 }
             }
             if (index > osumaIndeksi) {
                 alkuunPain = true;
             }
-            
-            /*
-             * Tämä on vaihtoehtoinen tapa ylemmästä asiasta. 
-            for (int i = 0; i<listModel.getSize(); i++) {
-                if (( i*list.getCellBounds(0, 0).getHeight()) < tiputusPaikka.getDropPoint().getY() && 
-                   tiputusPaikka.getDropPoint().getY() < ( (i+1)*list.getCellBounds(0, 0).getHeight())) {
-                    osumaIndeksi = i;
-                }
-            }*/
             
             //Tarkistetaan vielä onko tiputuspaikka listan indeksien ulkopuolella, jolloin tiputetaan
             //uusi elementti listan viimeiseksi. Muussa tapauksessa elementti lisätään indeksin määrittämään kohtaan.
@@ -125,9 +102,7 @@ public class KasiTransferHandler extends TransferHandler
                 }
                 
             }          
-            
-            // note that we still do not distinguish between copy and move
-            
+        
             return true;
         }
 
@@ -150,6 +125,5 @@ public class KasiTransferHandler extends TransferHandler
             alkuunPain = false;
             index = -1;
             boolean voititko = RaahausPeliPaneeli.testaaVoitto();
-            System.out.println(voititko);
         }  
 }

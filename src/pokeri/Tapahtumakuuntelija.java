@@ -55,7 +55,6 @@ public class Tapahtumakuuntelija implements ActionListener, ItemListener,
     @Override
     public void mousePressed(MouseEvent me)
     {
-        //System.out.println(String.format("MouseEvent: %s", me.getSource()));
     }
 
     @Override

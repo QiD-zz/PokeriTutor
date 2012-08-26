@@ -12,7 +12,7 @@ import raahauspeli.PokeriHanska;
 
 /**
  *
- * @author hurvittelu
+ * @author Kuisma Kuusniemi 81197
  */
 public class OpiTuntemaanHanskat extends JPanel implements ActionListener
 {
@@ -117,14 +117,8 @@ public class OpiTuntemaanHanskat extends JPanel implements ActionListener
         ohjeTekstinPaikka.add(nimenPaneeli);
         ohjeTekstinPaikka.setBackground(Color.lightGray);
         this.add(ohjeTekstinPaikka);
-        this.add(tyhja2); //this.add(oikealle);
+        this.add(tyhja2); 
 
-      /*  for (int i = 0; i < kortit.length; i++) {
-            JButton button = new JButton("Lukitse");
-            button.setPreferredSize(new Dimension(120, 50));
-            this.add(button);
-
-        }*/
     }
 
     @Override

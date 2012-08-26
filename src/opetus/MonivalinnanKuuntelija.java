@@ -8,7 +8,7 @@ import raahauspeli.PokeriHanska;
 
 /**
  *
- * @author hurvittelu
+ * @author Kuisma Kuusniemi 81197
  */
 public class MonivalinnanKuuntelija implements ActionListener
 {
@@ -48,9 +48,6 @@ public class MonivalinnanKuuntelija implements ActionListener
                 skenu.getTokaHanska(), skenu.getKolmasHanska());
             taulu.setValintaPaneeli(vp);
             taulu.add(vp);
-          /*
-           * taulu.add(new ValintaPaneeli(taulu, new PokeriHanska(PokeriHanska.Arvo.KOLMOSET),
-                new PokeriHanska(PokeriHanska.Arvo.SUORA), new PokeriHanska(PokeriHanska.Arvo.VARISUORA)));*/
             taulu.validate();
         } else if (e.getActionCommand().equals(Extern.MONIVALINTAVASTAUS)) {
             ValintaPaneeli vp = taulu.getValintaPaneeli();

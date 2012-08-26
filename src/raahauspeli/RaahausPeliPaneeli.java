@@ -21,7 +21,6 @@ public class RaahausPeliPaneeli extends JPanel implements ActionListener
     private JPanel oikea;
     private JButton uusiPeli;
     private static JLabel tulos;
-    private Timer kello;
     private static Date startTime;
     private static Date endTime;
     private JTextArea peliSuunta;
@@ -62,13 +61,11 @@ public class RaahausPeliPaneeli extends JPanel implements ActionListener
         uusiPeli.addActionListener(this);
         tulos = new JLabel();
         tulos.setBorder(BorderFactory.createTitledBorder("Viimeisin tulos"));
-        tulos.setPreferredSize(new Dimension(150, 50));
-        kello = new Timer(1000, this);       
+        tulos.setPreferredSize(new Dimension(150, 50));      
         
         peliSuunta = new JTextArea();
         peliSuunta.setWrapStyleWord(true);
         peliSuunta.setLineWrap(true);
-     //   peliSuunta.setBackground(this.getBackground());
         peliSuunta.setPreferredSize(new Dimension(125, 70));
         peliSuunta.setFont(new Font(this.getFont().getName(), Font.PLAIN, 17));
         peliSuunta.setBorder(BorderFactory.createTitledBorder("Pelin suunta"));
@@ -100,7 +97,6 @@ public class RaahausPeliPaneeli extends JPanel implements ActionListener
         lista.setPreferredSize(new Dimension(200, 300));
         lista.setFixedCellHeight(50);
         lista.setFont(new Font("Arial",Font.BOLD, 20));
-     //   lista.setLocation(0, 0);
         selitys = new JEditorPane();
         selitys.setPreferredSize(new Dimension(250, 200));
         selitys.setText("Tehtävänäsi on raahat kädet oikeaan \n"
@@ -110,13 +106,12 @@ public class RaahausPeliPaneeli extends JPanel implements ActionListener
         selitys.setBackground(this.getBackground());
         vasen.add(selitys);
         vasen.add(lista);
-     //  selitys.setLocation(200, 200);
         this.add(vasen);
         this.add(oikeanPohja);
         
         JScrollPane jscroll = new JScrollPane(HoF);
         jscroll.setPreferredSize(new Dimension(200, 300));
-        jscroll.setBorder(BorderFactory.createTitledBorder("Parhaat tulokset (sekuntteina)"));
+        jscroll.setBorder(BorderFactory.createTitledBorder("Parhaat tulokset (sekunteina)"));
         this.add(jscroll);
         
         this.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA, 400));
@@ -145,16 +140,6 @@ public class RaahausPeliPaneeli extends JPanel implements ActionListener
             lista.setEnabled(true);
             lista.setForeground(Color.ORANGE);
             startTime = Calendar.getInstance().getTime();
-          //  kello.start();
-        }
-        if (e.getSource().equals(kello)) {
-            endTime = Calendar.getInstance().getTime();
-           // kello.stop();
-            long delay = endTime.getTime()-startTime.getTime();
-            tulos.setText(String.valueOf(delay));
-       //     System.out.print(delay);
-         //   tulos.validate();
-            
         }
     }
     
@@ -197,8 +182,7 @@ public class RaahausPeliPaneeli extends JPanel implements ActionListener
            tulos.setText(String.valueOf(tulosteksti));
            parhaatTulokset.addElement(delayAsDouble);
            Object[] temp = parhaatTulokset.toArray();
-           
-           
+                     
            Arrays.sort(temp);
            
            parhaatTulokset.clear();

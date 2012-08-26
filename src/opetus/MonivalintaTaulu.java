@@ -9,7 +9,7 @@ import raahauspeli.PokeriHanska;
 
 /**
  *
- * @author hurvittelu
+ * @author Kuisma Kuusniemi 81197
  */
 public class MonivalintaTaulu extends JPanel
 {
