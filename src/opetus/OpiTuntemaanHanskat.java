@@ -61,7 +61,6 @@ public class OpiTuntemaanHanskat extends JPanel implements ActionListener
         main = m;
 
         int reunojenPaksuus = main.getContentPane().getBounds().width;
-        System.out.println(reunojenPaksuus);
 
         kuvausLaskuri = 0;
         this.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA, Extern.KORKEUS_IKKUNA));

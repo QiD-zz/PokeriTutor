@@ -117,7 +117,6 @@ public class KasiTransferHandler extends TransferHandler
             if (alkuunPain) {
                 index++;
             }
-            System.out.println(listModel.size());
             if (action == TransferHandler.MOVE) {
                 listModel.remove(index);
             }

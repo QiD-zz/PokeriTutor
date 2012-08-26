@@ -19,7 +19,6 @@ public class KasiTaulu extends JPanel
         {
             hanska = hanska_;
             int hanskanLuku = hanska.arvo.ordinal();
-            System.out.println(hanskanLuku);
 
             this.setLayout(new FlowLayout(FlowLayout.CENTER));
             this.setBackground(Color.lightGray);
