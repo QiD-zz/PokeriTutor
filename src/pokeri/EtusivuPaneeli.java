@@ -1,6 +1,5 @@
 package pokeri;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -26,17 +25,17 @@ public class EtusivuPaneeli extends JPanel
         setBackground(Extern.PASTELLITAUSTA);
 
         opiKadet = new JButton("Opi tuntemaan pokerikädet");
-        opiKadet.setBackground(new Color(107, 142, 35));
+        opiKadet.setBackground(Extern.POKERIKADETTAUSTA);
         opiKadet.setOpaque(true);
         opiKadet.setFocusPainted(false);
         kadetJarj = new JButton("Kädet järjestykseen -peli");
-        kadetJarj.setBackground(new Color(154, 205, 50));
+        kadetJarj.setBackground(Extern.KADETJARJTAUSTA);
         kadetJarj.setOpaque(true);
         pelaaPokeri = new JButton("Käytännön pokeripeli");
-        pelaaPokeri.setBackground(new Color(240, 230, 140));
+        pelaaPokeri.setBackground(Extern.POKERIPELITAUSTA);
         pelaaPokeri.setOpaque(true);
         monivalintapeli = new JButton("Testaa taitosi");
-        monivalintapeli.setBackground(new Color(189, 183, 107));
+        monivalintapeli.setBackground(Extern.TAIDOTTAUSTA);
         monivalintapeli.setOpaque(true);
 
         opiKadet.addActionListener(tkuuntelija);

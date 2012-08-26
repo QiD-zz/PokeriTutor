@@ -65,16 +65,16 @@ public class OpiTuntemaanHanskat extends JPanel implements ActionListener
         kuvausLaskuri = 0;
         this.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA, Extern.KORKEUS_IKKUNA));
         this.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
-        this.setBackground(Color.lightGray);
+        this.setBackground(Extern.POKERIKADETTAUSTA);
         PokeriHanska alkuHanska = new PokeriHanska(PokeriHanska.Arvo.HAI);
         kasiTaulu = new KasiTaulu(alkuHanska);
         kasiTaulunPaikka = new JPanel();
-        kasiTaulunPaikka.setBackground(Color.lightGray);
-        kasiTaulu.setBackground(Color.lightGray);
+        kasiTaulunPaikka.setBackground(Extern.POKERIKADETTAUSTA);
+        kasiTaulu.setBackground(Extern.POKERIKADETTAUSTA);
         kasiTaulunPaikka.add(kasiTaulu);
         this.add(kasiTaulunPaikka);
         nykyinenKasi = new JLabel();
-        nykyinenKasi.setBackground(Color.lightGray);
+        nykyinenKasi.setBackground(Extern.POKERIKADETTAUSTA);
         nykyinenKasi.setFont(new Font(Font.SERIF, Font.BOLD, 30));
         vasemmalle = new JButton("Edellinen käsi");
         edellinenHuonompi = new JLabel();
@@ -86,11 +86,11 @@ public class OpiTuntemaanHanskat extends JPanel implements ActionListener
         vasemmalle.setEnabled(false);
         oikealle.addActionListener(this);
         JPanel tyhja = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        tyhja.setBackground(Color.lightGray);
+        tyhja.setBackground(Extern.POKERIKADETTAUSTA);
         tyhja.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA/7, 250));
         JPanel tyhja2 = new JPanel(new FlowLayout(FlowLayout.CENTER));
         tyhja2.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA/7, 250));
-        tyhja2.setBackground(Color.lightGray);
+        tyhja2.setBackground(Extern.POKERIKADETTAUSTA);
         tyhja.add(vasemmalle);
         tyhja.add(edellinenHuonompi);
         tyhja2.add(oikealle);
@@ -98,7 +98,6 @@ public class OpiTuntemaanHanskat extends JPanel implements ActionListener
         this.add(tyhja); 
         nimenPaneeli = new JPanel(new FlowLayout(FlowLayout.CENTER));
         nimenPaneeli.setPreferredSize(new Dimension((Extern.LEVEYS_IKKUNA/3)*2, 250));
-        nimenPaneeli.setBackground(Color.lightGray);
         nykyinenKasi.setBackground(this.getBackground());
         nykyinenKasi.setLayout(new FlowLayout(FlowLayout.CENTER));
         nykyinenKasi.setText(alkuHanska.getHanskaName());
@@ -106,10 +105,9 @@ public class OpiTuntemaanHanskat extends JPanel implements ActionListener
         main.setOhjeTekstiAlue(kuvaukset[kuvausLaskuri]);
         ohjeTekstinPaikka = new JPanel();
         ohjeTekstinPaikka.add(nimenPaneeli);
-        ohjeTekstinPaikka.setBackground(Color.lightGray);
+        ohjeTekstinPaikka.setBackground(Extern.POKERIKADETTAUSTA);
         this.add(ohjeTekstinPaikka);
         this.add(tyhja2); 
-
     }
 
     @Override

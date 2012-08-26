@@ -26,14 +26,14 @@ import raahauspeli.PokeriHanska;
         setLayout(new FlowLayout(FlowLayout.LEFT));
         JPanel paneeli = new JPanel();
         paneeli.setLayout(new GridLayout(3, 1));
-        this.setBackground(Extern.SKENAARIOPELINTAUSTAVARI);
+        this.setBackground(Extern.TAIDOTTAUSTA);
 
-        ekaNappi = new JRadioButton(eka.getHanskaName());   
-        ekaNappi.setBackground(Extern.SKENAARIOPELINTAUSTAVARI);
+        ekaNappi = new JRadioButton(eka.getHanskaName());
+        ekaNappi.setBackground(Extern.TAIDOTTAUSTA);
         tokaNappi = new JRadioButton(toka.getHanskaName());
-        tokaNappi.setBackground(Extern.SKENAARIOPELINTAUSTAVARI);
+        tokaNappi.setBackground(Extern.TAIDOTTAUSTA);
         kolmasNappi = new JRadioButton(kolmas.getHanskaName());
-        kolmasNappi.setBackground(Extern.SKENAARIOPELINTAUSTAVARI);
+        kolmasNappi.setBackground(Extern.TAIDOTTAUSTA);
 
         ekaNappi.setFont(new Font(Font.SERIF, Font.BOLD, 25));
         tokaNappi.setFont(new Font(Font.SERIF, Font.BOLD, 25));
@@ -66,8 +66,8 @@ import raahauspeli.PokeriHanska;
         paneeli.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA / 5, Extern.KORKEUS_IKKUNA / 9));
         paneeli2.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA / 5, Extern.KORKEUS_IKKUNA / 9));
 
-        paneeli.setBackground(Extern.SKENAARIOPELINTAUSTAVARI);
-        paneeli2.setBackground(Extern.SKENAARIOPELINTAUSTAVARI);
+        paneeli.setBackground(Extern.TAIDOTTAUSTA);
+        paneeli2.setBackground(Extern.TAIDOTTAUSTA);
         this.add(paneeli);      
         this.add(paneeli2);
     }

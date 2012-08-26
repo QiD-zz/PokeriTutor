@@ -41,12 +41,14 @@ public class KorttiPaneeli extends JPanel
         vaihtoKrt = 0;
 
         kortitPane = new JPanel();
+        kortitPane.setBackground(Extern.POKERIPELITAUSTA);
         tilastotPane = new JPanel();
         toiminnotPane = new JPanel();
         toiminnotPane.setBackground(Extern.PAINIKETAUSTA1);
         peliNappulatPane = new JPanel();
         peliNappulatPane.setBackground(Extern.PAINIKETAUSTA2);
         wrapper = new JPanel();
+        wrapper.setBackground(Extern.POKERIPELITAUSTA);
         main = m;
 
         // Layout määrittelyt

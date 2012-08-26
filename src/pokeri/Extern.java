@@ -6,7 +6,6 @@ import java.awt.Point;
 
 public final class Extern
 {
-    
     private Extern()
     {
     }
@@ -20,8 +19,10 @@ public final class Extern
     public static final Color PASTELLITAUSTA = new Color(238, 232, 170);
     public static final Color PAINIKETAUSTA1 = new Color(218, 200, 120);
     public static final Color PAINIKETAUSTA2 = new Color(200, 212, 150);
-    public static final Color RAAHAUSPELINTAUSTAVARI = new Color(111, 46, 170);
-    public static final Color SKENAARIOPELINTAUSTAVARI = new Color(199, 116, 190);
+    public static final Color POKERIKADETTAUSTA = new Color(107, 142, 35);
+    public static final Color KADETJARJTAUSTA = new Color(154, 205, 50);
+    public static final Color POKERIPELITAUSTA = new Color(240, 230, 140);
+    public static final Color TAIDOTTAUSTA = new Color(189, 183, 107);
 
     // Peliin liittyvät asiat
     public static final int KORTTEJA_MAASSA   = 13;

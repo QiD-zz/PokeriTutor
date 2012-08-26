@@ -10,8 +10,7 @@ import pokeri.Kortti;
 import raahauspeli.PokeriHanska;
 
 public class KasiTaulu extends JPanel
-    {
-    
+{
     private Kortti[] kortit;
         private PokeriHanska hanska;
 
@@ -21,7 +20,7 @@ public class KasiTaulu extends JPanel
             int hanskanLuku = hanska.arvo.ordinal();
 
             this.setLayout(new FlowLayout(FlowLayout.CENTER));
-            this.setBackground(Color.lightGray);
+            //this.setBackground(Color.lightGray);
             Kortti[] kortit = new Kortti[5];
             kortit = teeKasi(PokeriHanska.HAI);
             this.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA, 170));

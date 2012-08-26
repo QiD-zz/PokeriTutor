@@ -20,12 +20,12 @@ public class MonivalintaTaulu extends JPanel
         main = m;
         this.setLayout(new FlowLayout(FlowLayout.CENTER));
         this.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA, Extern.KORKEUS_IKKUNA/2));
-        this.setBackground(Extern.SKENAARIOPELINTAUSTAVARI);
+        this.setBackground(Extern.TAIDOTTAUSTA);
         Random rnd = new Random();
         edellisenSkenaarionNro = rnd.nextInt(Extern.SKENAARIOIDEN_LKM);
         skenu = new Skenaario(edellisenSkenaarionNro);
         KasiTaulu kasiTaulu = new KasiTaulu(new PokeriHanska(3));
-        kasiTaulu.setBackground(Extern.SKENAARIOPELINTAUSTAVARI);
+        kasiTaulu.setBackground(Extern.TAIDOTTAUSTA);
 
         for (int i = 0; i < Extern.KORTTEJA_POYDALLA; i++) {
             kasiTaulu.setKorttiTaulussa(skenu.getKortti(i), i);

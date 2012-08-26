@@ -60,7 +60,7 @@ public class MainMenu extends JFrame
         mitem = new JMenuItem(Extern.MONIVALINTAPELI);
         mitem.addActionListener(tkuuntelija);
         menu.add(mitem);
-        
+
         mitem = new JMenuItem("Lopeta");
         mitem.addActionListener(tkuuntelija);
         menu.add(mitem);
@@ -165,7 +165,7 @@ public class MainMenu extends JFrame
         ohjeTekstiAlue.setText("");
         paaPaneeli.removeAll();
         paaPaneeli.add(new RaahausPeliPaneeli());
-        paaPaneeli.setBackground(Extern.RAAHAUSPELINTAUSTAVARI);
+        paaPaneeli.setBackground(Extern.KADETJARJTAUSTA);
         paaPaneeli.repaint();
         paaPaneeli.revalidate();
     }
@@ -181,6 +181,7 @@ public class MainMenu extends JFrame
         paaPaneeli.setBackground(Color.LIGHT_GRAY);
         paaPaneeli.repaint();
         paaPaneeli.revalidate();
+        paaPaneeli.setBackground(Extern.POKERIPELITAUSTA);
     }
 
     public void setOpetuspaneeli()
@@ -194,27 +195,27 @@ public class MainMenu extends JFrame
         paaPaneeli.revalidate();
     }
 
-    public void setEtusivu()
-    {
-        paluu.setVisible(false);
-        lopeta.setVisible(true);
-        ohjeTekstiAlue.setText("");
-        paaPaneeli.removeAll();
-        paaPaneeli.add(new EtusivuPaneeli(this));
-        paaPaneeli.setBackground(Extern.PASTELLITAUSTA);
-        paaPaneeli.repaint();
-        paaPaneeli.revalidate();
-    }
-
     public void setMonivalinta()
     {
         paluu.setVisible(true);
         ohjeTekstiAlue.setText("");
         paaPaneeli.removeAll();
         paaPaneeli.add(new MonivalintaTaulu(this));
-        paaPaneeli.setBackground(Extern.SKENAARIOPELINTAUSTAVARI);
+        paaPaneeli.setBackground(Extern.POKERIPELITAUSTA);
         paaPaneeli.repaint();
         paaPaneeli.revalidate();
+        paaPaneeli.setBackground(Extern.TAIDOTTAUSTA);
+    }
+
+    public void setEtusivu()
+    {
+        paluu.setVisible(false);
+        ohjeTekstiAlue.setText("");
+        paaPaneeli.removeAll();
+        paaPaneeli.add(new EtusivuPaneeli(this));
+        paaPaneeli.repaint();
+        paaPaneeli.revalidate();
+        paaPaneeli.setBackground(Extern.PASTELLITAUSTA);
     }
 
     public MainMenu getMainMenu() // FIXME Onko tälle käyttöä?
