@@ -179,10 +179,10 @@ public class KorttiPaneeli extends JPanel
             } else if (ae.getActionCommand().equals("stats")) {
                 String txt = "";
 
-                txt += "----OTETUT MAAT----%n";
+                txt += "----OTETUT MAAT----\n";
                 txt += otetutMaat();
-                txt += "%n----NOSTETTU----%n";
-                txt += String.format("Pakassa: %d, Nostettu: %d%n",
+                txt += "\n----NOSTETTU----\n";
+                txt += String.format("Pakassa: %d, Nostettu: %d\n",
                         pakka.jaljella(), pakka.nostettu());
                 main.setOhjeTekstiAlue(txt);
             } else if (ae.getActionCommand().equals("tallenna")) {
@@ -263,7 +263,7 @@ public class KorttiPaneeli extends JPanel
         StringBuilder sb = new StringBuilder();
 
         for (String m : Extern.MAAT)
-            sb.append(String.format("%s (%d kpl)%n", m,
+            sb.append(String.format("%s (%d kpl)\n", m,
                       pakka.getMaaOtettuCount(m)));
 
         return sb.toString();

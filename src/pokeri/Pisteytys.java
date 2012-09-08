@@ -138,7 +138,7 @@ public class Pisteytys
         String tallennusMuoto = "";
 
         pvmFmt = new SimpleDateFormat("[dd.MM.yyyy] HH:mm");
-        tallennusMuoto = String.format("Pokeri: %s\t%d%n", pvmFmt.format(pvm), pisteet);
+        tallennusMuoto = String.format("Pokeri: %s\t%d\n", pvmFmt.format(pvm), pisteet);
 
         tallennaTiedLoppuun(tallennusMuoto);
     }
