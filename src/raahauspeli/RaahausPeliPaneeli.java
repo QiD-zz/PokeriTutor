@@ -8,7 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.*;
 import javax.swing.*;
-import javax.swing.Timer;
 import pokeri.Extern;
 
 /**
@@ -28,7 +27,6 @@ public class RaahausPeliPaneeli extends JPanel implements ActionListener
     private static DefaultListModel parhaatTulokset;
 
     private static DefaultListModel listamalli;
-    private JEditorPane selitys;
     private static JList lista;
 
     private static JList HoF;
@@ -97,21 +95,13 @@ public class RaahausPeliPaneeli extends JPanel implements ActionListener
         lista.setPreferredSize(new Dimension(200, 300));
         lista.setFixedCellHeight(50);
         lista.setFont(new Font("Arial",Font.BOLD, 20));
-        selitys = new JEditorPane();
-        selitys.setPreferredSize(new Dimension(250, 200));
-        selitys.setText("Tehtävänäsi on raahat kädet oikeaan \n"
-                + "järjestykseen mahdollisimman nopeasti. \n"
-                + "Järjestämissuunta vaihtuu ja se ilmoitetaan aina uudestaan "
-                + "uuden pelin alkaessa.");
-        selitys.setBackground(this.getBackground());
-        vasen.add(selitys);
         vasen.add(lista);
         this.add(vasen);
         this.add(oikeanPohja);
         
         JScrollPane jscroll = new JScrollPane(HoF);
         jscroll.setPreferredSize(new Dimension(200, 300));
-        jscroll.setBorder(BorderFactory.createTitledBorder("Parhaat tulokset (sekunteina)"));
+        jscroll.setBorder(BorderFactory.createTitledBorder("Parhaat tulokset (sek)"));
         this.add(jscroll);
         
         this.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA, 400));
@@ -178,7 +168,7 @@ public class RaahausPeliPaneeli extends JPanel implements ActionListener
            endTime = Calendar.getInstance().getTime();          
            long delay = endTime.getTime()-startTime.getTime();
            double delayAsDouble = (double)delay/1000;
-           String tulosteksti = String.valueOf(delayAsDouble)+" sekuntia";
+           String tulosteksti = String.valueOf(delayAsDouble)+" sek";
            tulos.setText(String.valueOf(tulosteksti));
            parhaatTulokset.addElement(delayAsDouble);
            Object[] temp = parhaatTulokset.toArray();

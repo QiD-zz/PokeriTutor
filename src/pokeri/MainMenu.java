@@ -166,6 +166,10 @@ public class MainMenu extends JFrame
         lopeta.setVisible(false);
         ohjeTekstiAlue.setText("");
         paaPaneeli.removeAll();
+        ohjeTekstiAlue.setText("Tehtävänäsi on raahat kädet oikeaan \n"
+                + "järjestykseen mahdollisimman nopeasti. \n"
+                + "Järjestämissuunta vaihtuu ja se ilmoitetaan aina uudestaan "
+                + "uuden pelin alkaessa.");
         paaPaneeli.add(new RaahausPeliPaneeli());
         paaPaneeli.setBackground(Extern.KADETJARJTAUSTA);
         paaPaneeli.repaint();
