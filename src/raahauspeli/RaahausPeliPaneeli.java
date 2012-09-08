@@ -19,18 +19,16 @@ public class RaahausPeliPaneeli extends JPanel implements ActionListener
     private JPanel vasen;
     private JPanel oikea;
     private JButton uusiPeli;
+    private JTextArea peliSuunta;
+
     private static JLabel tulos;
     private static Date startTime;
     private static Date endTime;
-    private JTextArea peliSuunta;
-
     private static DefaultListModel parhaatTulokset;
-
     private static DefaultListModel listamalli;
     private static JList lista;
-
     private static JList HoF;
-    
+
     private static final int KORTTEJAPELISSA = 6;
 
     private final String[] pelimuodotLyhyesti = {"Parhaimmasta huonoimpaan.",
@@ -108,7 +106,8 @@ public class RaahausPeliPaneeli extends JPanel implements ActionListener
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed(ActionEvent e)
+    {
         if (e.getSource().equals(uusiPeli)) {
             listamalli.removeAllElements();
             Random rnd = new Random();

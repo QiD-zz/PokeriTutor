@@ -22,7 +22,8 @@ import raahauspeli.PokeriHanska;
     public ValintaPaneeli(MonivalintaTaulu taulu, PokeriHanska eka,
                           PokeriHanska toka, PokeriHanska kolmas)
     {
-        setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA/2, Extern.KORKEUS_IKKUNA/3));
+        setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA / 2,
+                         Extern.KORKEUS_IKKUNA / 3));
         setLayout(new FlowLayout(FlowLayout.LEFT));
         JPanel paneeli = new JPanel();
         paneeli.setLayout(new GridLayout(3, 1));

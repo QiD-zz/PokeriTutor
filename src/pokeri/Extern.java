@@ -10,6 +10,8 @@ public final class Extern
     {
     }
 
+    public static final String PISTEET_TIEDOSTO = "pisteet.txt";
+
     // Visuaaliset hommat
     public static final int LEVEYS_IKKUNA  = 1000;
     public static final int KORKEUS_IKKUNA = 1000;

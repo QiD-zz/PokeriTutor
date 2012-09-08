@@ -17,7 +17,7 @@ public class Pisteytys
     // Vakiot
     public  final int ALKUPISTEET = 10;
     public  final int PANOSMAX    =  5;
-    private final String PISTEET_TIEDOSTO = "pisteet.txt";
+
     private final static Map<String, Integer> VOITTOPISTE =
             Collections.unmodifiableMap(new HashMap<String, Integer>() {{
         /*
@@ -103,7 +103,7 @@ public class Pisteytys
 
     public String getTiedostoPolkuJaNimi()
     {
-        File tiednimi = new File(PISTEET_TIEDOSTO);
+        File tiednimi = new File(Extern.PISTEET_TIEDOSTO);
 
         if (tiednimi.exists())
             return String.format("%s", tiednimi.getAbsolutePath());
@@ -114,7 +114,7 @@ public class Pisteytys
     {
         FileWriter      fwrter;
         BufferedWriter  bwrter;
-        File tiednimi = new File(PISTEET_TIEDOSTO);
+        File tiednimi = new File(Extern.PISTEET_TIEDOSTO);
 
         try {
             if (!tiednimi.exists())
@@ -127,7 +127,7 @@ public class Pisteytys
             bwrter.close(); // sulkee myös fwrterin
         } catch (IOException ex) {
             System.out.println(String.format("Tiedostoon %s kirjoitus epäonnistui: %s",
-                    PISTEET_TIEDOSTO, ex.getMessage()));
+                    Extern.PISTEET_TIEDOSTO, ex.getMessage()));
         }
     }
 

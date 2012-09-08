@@ -1,5 +1,6 @@
 package pokeri;
 
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -21,12 +22,14 @@ public class KorttiPaneeli extends JPanel
     private JButton uusipeli;
     private JButton panos;
     private JButton tallenna;
+    private JButton top5;
     private JLabel  pistenaytto;
     private JPanel  kortitPane;
     private MainMenu main;
 
     private Pakka        pakka;
     private Pisteytys    pisteet;
+    private Top5         top5handler;
     private PokeriHanska tamanHetkinenKasi;
     private Kortti[] poytakortit = new Kortti[Extern.KORTTEJA_POYDALLA];
 
@@ -40,6 +43,7 @@ public class KorttiPaneeli extends JPanel
 
         vaihtoKrt = 0;
 
+        top5handler = Top5.getTop5();
         kortitPane = new JPanel();
         kortitPane.setBackground(Extern.POKERIPELITAUSTA);
         tilastotPane = new JPanel();
@@ -65,24 +69,39 @@ public class KorttiPaneeli extends JPanel
         pisteet = new Pisteytys();
         pistenaytto = new JLabel(String.format("Pisteet %5d  |  Panos %5d",
                                  pisteet.getPisteet(), pisteet.getPanos()));
-
         // Toiminnot
         pelaaKasi = new JButton("Pelaa käsi");
         pelaaKasi.setActionCommand("pelaakasi");
+        pelaaKasi.setBackground(new Color(220, 255, 180));
+        pelaaKasi.setOpaque(true);
         pelaaKasi.setEnabled(false);
         jaa = new JButton("Jää tähän");
         jaa.setActionCommand("jaa");
+        jaa.setBackground(new Color(220, 255, 180));
+        jaa.setOpaque(true);
         jaa.setEnabled(false);
         statistiikka = new JButton("Tilastoja");
         statistiikka.setActionCommand("stats");
+        statistiikka.setBackground(new Color(218, 180, 110));
+        statistiikka.setOpaque(true);
         statistiikka.setEnabled(false);
         uusipeli = new JButton("Uusi peli");
         uusipeli.setActionCommand("uusipeli");
+        uusipeli.setBackground(new Color(120, 255, 180));
+        uusipeli.setOpaque(true);
         panos = new JButton("Panos");
         panos.setActionCommand("panos");
+        panos.setBackground(new Color(220, 255, 180));
+        panos.setOpaque(true);
         tallenna = new JButton("Tallenna pisteet");
         tallenna.setActionCommand("tallenna");
+        tallenna.setBackground(new Color(218, 180, 110));
+        tallenna.setOpaque(true);
         tallenna.setEnabled(false);
+        top5 = new JButton("Top 5");
+        top5.setActionCommand("top5");
+        top5.setBackground(new Color(218, 180, 110));
+        top5.setOpaque(true);
 
         kuuntelija = new KorttipaneelinKuuntelija();
         pelaaKasi.addActionListener(kuuntelija);
@@ -91,6 +110,7 @@ public class KorttiPaneeli extends JPanel
         uusipeli.addActionListener(kuuntelija);
         panos.addActionListener(kuuntelija);
         tallenna.addActionListener(kuuntelija);
+        top5.addActionListener(kuuntelija);
 
         tilastotPane.add(pistenaytto);
 
@@ -101,14 +121,13 @@ public class KorttiPaneeli extends JPanel
 
         toiminnotPane.add(tallenna);
         toiminnotPane.add(statistiikka);
+        toiminnotPane.add(top5);
 
         wrapper.add(toiminnotPane);
         wrapper.add(peliNappulatPane);
         add(kortitPane);
         add(tilastotPane);
         add(wrapper);
-        //add(toiminnotPane);
-        //add(peliNappulatPane);
         kortitPane.setSize(getMaximumSize());
         toiminnotPane.setSize(getMaximumSize());
 
@@ -185,6 +204,12 @@ public class KorttiPaneeli extends JPanel
                 txt += String.format("Pakassa: %d, Nostettu: %d\n",
                         pakka.jaljella(), pakka.nostettu());
                 main.setOhjeTekstiAlue(txt);
+            } else if (ae.getActionCommand().equals("top5")) {
+                if (!top5handler.isShown()) {
+                    top5handler.luePisteetTiedostosta();
+                    top5handler.nayta();
+                } else
+                    top5handler.sulje();
             } else if (ae.getActionCommand().equals("tallenna")) {
                 pisteet.tallennaPisteet();
                 main.setOhjeTekstiAlue(String.format(
