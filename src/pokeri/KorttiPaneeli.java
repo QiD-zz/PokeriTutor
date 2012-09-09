@@ -160,23 +160,24 @@ public class KorttiPaneeli extends JPanel
             if (ae.getActionCommand().equals("pelaakasi")) {
                 if (vaihtoKrt < Extern.VAIHTOJEN_LKM) {
                     vaihdaKortit(poytakortit);
-                    //evaluoiKasi(poytakortit);
 
                     vaihtoKrt++;
                     if (vaihtoKrt == Extern.VAIHTOJEN_LKM) {
+                        if (pisteet.getPisteet() == 0) {
+                            main.setOhjeTekstiAlue("Peli loppui. Aloita uusi peli "+
+                                           "palaamalla pääsivulle ja valitsemalla "+
+                                           "kohta Käytännön pokeripeli");
+                            jaa.setEnabled(false);
+                            panos.setEnabled(false);
+                            uusipeli.setEnabled(false);
+                            tallenna.setEnabled(false);
+                            pelaaKasi.setEnabled(false);
+                            return;
+                    }
                         pelaaKasi.setEnabled(false);
                         jaa.setEnabled(false);
                         tallenna.setEnabled(true);
                         panos.setEnabled(true);
-                        uusipeli.setEnabled(true);
-                        evaluoiKasi(poytakortit);
-                        pisteet.laskePisteet(parsiKasiOhjetekstista());
-                    }
-
-                    if (pisteet.getPisteet() == 0) {
-                        main.setOhjeTekstiAlue("Peli loppui");
-                        jaa.setEnabled(false);
-                        panos.setEnabled(false);
                         uusipeli.setEnabled(true);
                         evaluoiKasi(poytakortit);
                         pisteet.laskePisteet(parsiKasiOhjetekstista());
@@ -223,8 +224,8 @@ public class KorttiPaneeli extends JPanel
                 main.setOhjeTekstiAlue("");
                 pelaaKasi.setEnabled(true);
                 jaa.setEnabled(true);
-                statistiikka.setEnabled(true);
                 tallenna.setEnabled(false);
+                statistiikka.setEnabled(true);
                 panos.setEnabled(false);
                 uusipeli.setEnabled(false);
                 pisteet.vahennaPisteita();
