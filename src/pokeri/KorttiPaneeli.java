@@ -120,8 +120,8 @@ public class KorttiPaneeli extends JPanel
         peliNappulatPane.add(uusipeli);
 
         toiminnotPane.add(tallenna);
-        toiminnotPane.add(statistiikka);
         toiminnotPane.add(top5);
+        toiminnotPane.add(statistiikka);
 
         wrapper.add(toiminnotPane);
         wrapper.add(peliNappulatPane);
@@ -199,7 +199,7 @@ public class KorttiPaneeli extends JPanel
 
                 txt += "----OTETUT MAAT----\n";
                 txt += otetutMaat();
-                txt += "\n----NOSTETTU----\n";
+                txt += "----NOSTETTU----\n";
                 txt += String.format("Pakassa: %d, Nostettu: %d\n",
                         pakka.jaljella(), pakka.nostettu());
                 main.setOhjeTekstiAlue(txt);

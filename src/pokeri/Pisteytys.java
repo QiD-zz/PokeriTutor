@@ -32,13 +32,13 @@ public class Pisteytys
          * Pari
          * Hai
          */
-        put(raahauspeli.PokeriHanska.VARISUORA, 100);
-        put(raahauspeli.PokeriHanska.NELOSET, 90);
+        put(raahauspeli.PokeriHanska.VARISUORA, 50);
+        put(raahauspeli.PokeriHanska.NELOSET, 40);
         put(raahauspeli.PokeriHanska.TAYSKASI, 20);
         put(raahauspeli.PokeriHanska.VARI, 15);
         put(raahauspeli.PokeriHanska.SUORA, 15);
-        put(raahauspeli.PokeriHanska.KOLMOSET, 10);
-        put(raahauspeli.PokeriHanska.KAKSIPARIA, 5);
+        put(raahauspeli.PokeriHanska.KOLMOSET, 5);
+        put(raahauspeli.PokeriHanska.KAKSIPARIA, 3);
         put(raahauspeli.PokeriHanska.PARI, 1);
         put(raahauspeli.PokeriHanska.HAI, 0);
     }});
