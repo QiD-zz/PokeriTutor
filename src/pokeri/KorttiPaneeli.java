@@ -173,13 +173,11 @@ public class KorttiPaneeli extends JPanel
                         tallenna.setEnabled(true);
                         statistiikka.setEnabled(true);
                     } else {
-                        main.setOhjeTekstiAlue("Peli loppui. Aloita uusi peli "+
-                                       "palaamalla pääsivulle ja valitsemalla "+
-                                       "kohta Käytännön pokeripeli");
                         uusipeli.setEnabled(true);
                         alustaUusiPeli();
                         pisteet.nollaaPisteet();
                         paivitaPisteNaytto();
+                        main.setOhjeTekstiAlue("Peli loppui.");
                     }
                     vaihtoKrt = 0;
                 }
@@ -221,7 +219,6 @@ public class KorttiPaneeli extends JPanel
                 alustaUusiPeli();
                 vaihtoKrt = 0;
                 pisteet.vahennaPisteita();
-                //evaluoiKasi(poytakortit); //XXX TURHA?
                 jaa.setEnabled(true);
                 pelaaKasi.setEnabled(true);
                 statistiikka.setEnabled(true);
