@@ -158,44 +158,42 @@ public class KorttiPaneeli extends JPanel
         public void actionPerformed(ActionEvent ae)
         {
             if (ae.getActionCommand().equals("pelaakasi")) {
-                if (vaihtoKrt < Extern.VAIHTOJEN_LKM) {
-                    vaihdaKortit(poytakortit);
+                vaihdaKortit(poytakortit); // Tekee myös vaihtoKrt lisäyksen
+                if (vaihtoKrt == Extern.VAIHTOJEN_LKM) {
+                    jaa.setEnabled(false);
+                    pelaaKasi.setEnabled(false);
 
-                    vaihtoKrt++;
-                    if (vaihtoKrt == Extern.VAIHTOJEN_LKM) {
-                        if (pisteet.getPisteet() == 0) {
-                            main.setOhjeTekstiAlue("Peli loppui. Aloita uusi peli "+
-                                           "palaamalla pääsivulle ja valitsemalla "+
-                                           "kohta Käytännön pokeripeli");
-                            jaa.setEnabled(false);
-                            panos.setEnabled(false);
-                            uusipeli.setEnabled(false);
-                            tallenna.setEnabled(false);
-                            pelaaKasi.setEnabled(false);
-                            return;
-                    }
-                        pelaaKasi.setEnabled(false);
-                        jaa.setEnabled(false);
-                        tallenna.setEnabled(true);
+                    evaluoiKasi(poytakortit);
+                    pisteet.laskePisteet(parsiKasiOhjetekstista());
+                    paivitaPisteNaytto();
+                    // Tarkasta näin lopussa, että onko peliä mahdollista jatkaa
+                    if (pisteet.getPisteet() > 0) {
                         panos.setEnabled(true);
                         uusipeli.setEnabled(true);
-                        evaluoiKasi(poytakortit);
-                        pisteet.laskePisteet(parsiKasiOhjetekstista());
+                        tallenna.setEnabled(true);
+                        statistiikka.setEnabled(true);
+                    } else {
+                        main.setOhjeTekstiAlue("Peli loppui. Aloita uusi peli "+
+                                       "palaamalla pääsivulle ja valitsemalla "+
+                                       "kohta Käytännön pokeripeli");
+                        uusipeli.setEnabled(true);
+                        alustaUusiPeli();
+                        pisteet.nollaaPisteet();
+                        paivitaPisteNaytto();
                     }
+                    vaihtoKrt = 0;
                 }
             } else if (ae.getActionCommand().equals("jaa")) {
-                pelaaKasi.setEnabled(false);
-                jaa.setEnabled(false);
-                tallenna.setEnabled(true);
-                panos.setEnabled(true);
-                uusipeli.setEnabled(true);
                 evaluoiKasi(poytakortit);
                 pisteet.laskePisteet(parsiKasiOhjetekstista());
+                paivitaPisteNaytto();
+                vaihtoKrt = 0;
 
-                if (pisteet.getPisteet() == 0) {
-                    pelaaKasi.setEnabled(false);
-                    main.setOhjeTekstiAlue("Peli loppui");
-                }
+                jaa.setEnabled(false);
+                pelaaKasi.setEnabled(false);
+                tallenna.setEnabled(true);
+                uusipeli.setEnabled(true);
+                panos.setEnabled(true);
             } else if (ae.getActionCommand().equals("stats")) {
                 String txt = "";
 
@@ -221,16 +219,17 @@ public class KorttiPaneeli extends JPanel
                 pisteet.vaihdaPanos();
             } else if (ae.getActionCommand().equals("uusipeli")) {
                 alustaUusiPeli();
-                main.setOhjeTekstiAlue("");
-                pelaaKasi.setEnabled(true);
+                vaihtoKrt = 0;
+                pisteet.vahennaPisteita();
+                //evaluoiKasi(poytakortit); //XXX TURHA?
                 jaa.setEnabled(true);
-                tallenna.setEnabled(false);
+                pelaaKasi.setEnabled(true);
                 statistiikka.setEnabled(true);
                 panos.setEnabled(false);
                 uusipeli.setEnabled(false);
-                pisteet.vahennaPisteita();
+                tallenna.setEnabled(false);
             }
-            paivitaPisteet();
+            paivitaPisteNaytto();
         }
     }
 
@@ -239,15 +238,20 @@ public class KorttiPaneeli extends JPanel
         int idx = 0;
 
         idx = main.getOhjeTeksti().indexOf(' ');
-        if (idx > 0)
+        if (idx > 0) {
+            if (main.getOhjeTeksti().substring(0, idx).equals("Kaksi"))
+                idx = main.getOhjeTeksti().indexOf(' ', idx + 1);
             return main.getOhjeTeksti().substring(0, idx);
+        }
         return "";
     }
 
-    public void paivitaPisteet()
+    public void paivitaPisteNaytto()
     {
         pistenaytto.setText(String.format("Pisteet %5d  |  Panos %5d",
                             pisteet.getPisteet(), pisteet.getPanos()));
+        pistenaytto.repaint();
+        pistenaytto.revalidate();
     }
 
     public void alustaUusiPeli()
@@ -258,30 +262,28 @@ public class KorttiPaneeli extends JPanel
         pakka.sekoita();
         alustaKortit();
         vaihtoKrt = 0;
-        //pisteet.nollaaPisteet();
         main.setOhjeTekstiAlue("");
-        evaluoiKasi(poytakortit);
     }
 
     public void vaihdaKortit(Kortti[] kortit)
     {
-       for (int i = 0; i < poytakortit.length; i++) {
-        if (poytakortit[i].getValinta() == false) {
-            Point vanhasijainti = poytakortit[i].getSijainti();
+        for (int i = 0; i < poytakortit.length; i++) {
+            if (poytakortit[i].getValinta() == false) {
+                Point vanhasijainti = poytakortit[i].getSijainti();
 
-            kortitPane.remove(poytakortit[i]);
-            poytakortit[i] = null;
-            poytakortit[i] = pakka.otaKortti();
-            if (poytakortit[i].getArvo() == 0) {
-                main.setOhjeTekstiAlue("Pakka tyhjä");
-                break;
+                kortitPane.remove(poytakortit[i]);
+                poytakortit[i] = pakka.otaKortti();
+                if (poytakortit[i].getArvo() == 0) {
+                    main.setOhjeTekstiAlue("Pakka tyhjä");
+                    break;
+                }
+                poytakortit[i].setSijainti(vanhasijainti);
+                kortitPane.add(poytakortit[i]);
             }
-            poytakortit[i].setSijainti(vanhasijainti);
-            kortitPane.add(poytakortit[i]);
         }
-        kortitPane.repaint();
+        kortitPane.repaint(); // FIXME pistä poist loopista
         kortitPane.revalidate();
-        }
+        vaihtoKrt++;
     }
 
     public String otetutMaat()
@@ -351,7 +353,7 @@ public class KorttiPaneeli extends JPanel
 
             if (tkasiVaiKaksiParia > 0) {
                 switch (tkasiVaiKaksiParia) {
-                case 2: // Kaksi paria
+                case 2:
                     main.setOhjeTekstiAlue(String.format("Kaksi paria (%d pistettä)",
                          pisteet.getPistePanosKerroin(raahauspeli.PokeriHanska.KAKSIPARIA)));
                     tamanHetkinenKasi = new PokeriHanska(raahauspeli.PokeriHanska.KAKSIPARIA);
