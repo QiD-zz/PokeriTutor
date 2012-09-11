@@ -110,14 +110,11 @@ public class MainMenu extends JFrame
         ohjeTekstiAlue.setBounds(paluu.getWidth() + insets.left, insets.top,
                                  paluuSize.width, paluuSize.height);
         ohjePane = new JScrollPane(ohjeTekstiAlue);
-        ohjePane.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA /
-                                        8 * 7, Extern.KORKEUS_IKKUNA / 7));
         ohjePane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         ohjePane.setBounds(paluu.getWidth() + insets.left, insets.top,
                                  paluuSize.width, paluuSize.height);
         ohjeTekstiAlue.setBackground(Extern.OHJETAUSTA);
-        ohjeTekstiAlue.setPreferredSize(new Dimension(Extern.LEVEYS_IKKUNA /
-                                        8 * 7, Extern.KORKEUS_IKKUNA / 4));
+
         ohjePaneeli.add(paluu);
         ohjePaneeli.add(lopeta);
         ohjePaneeli.add(ohjePane);

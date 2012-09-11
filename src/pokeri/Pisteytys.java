@@ -18,7 +18,7 @@ public class Pisteytys
     public  final int ALKUPISTEET = 10;
     public  final int PANOSMAX    =  5;
 
-    private final static Map<String, Integer> VOITTOPISTE =
+    private static final Map<String, Integer> VOITTOPISTE =
             Collections.unmodifiableMap(new HashMap<String, Integer>() {{
         /*
          * (Arvokkain ensin)
@@ -141,6 +141,15 @@ public class Pisteytys
         tallennusMuoto = String.format("%s\t%d\n", pvmFmt.format(pvm), pisteet);
 
         tallennaTiedLoppuun(tallennusMuoto);
+    }
+
+    public String pisteytys()
+    {
+        StringBuffer header = new StringBuffer();
+
+        for (String kasi : raahauspeli.PokeriHanska.kadet)
+            header.append(String.format("%s\t %s\n", kasi, getPistePanosKerroin(kasi)));
+        return header.toString();
     }
 
 }

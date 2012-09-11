@@ -215,6 +215,8 @@ public class KorttiPaneeli extends JPanel
                 tallenna.setEnabled(false);
             } else if (ae.getActionCommand().equals("panos")) {
                 pisteet.vaihdaPanos();
+                main.setOhjeTekstiAlue(pisteet.pisteytys());
+                paivitaPisteNaytto();
             } else if (ae.getActionCommand().equals("uusipeli")) {
                 alustaUusiPeli();
                 vaihtoKrt = 0;
