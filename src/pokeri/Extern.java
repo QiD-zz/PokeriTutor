@@ -39,9 +39,9 @@ public final class Extern
     public static final String[] MAAT = { "ruutu", "hertta", "pata", "risti" };
 
     // Komennot
-    public static final String RAAHAUSPELI = "RaahausPeli";
-    public static final String KORTTIPELI  = "KorttiPeli";
-    public static final String OPETUS      = "Opetus";
+    public static final String RAAHAUSPELI = "Kädet järjestykseen -peli";
+    public static final String KORTTIPELI  = "Korttipeli";
+    public static final String OPETUS      = "Opetusosio";
     public static final String ETUSIVU     = "Etusivulle";
     public static final String MONIVALINTAPELI = "Monivalintapeli";
     public static final String UUSIMONIVALINTATEHTAVA = "uusi tehtävä";

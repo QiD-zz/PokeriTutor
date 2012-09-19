@@ -32,8 +32,9 @@ public class MainMenu extends JFrame
 
     public MainMenu()
     {
-        super("TaoTao menee metsään!");
+        super("Etusivu");
         tkuuntelija = new Tapahtumakuuntelija(this);
+        this.setResizable(false);
 
         alustaElementit();
     }
@@ -159,6 +160,7 @@ public class MainMenu extends JFrame
 
     public void setRaahauspeli()
     {
+        this.setTitle(Extern.RAAHAUSPELI);
         paluu.setVisible(true);
         lopeta.setVisible(false);
         ohjeTekstiAlue.setText("");
@@ -175,6 +177,7 @@ public class MainMenu extends JFrame
 
     public void setPokeripeli()
     {
+        this.setTitle(Extern.KORTTIPELI);
         paluu.setVisible(true);
         lopeta.setVisible(false);
         ohjeTekstiAlue.setText("Aloita valitsemalla Uusi peli\n"
@@ -188,6 +191,7 @@ public class MainMenu extends JFrame
 
     public void setOpetuspaneeli()
     {
+        this.setTitle(Extern.OPETUS);
         paluu.setVisible(true);
         ohjeTekstiAlue.setText("");
         paaPaneeli.removeAll();
@@ -199,6 +203,7 @@ public class MainMenu extends JFrame
 
     public void setMonivalinta()
     {
+        this.setTitle(Extern.MONIVALINTAPELI);
         paluu.setVisible(true);
         ohjeTekstiAlue.setText("");
         paaPaneeli.removeAll();
@@ -211,6 +216,7 @@ public class MainMenu extends JFrame
 
     public void setEtusivu()
     {
+        this.setTitle("Etusivu");
         paluu.setVisible(false);
         lopeta.setVisible(true);
         lopeta.setBackground(Extern.LOPETATAUSTA);
