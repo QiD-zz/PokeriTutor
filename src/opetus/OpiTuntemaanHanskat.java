@@ -141,6 +141,7 @@ public class OpiTuntemaanHanskat extends JPanel implements ActionListener
             PokeriHanska vanhaHanska = kasiTaulu.getHanska();
             PokeriHanska uusHanska = new PokeriHanska(vanhaHanska.arvo.ordinal()+1);
             kasiTaulu = new KasiTaulu(uusHanska);
+            kasiTaulu.setBackground(Extern.POKERIKADETTAUSTA);
             kasiTaulunPaikka.removeAll();
 
             seuraavaParempi.setText(vanhaHanska.getHanskaName());
