@@ -24,17 +24,17 @@ public class EtusivuPaneeli extends JPanel
         setLayout(new FlowLayout(FlowLayout.CENTER));
         setBackground(Extern.PASTELLITAUSTA);
 
-        opiKadet = new JButton("Opi tuntemaan pokerikädet");
+        opiKadet = new JButton("1. Opi tuntemaan pokerikädet");
         opiKadet.setBackground(Extern.POKERIKADETTAUSTA);
         opiKadet.setOpaque(true);
         opiKadet.setFocusPainted(false);
-        kadetJarj = new JButton("Kädet järjestykseen -peli");
+        kadetJarj = new JButton("2. Kädet järjestykseen -peli");
         kadetJarj.setBackground(Extern.KADETJARJTAUSTA);
         kadetJarj.setOpaque(true);
-        pelaaPokeri = new JButton("Käytännön pokeripeli");
+        pelaaPokeri = new JButton("4. Käytännön pokeripeli");
         pelaaPokeri.setBackground(Extern.POKERIPELITAUSTA);
         pelaaPokeri.setOpaque(true);
-        monivalintapeli = new JButton("Testaa taitosi");
+        monivalintapeli = new JButton("3. Testaa taitosi");
         monivalintapeli.setBackground(Extern.TAIDOTTAUSTA);
         monivalintapeli.setOpaque(true);
 
