@@ -27,7 +27,7 @@ public final class Pakka
         for (int i = 0; i < Extern.MAIDEN_LKM; i++)
             otetutMaat.put(Extern.MAAT[i], Long.valueOf(0));
 
-        for (int i = 2; i <= Extern.KORTTEJA_PAKASSA / Extern.MAIDEN_LKM; i++) {
+        for (int i = 2; i <= 14; i++) {
             for (int maa = 0; maa < Extern.MAIDEN_LKM; maa++) {
                 Kortti k = new Kortti(Extern.MAAT[maa], i, new Point(0, 0));
                 pakka.add(k);
